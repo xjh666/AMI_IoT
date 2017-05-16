@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#005c7e</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="colorBackground">#004058</color>
+    <color name="colorHostsThatHadPerformedModificationsWithoutError">#4572a7</color>
+    <color name="colorHostsInErrorState">#aa4343</color>
+    <color name="colorGoodHostReportsInTheLast35Minutes">#89a54e</color>
+    <color name="colorHostsThatHadPendingChanges">#80699b</color>
+    <color name="colorOutOfSyncHosts">#3d96ae</color>
+    <color name="colorHostsWithNoReports">#db843d</color>
+    <color name="colorHostsWithAlertsDisabled">#92abcd</color>
+</resources>
