@@ -1,5 +1,6 @@
 package com.example.foremanproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,51 +16,47 @@ public class LoginInterface extends AppCompatActivity {
     EditText userNameEdit;
     EditText passwordEdit;
 
-    public static String domain;
-    public static String userName;
-    public static String password;
+    String domain;
+    String userName;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Welcome to Foreman");
         setContentView(R.layout.activity_login_interface);
 
         button = (Button)findViewById(R.id.button);
         domainEdit   = (EditText)findViewById(R.id.DOMAIN);
         userNameEdit   = (EditText)findViewById(R.id.USERNAME);
         passwordEdit   = (EditText)findViewById(R.id.PASSWORD);
+    }
 
-        //when click LOGIN
-        button.setOnClickListener(new View.OnClickListener()
-                {
-                    public void onClick(View view)
-                    {
-                        domain = domainEdit.getText().toString();
-                        userName = userNameEdit.getText().toString();
-                        password = passwordEdit.getText().toString();
+    public void Login(View view){
+        domain = domainEdit.getText().toString();
+        userName = userNameEdit.getText().toString();
+        password = passwordEdit.getText().toString();
+        Intent intent = new Intent(this, MainInterface.class);
+        try{
+            if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
+                    &&(userName.equals("admin"))
+                    &&(password.equals("012278"))) {
+                Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            }
 
-                        try{
-                            if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
-                                    &&(userName.equals("admin"))
-                                    &&(password.equals("012278")))
-                                Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
+            else if(domain.equals(""))
+                Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
 
-                            else if(domain.equals(""))
-                                Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
+            else if(userName.equals(""))
+                Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
 
-                            else if(userName.equals(""))
-                                Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
+            else if(password.equals(""))
+                Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
 
-                            else if(password.equals(""))
-                                Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
-
-                            else Toast.makeText(LoginInterface.this, "Incorrect Domain/Username/Password", Toast.LENGTH_LONG).show();
-
-
-                        }catch(Exception e){
-                            System.out.println(1);
-                        }
-                    }
-                });
+            else Toast.makeText(LoginInterface.this, "Incorrect Domain/Username/Password", Toast.LENGTH_LONG).show();
+        }catch(Exception e){
+            System.out.println(1);
+        }
     }
 }
