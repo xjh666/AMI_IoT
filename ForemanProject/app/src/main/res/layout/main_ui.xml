@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.13">
+
+        <LinearLayout
+            android:layout_width="382dp"
+            android:layout_height="418dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteY="29dp"
+            tools:layout_editor_absoluteX="6dp">
+
+            <Button
+                android:id="@+id/AllHosts"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="All Hosts"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <Button
+                android:id="@+id/HostGroups"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="Hosts Groups"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <Button
+                android:id="@+id/HostConfigurationStatus"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="Host Configuration Status"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <Button
+                android:id="@+id/HostConfigurationChart"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="Host Configuration Chart"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <Button
+                android:id="@+id/RunDistribution"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="Run Distribution(last 30 minutes)"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <Button
+                android:id="@+id/LatestEvents"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0.13"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:text="Latest Events"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="162dp" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
