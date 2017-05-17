@@ -15,10 +15,6 @@ public class LoginInterface extends AppCompatActivity {
     EditText userNameEdit;
     EditText passwordEdit;
 
-    private static String domain;
-    private static String username;
-    private static String password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,42 +28,30 @@ public class LoginInterface extends AppCompatActivity {
     }
 
     public void Login(View view){
-        domain = domainEdit.getText().toString();
-        username = userNameEdit.getText().toString();
-        password = passwordEdit.getText().toString();
+        String domain = domainEdit.getText().toString();
+        String username = userNameEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
         Intent intent = new Intent(this, MainInterface.class);
-        try{
-            if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
-                    &&(username.equals("admin"))
-                    &&(password.equals("012278"))) {
-                Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
-                startActivity(intent);
-            }
 
-            else if(domain.equals(""))
-                Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
+        if(domain.equals(""))
+            Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
 
-            else if(username.equals(""))
-                Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
+        else if(username.equals(""))
+            Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
 
-            else if(password.equals(""))
-                Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
+        else if(password.equals(""))
+            Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
 
-            else Toast.makeText(LoginInterface.this, "Incorrect Domain/Username/Password", Toast.LENGTH_LONG).show();
-        }catch(Exception e){
-            System.out.println(1);
+        else if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
+                &&(username.equals("admin"))
+                &&(password.equals("012278"))) {
+
+            Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
+            SendReqeust.setDomain(domain);
+            SendReqeust.setPassword(password);
+            SendReqeust.setUsername(username);
+            startActivity(intent);
         }
-    }
-
-    public static String getDomain(){
-        return domain;
-    }
-
-    public static String getUserName(){
-        return username;
-    }
-
-    public static String getPassword(){
-        return password;
+        else Toast.makeText(LoginInterface.this, "Incorrect Domain/Username/Password", Toast.LENGTH_LONG).show();
     }
 }
