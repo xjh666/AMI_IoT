@@ -15,9 +15,9 @@ public class LoginInterface extends AppCompatActivity {
     EditText userNameEdit;
     EditText passwordEdit;
 
-    String domain;
-    String userName;
-    String password;
+    private static String domain;
+    private static String username;
+    private static String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,12 @@ public class LoginInterface extends AppCompatActivity {
 
     public void Login(View view){
         domain = domainEdit.getText().toString();
-        userName = userNameEdit.getText().toString();
+        username = userNameEdit.getText().toString();
         password = passwordEdit.getText().toString();
         Intent intent = new Intent(this, MainInterface.class);
         try{
             if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
-                    &&(userName.equals("admin"))
+                    &&(username.equals("admin"))
                     &&(password.equals("012278"))) {
                 Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
                 startActivity(intent);
@@ -47,7 +47,7 @@ public class LoginInterface extends AppCompatActivity {
             else if(domain.equals(""))
                 Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
 
-            else if(userName.equals(""))
+            else if(username.equals(""))
                 Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
 
             else if(password.equals(""))
@@ -57,5 +57,17 @@ public class LoginInterface extends AppCompatActivity {
         }catch(Exception e){
             System.out.println(1);
         }
+    }
+
+    public static String getDomain(){
+        return domain;
+    }
+
+    public static String getUserName(){
+        return username;
+    }
+
+    public static String getPassword(){
+        return password;
     }
 }

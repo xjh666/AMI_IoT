@@ -27,6 +27,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="0.13"
                 android:background="@android:drawable/dialog_holo_light_frame"
+                android:onClick="click"
                 android:text="All Hosts"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="8dp"
