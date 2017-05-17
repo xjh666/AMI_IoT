@@ -5,11 +5,11 @@ package com.example.foremanproject;
  */
 
 class SendReqeust {
-    private static String domain;
+    private static String url;
     private static String username;
     private static String password;
 
-    static void setDomain(String newDomain) { domain = newDomain; }
+    static void setUrl(String newUrl) { url = newUrl; }
 
     static void setUsername(String newUsername) { username = newUsername; }
 

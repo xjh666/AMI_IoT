@@ -70,17 +70,17 @@
         android:layout_marginEnd="40dp" />
 
     <EditText
-        android:id="@+id/DOMAIN"
+        android:id="@+id/URL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:singleLine="false"
         android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-        android:layout_marginRight="40dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="40dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/USERNAME"

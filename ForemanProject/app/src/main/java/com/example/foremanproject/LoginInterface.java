@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class LoginInterface extends AppCompatActivity {
 
     Button button;
-    EditText domainEdit;
+    EditText urlEdit;
     EditText userNameEdit;
     EditText passwordEdit;
 
@@ -22,19 +22,19 @@ public class LoginInterface extends AppCompatActivity {
         setContentView(R.layout.activity_login_interface);
 
         button = (Button)findViewById(R.id.button);
-        domainEdit   = (EditText)findViewById(R.id.DOMAIN);
+        urlEdit   = (EditText)findViewById(R.id.URL);
         userNameEdit   = (EditText)findViewById(R.id.USERNAME);
         passwordEdit   = (EditText)findViewById(R.id.PASSWORD);
     }
 
     public void Login(View view){
-        String domain = domainEdit.getText().toString();
+        String url = urlEdit.getText().toString();
         String username = userNameEdit.getText().toString();
         String password = passwordEdit.getText().toString();
         Intent intent = new Intent(this, MainInterface.class);
 
-        if(domain.equals(""))
-            Toast.makeText(LoginInterface.this, "Please Enter Domain", Toast.LENGTH_LONG).show();
+        if(url.equals(""))
+            Toast.makeText(LoginInterface.this, "Please Enter url", Toast.LENGTH_LONG).show();
 
         else if(username.equals(""))
             Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
@@ -42,16 +42,14 @@ public class LoginInterface extends AppCompatActivity {
         else if(password.equals(""))
             Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
 
-        else if((domain.equals("172.29.32.41")||domain.equals("https://172.29.32.41"))
-                &&(username.equals("admin"))
-                &&(password.equals("012278"))) {
+        else {
 
             Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
-            SendReqeust.setDomain(domain);
+            SendReqeust.setUrl(url);
             SendReqeust.setPassword(password);
             SendReqeust.setUsername(username);
             startActivity(intent);
+            Toast.makeText(LoginInterface.this, "Incorrect url/Username/Password", Toast.LENGTH_LONG).show();
         }
-        else Toast.makeText(LoginInterface.this, "Incorrect Domain/Username/Password", Toast.LENGTH_LONG).show();
     }
 }
