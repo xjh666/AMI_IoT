@@ -14,12 +14,19 @@
 
         <TextView
             android:id="@+id/textView52"
-            android:layout_width="291dp"
+            android:layout_width="333dp"
             android:layout_height="41dp"
             android:text="Display 2 entries"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/refresh_icon" />
 
     </LinearLayout>
 

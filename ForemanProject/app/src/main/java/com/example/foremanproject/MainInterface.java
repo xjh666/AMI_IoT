@@ -1,5 +1,6 @@
 package com.example.foremanproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,7 +25,7 @@ public class MainInterface extends AppCompatActivity {
     }
 
     public void showHostConfigurationChart(View view){
-
+        startActivity(new Intent(this, HostConfigurationChart.class));
     }
 
     public void showRunDistribution(View view){

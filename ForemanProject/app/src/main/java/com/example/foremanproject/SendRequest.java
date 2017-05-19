@@ -4,7 +4,7 @@ package com.example.foremanproject;
  * Created by labuser on 5/17/2017.
  */
 
-class SendReqeust {
+class SendRequest {
     private static String url;
     private static String username;
     private static String password;
@@ -17,7 +17,12 @@ class SendReqeust {
             url = url + "/";
     }
 
-    static void setUsername(String newUsername) { username = newUsername; }
+    public static void setUsername(String newUsername) { username = newUsername; }
 
-    static void setPassword(String newPassword) { password = newPassword; }
+    public static void setPassword(String newPassword) { password = newPassword; }
+
+    public static String getUrl(){ return url;}
+
+    public static String getUNandPW(){ return (username + ":" + password);}
+
 }

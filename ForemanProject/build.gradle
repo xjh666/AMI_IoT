@@ -3,6 +3,9 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'

@@ -3,7 +3,7 @@ package com.example.foremanproject;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class AllHosts extends AppCompatActivity {
+class AllHosts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
