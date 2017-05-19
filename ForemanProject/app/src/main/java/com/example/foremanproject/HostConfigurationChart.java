@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -15,7 +16,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
@@ -28,30 +28,18 @@ import java.util.Map;
 public class HostConfigurationChart extends AppCompatActivity {
     private final String api = "api/dashboard";
 
-    /**
-     * Colors to be used for the pie slices.
-     */
     private final int COLOR[] = {0xFF4572A7, 0xFFAA4643, 0xFF89A541, 0xFF80699B, 0xFF3D96AE, 0xFFDB843D, 0xFF92A8CD};
-    /**
-     * The main series that will include all the data.
-     */
-    private CategorySeries mSeries = new CategorySeries("");
-    /**
-     * The main renderer for the main dataset.
-     */
-    private DefaultRenderer mRenderer = new DefaultRenderer();
-    /**
-     * The chart view that displays the data.
-     */
-    private GraphicalView mChartView;
-    /**  */
+
     private final String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
+
+    private TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Host Configuration Chart");
         setContentView(R.layout.host_configuration_chart);
+        text = (TextView) findViewById(R.id.ActivePercentage);
         sendRequest();
     }
 
@@ -102,6 +90,8 @@ public class HostConfigurationChart extends AppCompatActivity {
         int reportsMissing = response.getInt("reports_missing");
         int notification = response.getInt("disabled_hosts");
 
+        text.setText(activeHosts*100/totalHosts + "%  Active");
+
         int data[] = {activeHosts, badHosts, okHosts, pendingHosts, outOfSyncHosts, reportsMissing, notification};
 
         CategorySeries distributionSeries = new CategorySeries("PieChart");
@@ -117,7 +107,7 @@ public class HostConfigurationChart extends AppCompatActivity {
             seriesRenderer.setColor(COLOR[i]);
             seriesRenderer.setDisplayBoundingPoints(true);
 
-            defaultRenderer.setLabelsTextSize(30f);
+            defaultRenderer.setLabelsTextSize(40f);
             defaultRenderer.setLegendTextSize(50f);
             defaultRenderer.setApplyBackgroundColor(false);
             defaultRenderer.addSeriesRenderer(seriesRenderer);
