@@ -89,10 +89,19 @@ public class HostConfigurationChart extends AppCompatActivity {
         int outOfSyncHosts = response.getInt("out_of_sync_hosts");
         int reportsMissing = response.getInt("reports_missing");
         int notification = response.getInt("disabled_hosts");
-
-        text.setText(activeHosts*100/totalHosts + "%  Active");
-
         int data[] = {activeHosts, badHosts, okHosts, pendingHosts, outOfSyncHosts, reportsMissing, notification};
+
+        String display = labels[0];
+        int max = data[0];
+        for(int i=1;i<7;i++){
+            if(max < data[i]){
+                max = data[i];
+                display = labels[i];
+            }
+        }
+        text.setText(max*100/totalHosts + "%  " + display);
+
+
 
         CategorySeries distributionSeries = new CategorySeries("PieChart");
 
