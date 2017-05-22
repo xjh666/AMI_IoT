@@ -27,12 +27,12 @@ import java.util.Map;
 
 public class MainInterface extends AppCompatActivity {
     String api;
-    String title;
+    String title = "Host Configuration Chart";
     int request = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("");
+        setTitle("Dashboard");
         setContentView(R.layout.main_interface);
         sendRequest(request);
     }
