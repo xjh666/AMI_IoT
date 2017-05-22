@@ -46,6 +46,7 @@ public class MainInterface extends AppCompatActivity {
 
     public void showHostConfigurationStatus(View view){
         request = 1;
+        title = "Host Configuration Status";
         sendRequest(request);
     }
 
@@ -71,20 +72,21 @@ public class MainInterface extends AppCompatActivity {
 
     private void sendRequest(int request) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        final int drawChart;
+        final int methodToImplement;
         switch(request) {
             case 1:
-                drawChart = 2;
+                methodToImplement = 1;
+                api = "api/dashboard";
                 break;
             case 2:
-                drawChart = 2;
+                methodToImplement = 2;
                 api = "api/dashboard";
                 break;
             case 3:
-                drawChart = 2;
+                methodToImplement = 2;
                 break;
             default:
-                drawChart = 2;
+                methodToImplement = 2;
                 break;
         }
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -92,8 +94,9 @@ public class MainInterface extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            switch(drawChart) {
+                            switch(methodToImplement) {
                                 case 1:
+                                    createStatusList(response);
                                     break;
                                 case 2:
                                     drawPieChart(response);
@@ -127,7 +130,19 @@ public class MainInterface extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
+    private void createStatusList(JSONObject response) throws JSONException {
+        int totalHosts = response.getInt("total_hosts");
+        int activeHosts = response.getInt("active_hosts");
+        int badHosts = response.getInt("bad_hosts");
+        int okHosts = response.getInt("ok_hosts");
+        int pendingHosts = response.getInt("pending_hosts");
+        int outOfSyncHosts = response.getInt("out_of_sync_hosts");
+        int reportsMissing = response.getInt("reports_missing");
+        int notification = response.getInt("disabled_hosts");
 
+        LinearLayout layout = (LinearLayout) findViewById(R.id.chart_container);
+        layout.removeAllViews();
+    }
     private void drawPieChart(JSONObject response) throws JSONException {
         int COLOR[] = {0xFF4572A7, 0xFFAA4643, 0xFF89A541, 0xFF80699B, 0xFF3D96AE, 0xFFDB843D, 0xFF92A8CD};
         String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
