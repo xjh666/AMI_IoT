@@ -4,7 +4,7 @@ package com.example.foremanproject;
  * Created by labuser on 5/17/2017.
  */
 
-class SendRequest {
+class UserInfo {
     private static String url;
     private static String username;
     private static String password;

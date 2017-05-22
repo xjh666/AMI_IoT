@@ -88,7 +88,7 @@ public class MainInterface extends AppCompatActivity {
                 break;
         }
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (SendRequest.getUrl() + api), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -118,7 +118,7 @@ public class MainInterface extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(SendRequest.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }

@@ -68,9 +68,9 @@ public class LoginInterface extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
-                            SendRequest.setUrl(urlEdit.getText().toString());
-                            SendRequest.setUsername(userNameEdit.getText().toString());
-                            SendRequest.setPassword(passwordEdit.getText().toString());
+                            UserInfo.setUrl(urlEdit.getText().toString());
+                            UserInfo.setUsername(userNameEdit.getText().toString());
+                            UserInfo.setPassword(passwordEdit.getText().toString());
                             startActivity(intent);
                         }
                     }, new Response.ErrorListener() {
