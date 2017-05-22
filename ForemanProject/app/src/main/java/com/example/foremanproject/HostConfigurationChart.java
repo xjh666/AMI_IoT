@@ -55,7 +55,7 @@ public class HostConfigurationChart extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            drawChart(response);
+                            drawPieChart(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -80,7 +80,7 @@ public class HostConfigurationChart extends AppCompatActivity {
     }
 
 
-    private void drawChart(JSONObject response) throws JSONException {
+    private void drawPieChart(JSONObject response) throws JSONException {
         int totalHosts = response.getInt("total_hosts");
         int activeHosts = response.getInt("active_hosts");
         int badHosts = response.getInt("bad_hosts");
