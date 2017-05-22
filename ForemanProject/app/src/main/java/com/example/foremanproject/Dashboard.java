@@ -1,6 +1,7 @@
 package com.example.foremanproject;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -26,30 +27,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dashboard extends AppCompatActivity {
+    private Handler mHandler;
+    private int mInterval = 30000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Dashboard");
-        setContentView(R.layout.main_interface_1);
-        sendRequest();
+        setContentView(R.layout.main_interface);
+        mHandler = new Handler();
+
+        startRepeatingTask();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRepeatingTask();
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            sendRequest();
+            mHandler.postDelayed(mStatusChecker, mInterval);
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
+
     public void showAllHosts(View view){
     }
 
     public void showHostGroups(View view){
     }
-
-//    public void showHostConfigurationStatus(View view){
-//    }
-//
-//    public void showHostConfigurationChart(View view){
-//    }
-//
-//    public void showRunDistribution(View view){
-//    }
-//
-//    public void showLatestEvents(View view){
-//    }
 
     public void refresh(View view){
         sendRequest();
