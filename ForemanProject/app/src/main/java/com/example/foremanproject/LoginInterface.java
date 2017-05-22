@@ -34,7 +34,7 @@ public class LoginInterface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         NukeSSLCerts.nuke();
         setTitle("Welcome to Foreman");
-        setContentView(R.layout.activity_login_interface);
+        setContentView(R.layout.login_page);
 
         button = (Button)findViewById(R.id.button);
         urlEdit   = (EditText)findViewById(R.id.URL);

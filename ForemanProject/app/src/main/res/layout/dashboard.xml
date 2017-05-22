@@ -264,15 +264,35 @@
 
             </TableLayout>
 
-            <TableLayout
+            <TextView
+                android:id="@+id/textView28"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Run distribution in the last 30 min"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="23sp"
+                android:textStyle="bold|italic" />
 
-            </TableLayout>
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Latest Event"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="26sp"
+                android:textStyle="bold|italic" />
 
         </LinearLayout>
     </ScrollView>

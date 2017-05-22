@@ -20,6 +20,7 @@ import org.achartengine.ChartFactory;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Dashboard");
-        setContentView(R.layout.main_interface);
+        setContentView(R.layout.dashboard);
         mHandler = new Handler();
 
         startRepeatingTask();
@@ -48,7 +49,7 @@ public class Dashboard extends AppCompatActivity {
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
-            sendRequest();
+            sendRequestForConfigChartAndStatus();
             mHandler.postDelayed(mStatusChecker, mInterval);
         }
     };
@@ -68,19 +69,19 @@ public class Dashboard extends AppCompatActivity {
     }
 
     public void refresh(View view){
-        sendRequest();
+        sendRequestForConfigChartAndStatus();
+        sendRequestForTimeAndEvent();
     }
 
-    private void sendRequest() {
+    private void sendRequestForTimeAndEvent(){
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/dashboard"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                                    getInfo(response);
-
+                            getInfoForTimeAndEvent(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -104,7 +105,49 @@ public class Dashboard extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-    private void getInfo(JSONObject response) throws JSONException {
+    private void getInfoForTimeAndEvent(JSONObject response) throws JSONException{
+        JSONArray result = sort((JSONArray)response.get("results"));
+        System.out.println(result.length());
+    }
+
+    private JSONArray sort(JSONArray arr){
+
+        return arr;
+    }
+
+    private void sendRequestForConfigChartAndStatus() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, (UserInfo.getUrl() + "api/dashboard"), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            getInfoForConfigChartAndStatus(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
+
+    private void getInfoForConfigChartAndStatus(JSONObject response) throws JSONException {
         String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
 
         int totalHosts = response.getInt("total_hosts");
