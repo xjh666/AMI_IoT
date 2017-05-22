@@ -23,13 +23,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginInterface" />
         </activity>
-        <activity android:name=".HostConfigurationChart"
-            android:parentActivityName=".MainInterface" >
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainInterface" />
-        </activity>
     </application>
 
 </manifest>
