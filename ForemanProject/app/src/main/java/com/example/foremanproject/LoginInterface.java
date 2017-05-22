@@ -44,7 +44,7 @@ public class LoginInterface extends AppCompatActivity {
 
     public void Login(View view) throws AuthFailureError {
         String url = urlEdit.getText().toString();
-        final Intent intent = new Intent(this, MainInterface.class);
+        final Intent intent = new Intent(this, Dashboard.class);
 
         if(url.equals(""))
             Toast.makeText(LoginInterface.this, "Please Enter url", Toast.LENGTH_LONG).show();

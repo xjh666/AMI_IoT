@@ -25,88 +25,46 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainInterface extends AppCompatActivity {
-    String api;
-    String title = "Host Configuration Chart";
-    int request = 2;
+public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Dashboard");
-        setContentView(R.layout.main_interface);
-        sendRequest(request);
+        setContentView(R.layout.main_interface_1);
+        sendRequest();
     }
     public void showAllHosts(View view){
-
     }
 
     public void showHostGroups(View view){
-
     }
 
-    public void showHostConfigurationStatus(View view){
-        request = 1;
-        title = "Host Configuration Status";
-        sendRequest(request);
-    }
-
-    public void showHostConfigurationChart(View view){
-        request = 2;
-        title = "Host Configuration Chart";
-        sendRequest(request);
-    }
-
-    public void showRunDistribution(View view){
-        request = 3;
-        sendRequest(request);
-    }
-
-    public void showLatestEvents(View view){
-        request = 4;
-        sendRequest(request);
-    }
+//    public void showHostConfigurationStatus(View view){
+//    }
+//
+//    public void showHostConfigurationChart(View view){
+//    }
+//
+//    public void showRunDistribution(View view){
+//    }
+//
+//    public void showLatestEvents(View view){
+//    }
 
     public void refresh(View view){
-        sendRequest(request);
+        sendRequest();
     }
 
-    private void sendRequest(int request) {
+    private void sendRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        final int methodToImplement;
-        switch(request) {
-            case 1:
-                methodToImplement = 1;
-                api = "api/dashboard";
-                break;
-            case 2:
-                methodToImplement = 2;
-                api = "api/dashboard";
-                break;
-            case 3:
-                methodToImplement = 2;
-                break;
-            default:
-                methodToImplement = 2;
-                break;
-        }
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "api/dashboard"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            switch(methodToImplement) {
-                                case 1:
-                                    createStatusList(response);
-                                    break;
-                                case 2:
-                                    drawPieChart(response);
-                                    break;
-                                case 3:
-                                    break;
-                                case 4:
-                                    break;
-                            }
-                            drawPieChart(response);
+                                    getInfo(response);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -130,49 +88,63 @@ public class MainInterface extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-    private void createStatusList(JSONObject response) throws JSONException {
-        int totalHosts = response.getInt("total_hosts");
-        int activeHosts = response.getInt("active_hosts");
-        int badHosts = response.getInt("bad_hosts");
-        int okHosts = response.getInt("ok_hosts");
-        int pendingHosts = response.getInt("pending_hosts");
-        int outOfSyncHosts = response.getInt("out_of_sync_hosts");
-        int reportsMissing = response.getInt("reports_missing");
-        int notification = response.getInt("disabled_hosts");
-
-        LinearLayout layout = (LinearLayout) findViewById(R.id.chart_container);
-        layout.removeAllViews();
-    }
-    private void drawPieChart(JSONObject response) throws JSONException {
-        int COLOR[] = {0xFF4572A7, 0xFFAA4643, 0xFF89A541, 0xFF80699B, 0xFF3D96AE, 0xFFDB843D, 0xFF92A8CD};
+    private void getInfo(JSONObject response) throws JSONException {
         String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
 
         int totalHosts = response.getInt("total_hosts");
-        int activeHosts = response.getInt("active_hosts");
-        int badHosts = response.getInt("bad_hosts");
-        int okHosts = response.getInt("ok_hosts");
-        int pendingHosts = response.getInt("pending_hosts");
-        int outOfSyncHosts = response.getInt("out_of_sync_hosts");
-        int reportsMissing = response.getInt("reports_missing");
-        int notification = response.getInt("disabled_hosts");
-        int data[] = {activeHosts, badHosts, okHosts, pendingHosts, outOfSyncHosts, reportsMissing, notification};
+        int data[] = {  response.getInt("active_hosts"),
+                        response.getInt("bad_hosts"),
+                        response.getInt("ok_hosts"),
+                        response.getInt("pending_hosts"),
+                        response.getInt("out_of_sync_hosts"),
+                        response.getInt("reports_missing"),
+                        response.getInt("disabled_hosts")};
 
         String display = labels[0];
         int max = data[0];
-        for(int i=1;i<7;i++){
-            if(max < data[i]){
+        for(int i=1;i<7;i++) {
+            if (max < data[i]) {
                 max = data[i];
                 display = labels[i];
             }
         }
-        TextView text = (TextView) findViewById(R.id.ActivePercentage);
-        text.setText(max*100/totalHosts + "%  " + display);
 
-        TextView titleText = (TextView) findViewById(R.id.title);
-        titleText.setText(title);
+        setText(totalHosts, data, (max*100/totalHosts + "%  " + display));
+        drawPieChart(labels,data);
+    }
 
+    private void setText(int totalHost, int[] data, String percentage){
+        TextView total = (TextView) findViewById(R.id.totalHost);
+        total.setText(totalHost + "");
+
+        TextView active = (TextView) findViewById(R.id.activeHost);
+        active.setText(data[0] + "");
+
+        TextView bad = (TextView) findViewById(R.id.badHost);
+        bad.setText(data[1] + "");
+
+        TextView ok = (TextView) findViewById(R.id.okHost);
+        ok.setText(data[2] + "");
+
+        TextView pending = (TextView) findViewById(R.id.pendingHost);
+        pending.setText(data[3] + "");
+
+        TextView outOfSync = (TextView) findViewById(R.id.outOfSyncHost);
+        outOfSync.setText(data[4] + "");
+
+        TextView miss = (TextView) findViewById(R.id.reportMissing);
+        miss.setText(data[5] + "");
+
+        TextView disabled = (TextView) findViewById(R.id.disabledHost);
+        disabled.setText(data[6] + "");
+
+        TextView percent = (TextView) findViewById(R.id.percentage);
+        percent.setText(percentage);
+    }
+
+    private void drawPieChart(String[] labels, int[] data){
+        int COLOR[] = {0xFF4572A7, 0xFFAA4643, 0xFF89A541, 0xFF80699B, 0xFF3D96AE, 0xFFDB843D, 0xFF92A8CD};
         CategorySeries distributionSeries = new CategorySeries("PieChart");
-
         for(int i=0;i<7;i++) {
             if(data[i] == 0) continue;
             distributionSeries.add(labels[i], data[i]);
@@ -200,3 +172,6 @@ public class MainInterface extends AppCompatActivity {
         chartContainer.addView(mChart);
     }
 }
+
+
+
