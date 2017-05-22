@@ -9,35 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button14"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:background="@drawable/my_nine_patch"
-            android:text="All Host"
-            android:layout_weight="0.42" />
-
-        <Button
-            android:id="@+id/button13"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/my_nine_patch"
-            android:text="Host Groups" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.23"
-            android:text="    " />
-
-        <Button
-            android:id="@+id/refresh"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="@drawable/refresh_icon"
-            android:onClick="refresh" />
     </LinearLayout>
 
     <ScrollView
@@ -49,11 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:weightSum="1">
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textView23"
