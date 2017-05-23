@@ -1,4 +1,4 @@
-package com.example.foremanproject;
+package com.example.foremanproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +16,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.foremanproject.other.NukeSSLCerts;
+import com.example.foremanproject.R;
+import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginInterface extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     Button button;
     EditText urlEdit;
@@ -34,7 +37,7 @@ public class LoginInterface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         NukeSSLCerts.nuke();
         setTitle("Welcome to Foreman");
-        setContentView(R.layout.login_page);
+        setContentView(R.layout.activity_login);
 
         button = (Button)findViewById(R.id.button);
         urlEdit   = (EditText)findViewById(R.id.URL);
@@ -47,13 +50,13 @@ public class LoginInterface extends AppCompatActivity {
         final Intent intent = new Intent(this, Dashboard.class);
 
         if(url.equals(""))
-            Toast.makeText(LoginInterface.this, "Please Enter url", Toast.LENGTH_LONG).show();
+            Toast.makeText(Login.this, "Please Enter url", Toast.LENGTH_LONG).show();
 
         else if(userNameEdit.getText().toString().equals(""))
-            Toast.makeText(LoginInterface.this, "Please Enter Username", Toast.LENGTH_LONG).show();
+            Toast.makeText(Login.this, "Please Enter Username", Toast.LENGTH_LONG).show();
 
         else if(passwordEdit.getText().toString().equals(""))
-            Toast.makeText(LoginInterface.this, "Please Enter Password", Toast.LENGTH_LONG).show();
+            Toast.makeText(Login.this, "Please Enter Password", Toast.LENGTH_LONG).show();
 
         else {
             // Instantiate the RequestQueue.
@@ -67,7 +70,7 @@ public class LoginInterface extends AppCompatActivity {
                     (Request.Method.GET, url + "api/common_parameters", null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Toast.makeText(LoginInterface.this, "Successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login.this, "Successful", Toast.LENGTH_LONG).show();
                             UserInfo.setUrl(urlEdit.getText().toString());
                             UserInfo.setUsername(userNameEdit.getText().toString());
                             UserInfo.setPassword(passwordEdit.getText().toString());
@@ -76,7 +79,7 @@ public class LoginInterface extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(LoginInterface.this, "Incorrect url/Username/Password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login.this, "Incorrect url/Username/Password", Toast.LENGTH_LONG).show();
                         }
                     }){
                     @Override

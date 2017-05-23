@@ -1,4 +1,4 @@
-package com.example.foremanproject;
+package com.example.foremanproject.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.foremanproject.R;
+import com.example.foremanproject.other.UserInfo;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.model.CategorySeries;
@@ -34,7 +36,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Dashboard");
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.activity_dashboard);
         mHandler = new Handler();
 
         startRepeatingTask();
@@ -107,7 +109,6 @@ public class Dashboard extends AppCompatActivity {
 
     private void getInfoForTimeAndEvent(JSONObject response) throws JSONException{
         JSONArray result = sort((JSONArray)response.get("results"));
-        System.out.println(result.length());
     }
 
     private JSONArray sort(JSONArray arr){

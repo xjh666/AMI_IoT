@@ -1,15 +1,15 @@
-package com.example.foremanproject;
+package com.example.foremanproject.other;
 
 /**
  * Created by labuser on 5/17/2017.
  */
 
-class UserInfo {
+public class UserInfo {
     private static String url;
     private static String username;
     private static String password;
 
-    static void setUrl(String newUrl) {
+    public static void setUrl(String newUrl) {
         url = newUrl;
         if(!url.substring(0,4).equals("https"))
             url = "https://" + url;
