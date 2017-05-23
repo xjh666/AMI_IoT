@@ -1,10 +1,14 @@
-package com.example.foremanproject.activity;
+package com.example.foremanproject.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,17 +33,23 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends Fragment {
     private Handler mHandler;
     private int mInterval = 30000;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle("Dashboard");
-        setContentView(R.layout.activity_dashboard);
-        mHandler = new Handler();
 
+    public static Dashboard newInstance() {
+        return new Dashboard();
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.dashboard, container, false);
+        mHandler = new Handler();
         startRepeatingTask();
+        final Activity activity = getActivity();;
+        return view;
     }
 
     @Override
@@ -70,13 +80,13 @@ public class Dashboard extends AppCompatActivity {
     public void showHostGroups(View view){
     }
 
-    public void refresh(View view){
+    public void refresh(){
         sendRequestForConfigChartAndStatus();
         sendRequestForTimeAndEvent();
     }
 
     private void sendRequestForTimeAndEvent(){
-        RequestQueue queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
@@ -116,7 +126,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void sendRequestForConfigChartAndStatus() {
-        RequestQueue queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, (UserInfo.getUrl() + "api/dashboard"), null, new Response.Listener<JSONObject>() {
@@ -173,31 +183,31 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void setText(int totalHost, int[] data, String percentage){
-        TextView total = (TextView) findViewById(R.id.totalHost);
+        TextView total = (TextView) getView().findViewById(R.id.totalHost);
         total.setText(totalHost + "");
 
-        TextView active = (TextView) findViewById(R.id.activeHost);
+        TextView active = (TextView) getView().findViewById(R.id.activeHost);
         active.setText(data[0] + "");
 
-        TextView bad = (TextView) findViewById(R.id.badHost);
+        TextView bad = (TextView) getView().findViewById(R.id.badHost);
         bad.setText(data[1] + "");
 
-        TextView ok = (TextView) findViewById(R.id.okHost);
+        TextView ok = (TextView) getView().findViewById(R.id.okHost);
         ok.setText(data[2] + "");
 
-        TextView pending = (TextView) findViewById(R.id.pendingHost);
+        TextView pending = (TextView) getView().findViewById(R.id.pendingHost);
         pending.setText(data[3] + "");
 
-        TextView outOfSync = (TextView) findViewById(R.id.outOfSyncHost);
+        TextView outOfSync = (TextView) getView().findViewById(R.id.outOfSyncHost);
         outOfSync.setText(data[4] + "");
 
-        TextView miss = (TextView) findViewById(R.id.reportMissing);
+        TextView miss = (TextView) getView().findViewById(R.id.reportMissing);
         miss.setText(data[5] + "");
 
-        TextView disabled = (TextView) findViewById(R.id.disabledHost);
+        TextView disabled = (TextView) getView().findViewById(R.id.disabledHost);
         disabled.setText(data[6] + "");
 
-        TextView percent = (TextView) findViewById(R.id.percentage);
+        TextView percent = (TextView) getView().findViewById(R.id.percentage);
         percent.setText(percentage);
     }
 
@@ -221,14 +231,19 @@ public class Dashboard extends AppCompatActivity {
             defaultRenderer.addSeriesRenderer(seriesRenderer);
         }
         defaultRenderer.setZoomButtonsVisible(false);
-        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
+        LinearLayout chartContainer = (LinearLayout) getView().findViewById(R.id.chart_container);
         // remove any views before u paint the chart
         chartContainer.removeAllViews();
         // drawing pie chart
-        View mChart = ChartFactory.getPieChartView(getBaseContext(),
+        View mChart = ChartFactory.getPieChartView(getActivity(),
                 distributionSeries, defaultRenderer);
         // adding the view to the linearlayout
         chartContainer.addView(mChart);
+    }
+
+    public interface OnDashboardSelected {
+        void OnDashboardSelected(int imageResId, String name,
+                                 String description, String url);
     }
 }
 
