@@ -41,7 +41,6 @@ public class Dashboard extends Fragment {
         return new Dashboard();
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class Dashboard extends Fragment {
         super.onDestroy();
         stopRepeatingTask();
     }
-
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
@@ -65,11 +63,9 @@ public class Dashboard extends Fragment {
             mHandler.postDelayed(mStatusChecker, mInterval);
         }
     };
-
     void startRepeatingTask() {
         mStatusChecker.run();
     }
-
     void stopRepeatingTask() {
         mHandler.removeCallbacks(mStatusChecker);
     }

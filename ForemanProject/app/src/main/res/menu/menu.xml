@@ -5,9 +5,6 @@
 
     <!-- Settings, should always be in the overflow -->
     <item
-        android:id="@+id/refresh"
-        android:title="Refresh" />
-    <item
         android:id="@+id/logout"
         android:title="Log out"
         app:showAsAction="never" />

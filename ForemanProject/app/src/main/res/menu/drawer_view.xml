@@ -1,0 +1,16 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard_fragment"
+            android:checked="true"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_allhost_fragment"
+            android:title="All Hosts" />
+        <item
+        android:id="@+id/nav_hostgroup_fragment"
+        android:title="Host Groups" />
+    </group>
+</menu>
