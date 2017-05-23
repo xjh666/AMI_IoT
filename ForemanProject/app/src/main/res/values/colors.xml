@@ -5,6 +5,7 @@
     <color name="colorAccent">#f9fcf1</color>
 
     <color name="colorBackground">#004058</color>
+    <color name="colorBackgroundApp">#ffffff</color>
     <color name="colorHostsThatHadPerformedModificationsWithoutError">#4572a7</color>
     <color name="colorHostsInErrorState">#aa4343</color>
     <color name="colorGoodHostReportsInTheLast35Minutes">#89a54e</color>

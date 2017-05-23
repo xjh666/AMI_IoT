@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:text="Host Configuration Chart"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_bright"
+                android:textColor="@android:color/black"
                 android:textSize="26sp"
                 android:textStyle="bold|italic" />
 
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="Host Configuration Status"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_bright"
+                android:textColor="@android:color/background_dark"
                 android:textSize="26sp"
                 android:textStyle="bold|italic" />
 
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Total Hosts"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@android:color/background_dark"
                         android:textSize="20sp" />
 
                     <TextView
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@android:color/background_dark"
                         android:textSize="25sp" />
                 </TableRow>
 
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:text="Run distribution in the last 30 min"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_bright"
+                android:textColor="@android:color/black"
                 android:textSize="23sp"
                 android:textStyle="bold|italic" />
 
@@ -249,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:text="Latest Event"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_bright"
+                android:textColor="@android:color/black"
                 android:textSize="26sp"
                 android:textStyle="bold|italic" />
 

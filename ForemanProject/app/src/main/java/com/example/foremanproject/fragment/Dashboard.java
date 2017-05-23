@@ -222,6 +222,7 @@ public class Dashboard extends Fragment {
             seriesRenderer.setDisplayBoundingPoints(true);
 
             defaultRenderer.setLabelsTextSize(40f);
+            defaultRenderer.setLabelsColor(0xff000000);
             defaultRenderer.setLegendTextSize(50f);
             defaultRenderer.setApplyBackgroundColor(false);
             defaultRenderer.addSeriesRenderer(seriesRenderer);
