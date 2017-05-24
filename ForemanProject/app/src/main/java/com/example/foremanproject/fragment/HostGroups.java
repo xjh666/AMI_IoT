@@ -1,6 +1,5 @@
 package com.example.foremanproject.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,16 +28,20 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AllHosts extends Fragment {
+/**
+ * Created by labuser on 5/24/2017.
+ */
+
+public class HostGroups extends Fragment {
     public static AllHosts newInstance() {
         return new AllHosts();
     }
-    LinearLayout totalList;
+    LinearLayout grouplist;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.all_hosts, container, false);
+        View view=inflater.inflate(R.layout.host_group, container, false);
         sendRequest();
         return view;
     }
@@ -47,7 +50,7 @@ public class AllHosts extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "api/hostgroups"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -77,27 +80,34 @@ public class AllHosts extends Fragment {
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = (JSONArray) response.get("results");
-        totalList = (LinearLayout) getView().findViewById(R.id.totallist);
+        grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
 
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
-            totalList.addView(linearlayout);
+            grouplist.addView(linearlayout);
 
             TextView textView = new TextView(getActivity());
             textView.setText((String) obj.get("name"));
-            textView.setTextSize(22);
+            textView.setTextSize(16);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-            Button button = new Button(getActivity());
-            button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
-            button.setText("Edit");
-            button.setTag(obj.get("name"));
-            button.setBackground(getResources().getDrawable(R.drawable.button_icon));
-            linearlayout.addView(textView);
-            linearlayout.addView(button);
 
-            totalList.addView(new LinearLayout(getActivity()));
+            Button button1 = new Button(getActivity());
+            button1.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+            button1.setText("All");
+            button1.setTag(obj.get("name") + "showall");
+
+            Button button2 = new Button(getActivity());
+            button2.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+            button2.setText("EDIT");
+            button2.setTag(obj.get("name") + "edit");
+
+            linearlayout.addView(textView);
+            linearlayout.addView(button1);
+            linearlayout.addView(button2);
+
+            grouplist.addView(new LinearLayout(getActivity()));
         }
     }
 }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.example.foremanproject.R;
 import com.example.foremanproject.fragment.AllHosts;
 import com.example.foremanproject.fragment.Dashboard;
+import com.example.foremanproject.fragment.HostGroups;
 
 /**
  * Created by labuser on 5/23/2017.
@@ -120,9 +121,9 @@ public class BasicActivity extends AppCompatActivity {
             case R.id.nav_allhost_fragment:
                 fragmentClass = AllHosts.class;
                 break;
-//            case R.id.nav_third_fragment:
-//                fragmentClass = ThirdFragment.class;
-//                break;
+            case R.id.nav_hostgroup_fragment:
+                fragmentClass = HostGroups.class;
+                break;
             default:
                 fragmentClass = Dashboard.class;
         }
