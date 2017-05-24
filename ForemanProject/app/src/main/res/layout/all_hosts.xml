@@ -7,37 +7,14 @@
     android:orientation="vertical"
     tools:context="com.example.foremanproject.fragment.AllHosts">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView52"
-            android:layout_width="291dp"
-            android:layout_height="wrap_content"
-            android:text="Display 25 entries - 2 selected"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/Action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Action"
-            android:textColor="@color/colorAccent" />
-
-        <Spinner
-            android:id="@+id/spinner5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/arrow_down_float"
-            android:popupBackground="@android:drawable/spinner_background"
-            android:spinnerMode="dialog"
-            android:visibility="visible" />
-
-    </LinearLayout>
+        android:text="Display 25 entries - 2 selected"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -55,6 +32,7 @@
 
                 <CheckBox
                     android:id="@+id/checkBox"
+                    style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -64,142 +42,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.50"
                     android:text="puppet.ami-lab.org"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@android:color/black"
                     android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="73dp"
                     android:layout_height="37dp"
+                    android:background="@drawable/my_nine_patch"
                     android:text="Edit" />
 
             </LinearLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Configuration"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     No Change"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Operating System"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Ubuntu 16.04.2 LTS"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Environment"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     production"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Model"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Standard  PC( i440FX + PIIX, 1996)"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Host Group"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="    "
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Report"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     14 minutes ago"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-            </TableLayout>
 
             <TextView
                 android:id="@+id/textView49"
@@ -223,141 +76,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.50"
                     android:text="raspberrypi01"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@android:color/black"
                     android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="73dp"
                     android:layout_height="37dp"
+                    android:background="@drawable/my_nine_patch"
                     android:text="Edit" />
 
             </LinearLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Configuration"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Active"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Operating System"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Raspbian 8.0"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Environment"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     production"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Model"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Host Group"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     AMI Testbed"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Report"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     7 minutes ago"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-            </TableLayout>
 
             <TextView
                 android:id="@+id/textView45"
@@ -381,141 +110,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.50"
                     android:text="raspberrypi02"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@android:color/black"
                     android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="73dp"
                     android:layout_height="37dp"
+                    android:background="@drawable/my_nine_patch"
                     android:text="Edit" />
 
             </LinearLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Configuration"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Active"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Operating System"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Raspbian 8.0"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Environment"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     production"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Model"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Host Group"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     AMI Testbed"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Report"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     15 minutes ago"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-            </TableLayout>
 
             <TextView
                 android:id="@+id/textView43"
@@ -528,8 +133,8 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/checkBox"
+                <RadioButton
+                    android:id="@+id/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -539,141 +144,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.50"
                     android:text="raspberrypi03"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@android:color/black"
                     android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="73dp"
                     android:layout_height="37dp"
+                    android:background="@drawable/my_nine_patch"
                     android:text="Edit" />
 
             </LinearLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Configuration"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Active"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Operating System"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     Raspbian 8.0"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Environment"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     production"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Model"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Host Group"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     AMI Testbed"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Report"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="     15 minutes ago"
-                        android:textColor="@color/colorAccent" />
-                </TableRow>
-
-            </TableLayout>
 
             <TextView
                 android:id="@+id/textView50"
