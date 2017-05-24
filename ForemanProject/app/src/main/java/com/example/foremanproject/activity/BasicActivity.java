@@ -29,6 +29,8 @@ public class BasicActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    public static int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

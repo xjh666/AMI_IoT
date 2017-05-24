@@ -1,9 +1,8 @@
 package com.example.foremanproject.fragment;
 
-
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
+import com.example.foremanproject.activity.BasicActivity;
 import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONArray;
@@ -29,10 +29,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AllHosts extends Fragment  {
-    public static AllHosts newInstance() {
-        return new AllHosts();
-    }
+/**
+ * Created by Xie Jihui on 5/24/2017.
+ */
+
+public class HostsOfAHostGroup extends Fragment{
+    public static HostsOfAHostGroup newInstance() {return new HostsOfAHostGroup(); }
     LinearLayout totalList;
 
     @Nullable
@@ -47,7 +49,7 @@ public class AllHosts extends Fragment  {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "/api/hostgroups/" + BasicActivity.id + "/hosts"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
