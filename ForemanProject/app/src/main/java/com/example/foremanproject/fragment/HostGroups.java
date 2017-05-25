@@ -89,7 +89,7 @@ public class HostGroups extends Fragment {
             grouplist.addView(linearlayout);
 
             TextView textView = new TextView(getActivity());
-            textView.setText((String) obj.get("name"));
+            textView.setText(" " + (String) obj.get("name"));
             textView.setTextSize(16);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
 
@@ -173,9 +173,11 @@ public class HostGroups extends Fragment {
     }
 
     private void selectInstruction(int id, String tag, String name) throws IllegalAccessException, java.lang.InstantiationException {
-        HostsOfAHostGroup.setAPI(id);
-        HostsOfAHostGroup.setPageTitle(name);
         if (tag.equals("s")) {
+            HostsOfAHostGroup.setAPI(id);
+            HostsOfAHostGroup.setPageTitle(name);
+            startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
+        } else {
             startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         }
     }

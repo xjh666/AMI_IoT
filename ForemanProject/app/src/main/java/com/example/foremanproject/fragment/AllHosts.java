@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -85,15 +86,24 @@ public class AllHosts extends Fragment  {
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
             totalList.addView(linearlayout);
 
+            ImageView imageView = new ImageView(getActivity());
+            if(obj.get("configuration_status") == (Object)1 || obj.get("configuration_status") == (Object) 0)
+                imageView.setImageResource(R.drawable.ok_icon);
+            else imageView.setImageResource(R.drawable.exclamation_icon);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 160));
+
             TextView textView = new TextView(getActivity());
-            textView.setText((String) obj.get("name"));
+            textView.setText(" " + (String) obj.get("name"));
             textView.setTextSize(22);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+
             Button button = new Button(getActivity());
             button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
             button.setText("Edit");
             button.setTag(obj.get("name"));
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
+
+            linearlayout.addView(imageView);
             linearlayout.addView(textView);
             linearlayout.addView(button);
 
