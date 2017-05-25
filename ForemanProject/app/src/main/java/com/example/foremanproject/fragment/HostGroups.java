@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
 import com.example.foremanproject.activity.HostsOfAHostGroup;
+import com.example.foremanproject.activity.Parameters;
 import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONArray;
@@ -178,7 +179,7 @@ public class HostGroups extends Fragment {
             HostsOfAHostGroup.setPageTitle(name);
             startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         } else {
-            startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
+            startActivity(new Intent(getActivity(), Parameters.class));
         }
     }
 }
