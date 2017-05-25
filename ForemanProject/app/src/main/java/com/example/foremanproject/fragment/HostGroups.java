@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -96,16 +97,25 @@ public class HostGroups extends Fragment {
             final Button button1 = new Button(getActivity());
             button1.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
             button1.setText("All");
-            button1.setId(i*2);
             button1.setTag(obj.get("name") + "s");
+            button1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), (String) button1.getTag(), Toast.LENGTH_LONG).show();
+                    sendRequestForID((String) button1.getTag());
+                }
+            });
 
 
             final Button button2 = new Button(getActivity());
             button2.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
             button2.setText("EDIT");
-            button1.setId(i*2+1);
             button2.setTag(obj.get("name") + "e");
-
+            button2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), (String) button2.getTag(), Toast.LENGTH_LONG).show();
+                    sendRequestForID((String) button2.getTag());
+                }
+            });
             linearlayout.addView(textView);
             linearlayout.addView(button1);
             linearlayout.addView(button2);
@@ -152,9 +162,12 @@ public class HostGroups extends Fragment {
 
     private void getID(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
         JSONArray arr = (JSONArray) response.get("results");
+        String name = tag.substring(0,tag.length()-2);
+        Toast.makeText(getActivity(), name, Toast.LENGTH_LONG).show();
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
-            if(obj.get("name").equals(tag.substring(0,tag.length()-2))){
+            String objName = (String)obj.get("name");
+            if(objName.equals(name)){
                 selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1));
                 break;
             }
