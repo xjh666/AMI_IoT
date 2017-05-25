@@ -16,7 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BasicActivity" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activity.BasicActivity" android:theme="@style/BasicActivityTheme"></activity>
+        <activity android:name=".activity.HostsOfAHostGroup" android:theme="@style/SecondActivityTheme"
+            android:parentActivityName="com.example.foremanproject.activity.BasicActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.foremanproject.activity.BasicActivity" />
+        </activity>
     </application>
 
 </manifest>

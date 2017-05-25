@@ -1,9 +1,9 @@
 package com.example.foremanproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
-import com.example.foremanproject.activity.BasicActivity;
+import com.example.foremanproject.activity.HostsOfAHostGroup;
 import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONArray;
@@ -95,24 +94,24 @@ public class HostGroups extends Fragment {
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
 
             final Button button1 = new Button(getActivity());
-            button1.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+            button1.setLayoutParams(new LinearLayout.LayoutParams(180, 140));
             button1.setText("All");
             button1.setTag(obj.get("name") + "s");
+            button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), (String) button1.getTag(), Toast.LENGTH_LONG).show();
                     sendRequestForID((String) button1.getTag());
                 }
             });
 
 
             final Button button2 = new Button(getActivity());
-            button2.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+            button2.setLayoutParams(new LinearLayout.LayoutParams(180, 140));
             button2.setText("EDIT");
             button2.setTag(obj.get("name") + "e");
+            button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), (String) button2.getTag(), Toast.LENGTH_LONG).show();
                     sendRequestForID((String) button2.getTag());
                 }
             });
@@ -162,26 +161,22 @@ public class HostGroups extends Fragment {
 
     private void getID(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
         JSONArray arr = (JSONArray) response.get("results");
-        String name = tag.substring(0,tag.length()-2);
-        Toast.makeText(getActivity(), name, Toast.LENGTH_LONG).show();
+        String name = tag.substring(0,tag.length()-1);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
             String objName = (String)obj.get("name");
             if(objName.equals(name)){
-                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1));
+                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),objName);
                 break;
             }
         }
     }
 
-    private void selectInstruction(int id, String tag) throws IllegalAccessException, java.lang.InstantiationException {
-        Class fragmentClass = null;
-        BasicActivity.id = id;
-        if(tag.equals("s")){
-            fragmentClass = HostsOfAHostGroup.class;
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+    private void selectInstruction(int id, String tag, String name) throws IllegalAccessException, java.lang.InstantiationException {
+        HostsOfAHostGroup.setAPI(id);
+        HostsOfAHostGroup.setPageTitle(name);
+        if (tag.equals("s")) {
+            startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         }
     }
 }

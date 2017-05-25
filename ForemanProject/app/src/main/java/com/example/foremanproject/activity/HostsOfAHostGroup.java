@@ -1,11 +1,8 @@
-package com.example.foremanproject.fragment;
+package com.example.foremanproject.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,7 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
-import com.example.foremanproject.activity.BasicActivity;
 import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONArray;
@@ -33,23 +29,24 @@ import java.util.Map;
  * Created by Xie Jihui on 5/24/2017.
  */
 
-public class HostsOfAHostGroup extends Fragment{
-    public static HostsOfAHostGroup newInstance() {return new HostsOfAHostGroup(); }
-    LinearLayout totalList;
+public class HostsOfAHostGroup extends AppCompatActivity {
+    private LinearLayout totalList;
+    private static String api = "";
+    private static String title = "";
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.all_hosts, container, false);
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.hosts_of_a_host_group);
+        setTitle(title);
         sendRequest();
-        return view;
     }
 
     private void sendRequest() {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "/api/hostgroups/" + BasicActivity.id + "/hosts"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -79,19 +76,19 @@ public class HostsOfAHostGroup extends Fragment{
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = (JSONArray) response.get("results");
-        totalList = (LinearLayout) getView().findViewById(R.id.totallist);
+        totalList = (LinearLayout) findViewById(R.id.totallist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
 
-            LinearLayout linearlayout = new LinearLayout(getActivity());
+            LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
             totalList.addView(linearlayout);
 
-            TextView textView = new TextView(getActivity());
+            TextView textView = new TextView(this);
             textView.setText((String) obj.get("name"));
             textView.setTextSize(22);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-            Button button = new Button(getActivity());
+            Button button = new Button(this);
             button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
             button.setText("Edit");
             button.setTag(obj.get("name"));
@@ -99,7 +96,15 @@ public class HostsOfAHostGroup extends Fragment{
             linearlayout.addView(textView);
             linearlayout.addView(button);
 
-            totalList.addView(new LinearLayout(getActivity()));
+            totalList.addView(new LinearLayout(this));
         }
+    }
+
+    public static void setAPI(int id){
+        api = "/api/hostgroups/" + id + "/hosts";
+    }
+
+    public static void setPageTitle(String str){
+        title = str;
     }
 }

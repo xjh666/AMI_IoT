@@ -29,14 +29,13 @@ public class BasicActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    public static int id;
-
+    private static String instruction = "Dashboard";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_activity);
-        setTitle("Dashboard");
+        setTitle(instruction);
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,10 +47,22 @@ public class BasicActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        Fragment fragment = null;
+        switch(instruction){
+            case "Dashboard":
+                fragment = (Fragment) Dashboard.newInstance();
+                break;
+            case "All Hosts":
+                fragment = (Fragment) AllHosts.newInstance();
+                break;
+            case "Host Groups":
+                fragment = (Fragment) HostGroups.newInstance();
+                break;
+        }
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.content_frame, Dashboard.newInstance(), "dashboard")
+                    .add(R.id.content_frame, fragment, "dashboard")
                     .commit();
         }
     }
@@ -112,18 +123,21 @@ public class BasicActivity extends AppCompatActivity {
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_dashboard_fragment:
+                instruction = "Dashboard";
                 fragmentClass = Dashboard.class;
                 break;
             case R.id.nav_allhost_fragment:
+                instruction = "All Hosts";
                 fragmentClass = AllHosts.class;
                 break;
             case R.id.nav_hostgroup_fragment:
+                instruction = "Host Groups";
                 fragmentClass = HostGroups.class;
                 break;
             default:
