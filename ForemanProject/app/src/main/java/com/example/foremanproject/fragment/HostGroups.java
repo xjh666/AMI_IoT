@@ -179,6 +179,9 @@ public class HostGroups extends Fragment {
             HostsOfAHostGroup.setPageTitle(name);
             startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         } else {
+            Parameters.setID(id);
+            Parameters.setType("HOSTGROUP");
+            Parameters.setPageTitle(name);
             startActivity(new Intent(getActivity(), Parameters.class));
         }
     }
