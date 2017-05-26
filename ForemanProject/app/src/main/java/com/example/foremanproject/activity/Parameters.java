@@ -20,7 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +34,6 @@ public class Parameters extends AppCompatActivity {
     private static String title;
     private static String type;
     private HashMap<String, ArrayList<JSONObject>> parameters;
-    private ArrayList<String> puppetClassNameList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,7 +41,6 @@ public class Parameters extends AppCompatActivity {
         setContentView(R.layout.parameters);
         setTitle(title);
         parameters = new HashMap<>();
-        puppetClassNameList = new ArrayList<>();
         sendRequestToGetParameters();
     }
 
@@ -87,29 +87,19 @@ public class Parameters extends AppCompatActivity {
             JSONObject obj = (JSONObject) arr.get(i);
             JSONObject puppetClass = (JSONObject) obj.get("puppetclass_name");
             String puppetClassName = (String) puppetClass.get("name");
-
             if(parameters.containsKey(puppetClassName)){
                 parameters.get(puppetClassName).add(obj);
             } else{
                 parameters.put(puppetClassName,new ArrayList<JSONObject>());
                 parameters.get(puppetClassName).add(obj);
-
-                if(puppetClassNameList.isEmpty()){
-                    puppetClassNameList.add(puppetClassName);
-                } else {
-                    for(int j=0;j<puppetClassNameList.size();j++){
-                        if(j == puppetClassNameList.size() - 1)
-                            puppetClassNameList.add(puppetClassName);
-                        else if(puppetClassName.compareTo(puppetClassNameList.get(j))<0)
-                            puppetClassNameList.add(j,puppetClassName);
-                    }
-                }
             }
         }
         displayParameters();
     }
 
     private void displayParameters(){
+        List<String> arr = new ArrayList<String>(parameters.keySet());
+        Collections.sort(arr);
 
     }
 

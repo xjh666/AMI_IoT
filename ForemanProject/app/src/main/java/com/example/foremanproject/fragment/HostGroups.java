@@ -180,7 +180,7 @@ public class HostGroups extends Fragment {
             startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         } else {
             Parameters.setID(id);
-            Parameters.setType("HOSTGROUP");
+            Parameters.setType("HOSTGROUPS");
             Parameters.setPageTitle(name);
             startActivity(new Intent(getActivity(), Parameters.class));
         }

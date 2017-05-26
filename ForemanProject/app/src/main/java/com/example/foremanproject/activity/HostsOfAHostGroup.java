@@ -86,7 +86,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             totalList.addView(linearlayout);
 
             ImageView imageView = new ImageView(this);
-            if( obj.get("configuration_status") == (Object) 1 || obj.get("configuration_status") == (Object) 0)
+            if(obj.get("global_status_label").equals((Object) "OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 160));
