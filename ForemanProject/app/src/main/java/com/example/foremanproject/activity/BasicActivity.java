@@ -34,7 +34,7 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.basic_activity);
+        setContentView(R.layout.activity_basicactivity);
         setTitle(instruction);
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,7 +62,7 @@ public class BasicActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.content_frame, fragment, "dashboard")
+                    .add(R.id.content_frame, fragment, "fragment_dashboard")
                     .commit();
         }
     }

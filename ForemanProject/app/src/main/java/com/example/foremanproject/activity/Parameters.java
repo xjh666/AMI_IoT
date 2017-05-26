@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,7 +40,7 @@ public class Parameters extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.parameters);
+        setContentView(R.layout.activity_parameters);
         setTitle(title);
         parameters = new HashMap<>();
         sendRequestToGetParameters();
@@ -97,10 +99,49 @@ public class Parameters extends AppCompatActivity {
         displayParameters();
     }
 
-    private void displayParameters(){
+    private void displayParameters() throws JSONException {
         List<String> arr = new ArrayList<String>(parameters.keySet());
         Collections.sort(arr);
+        LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
+
+        for(String key: arr){
+            boolean hasEnableVariable = false;
+
+            LinearLayout linearlayout = new LinearLayout(this);
+            linearlayout.setOrientation(LinearLayout.VERTICAL);
+            linearlayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+            list.addView(linearlayout);
+
+            List<JSONObject> parameter = parameters.get(key);
+            for(JSONObject obj: parameter){
+                if(obj.get("description").toString().substring(0,5).equals("Enable")){
+                    hasEnableVariable = true;
+                    break;
+                }
+            }
+
+            if(hasEnableVariable){
+
+            }else{
+
+            }
+            TextView textView = new TextView(this);
+            textView.setText(key);
+//            textView.setTextSize(22);
+//            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+
+//            Button button = new Button(getActivity());
+//            button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+//            button.setText("Edit");
+//            button.setTag(obj.get("name"));
+//            button.setBackground(getResources().getDrawable(R.drawable.button_icon));
+//            button.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    startActivity(new Intent(getActivity(), Parameters.class));
+//                }
+//            });
+        }
     }
 
     public void CloseActivity(View v){

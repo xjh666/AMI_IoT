@@ -44,7 +44,7 @@ public class Dashboard extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dashboard, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
         startRepeatingTask();
         final Activity activity = getActivity();;

@@ -41,7 +41,7 @@ public class AllHosts extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.all_hosts, container, false);
+        View view=inflater.inflate(R.layout.fragment_allhosts, container, false);
         sendRequest();
         return view;
     }

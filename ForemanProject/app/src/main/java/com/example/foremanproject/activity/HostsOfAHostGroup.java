@@ -38,7 +38,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hosts_of_a_host_group);
+        setContentView(R.layout.activity_hostsofahost_group);
         setTitle(title);
         sendRequest();
     }
