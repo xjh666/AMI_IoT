@@ -99,14 +99,14 @@ public class AllHosts extends Fragment  {
             textView.setTextSize(22);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
 
-            Button button = new Button(getActivity());
+            final Button button = new Button(getActivity());
             button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
             button.setText("Edit");
             button.setTag(obj.get("name"));
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), Parameters.class));
+                    sendRequestForID((String) button.getTag());
                 }
             });
 
@@ -115,6 +115,57 @@ public class AllHosts extends Fragment  {
             linearlayout.addView(button);
 
             totalList.addView(new LinearLayout(getActivity()));
+        }
+    }
+
+    private void sendRequestForID(final String tag)  {
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            getID(response, tag);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (java.lang.InstantiationException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
+
+    private void getID(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
+        JSONArray arr = (JSONArray) response.get("results");
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = (JSONObject) arr.get(i);
+            String objName = (String)obj.get("name");
+            if(objName.equals(name)){
+                Parameters.setID((Integer)obj.get("id"));
+                Parameters.setType("HOST");
+                Parameters.setPageTitle(name);
+                startActivity(new Intent(getActivity(), Parameters.class));
+                break;
+            }
         }
     }
 }

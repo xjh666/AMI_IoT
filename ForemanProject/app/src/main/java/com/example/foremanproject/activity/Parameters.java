@@ -37,7 +37,7 @@ import java.util.Map;
 public class Parameters extends AppCompatActivity {
     private static int id;
     private static String title;
-    private static String type;
+    private static String type = "";
     private HashMap<String, ArrayList<JSONObject>> parameters;
 
     @Override
