@@ -2,10 +2,13 @@ package com.example.foremanproject.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -107,44 +110,70 @@ public class Parameters extends AppCompatActivity {
 
         for(String key: arr){
             boolean hasEnableVariable = false;
-
+            boolean isEnabled = false;
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
-            linearlayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
             list.addView(linearlayout);
 
             List<JSONObject> parameter = parameters.get(key);
             for(JSONObject obj: parameter){
-                if(obj.get("description").toString().substring(0,5).equals("Enable")){
+                System.out.println(obj.get("description").toString().substring(0,5));
+                if(obj.get("description").toString().substring(0,6).equals("Enable")){
                     hasEnableVariable = true;
+                    isEnabled = (boolean) obj.get("default_value");
                     break;
                 }
             }
 
-            if(hasEnableVariable){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
 
-            }else{
-
-            }
             TextView textView = new TextView(this);
             textView.setText(key);
-//            textView.setTextSize(22);
-//            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            textView.setTextSize(25);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(800, LinearLayout.LayoutParams.MATCH_PARENT));
+            layout.addView(textView);
 
-//            Button button = new Button(getActivity());
-//            button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
-//            button.setText("Edit");
-//            button.setTag(obj.get("name"));
-//            button.setBackground(getResources().getDrawable(R.drawable.button_icon));
-//            button.setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View v) {
-//                    startActivity(new Intent(getActivity(), Parameters.class));
-//                }
-//            });
+            if(hasEnableVariable) {
+                ToggleButton button = new ToggleButton(this);
+                button.setTextOn("Enabled");
+                button.setTextOff("Disabled");
+                button.setChecked(isEnabled);
+                layout.addView(button);
+            }
+            linearlayout.addView(layout);
+
+            for(JSONObject obj: parameter){
+                if(!obj.get("description").toString().substring(0,6).equals("Enable")){
+                    LinearLayout pLayout = new LinearLayout(this);
+                    layout.setOrientation(LinearLayout.HORIZONTAL);
+                    layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
+                    TextView pTextView = new TextView(this);
+                    pTextView.setText(obj.get("parameter").toString());
+                    pTextView.setTextSize(20);
+                    pTextView.setLayoutParams(new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    EditText editText = new EditText(this);
+                    editText.setText(obj.get("default_value").toString());
+                    editText.setTextSize(18);
+                    editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                    pLayout.addView(pTextView);
+                    pLayout.addView(editText);
+
+                    linearlayout.addView(pLayout);
+                }
+            }
+            TextView space = new TextView(this);
+            space.setText("");
+            linearlayout.addView(space);
         }
     }
 
-    public void CloseActivity(View v){
+    public void closeActivity(View v){
         finish();
     }
 
