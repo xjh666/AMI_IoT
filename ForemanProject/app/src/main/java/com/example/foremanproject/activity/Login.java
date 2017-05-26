@@ -33,6 +33,10 @@ public class Login extends AppCompatActivity {
     EditText passwordEdit;
 
     @Override
+    public void onBackPressed() {
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NukeSSLCerts.nuke();
