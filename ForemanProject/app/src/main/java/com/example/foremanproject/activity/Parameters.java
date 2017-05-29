@@ -5,10 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,20 +37,18 @@ import java.util.Map;
 
 public class Parameters extends AppCompatActivity {
     private static int id;
-    private static String title;
-    private static String type = "";
-    private HashMap<String, ArrayList<JSONObject>> parameters;
-
-    @Override
-    public void onBackPressed() {
-    }
-
+    private static String name;
+    private static String hostGroup;
+    private static String type;
+    private static Map<String, HashMap<String, Object>> parameters;
+    private static int requestReceive;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
-        setTitle(title);
+        setTitle(name);
         parameters = new HashMap<>();
+        requestReceive = 0;
         sendRequestToGetParameters();
     }
 
@@ -67,6 +66,53 @@ public class Parameters extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             getParameters(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
+
+    private void getParameters(JSONObject response) throws JSONException, InterruptedException {
+        JSONArray arr = (JSONArray) response.get("results");
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject puppetClass = (JSONObject) obj.get("puppetclass_name");
+            String puppetClassName = (String) puppetClass.get("name");
+            int parameter_id = (Integer) obj.get("id");
+            sendRequestForValue(arr, parameter_id,puppetClassName);
+        }
+    }
+
+    private void sendRequestForValue(final JSONArray arr, final int parameter_id, final String puppetClassName) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            getValue(response, puppetClassName);
+                            if(requestReceive == arr.length())
+                                displayParameters();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -90,27 +136,32 @@ public class Parameters extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-    private void getParameters(JSONObject response) throws JSONException {
-        JSONArray arr = (JSONArray) response.get("results");
+    private void getValue(JSONObject response, String puppetClassName) throws JSONException {
+        JSONArray arr  = (JSONArray) response.get("override_values");
+        Object value = response.get("default_value");
+        String parameter = (String)response.get("parameter");
+
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
-            JSONObject puppetClass = (JSONObject) obj.get("puppetclass_name");
-            String puppetClassName = (String) puppetClass.get("name");
-            if(parameters.containsKey(puppetClassName)){
-                parameters.get(puppetClassName).add(obj);
-            } else{
-                parameters.put(puppetClassName,new ArrayList<JSONObject>());
-                parameters.get(puppetClassName).add(obj);
+            String match = (String) obj.get("match");
+            if(match.substring(0,4).equals("fqdn") && match.substring(5).equals(name) && !((boolean)obj.get("use_puppet_default"))){
+                value = obj.get("value");
+                break;
+            }
+            else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(hostGroup) && !((boolean)obj.get("use_puppet_default"))){
+                value = obj.get("value");
             }
         }
-        displayParameters();
+        if(!parameters.containsKey(puppetClassName))
+            parameters.put(puppetClassName,new HashMap<String, Object>());
+        parameters.get(puppetClassName).put(parameter,value);
+        requestReceive++;
     }
 
     private void displayParameters() throws JSONException {
-        List<String> arr = new ArrayList<String>(parameters.keySet());
+        List<String> arr = new ArrayList<>(parameters.keySet());
         Collections.sort(arr);
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
-
 
         for(String key: arr){
             boolean hasEnableVariable = false;
@@ -119,12 +170,13 @@ public class Parameters extends AppCompatActivity {
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
 
-            List<JSONObject> parameter = parameters.get(key);
-            for(JSONObject obj: parameter){
-                System.out.println(obj.get("description").toString().substring(0,5));
-                if(obj.get("description").toString().substring(0,6).equals("Enable")){
+            List<String> parameter = new ArrayList<String>(parameters.get(key).keySet());
+            Collections.sort(parameter);
+            for(String obj: parameter){
+                if(obj.equals("enabled")){
                     hasEnableVariable = true;
-                    isEnabled = (boolean) obj.get("default_value");
+                    if((boolean)parameters.get(key).get(obj))
+                        isEnabled = true;
                     break;
                 }
             }
@@ -134,33 +186,37 @@ public class Parameters extends AppCompatActivity {
 
             TextView textView = new TextView(this);
             textView.setText(key);
-            textView.setTextSize(25);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(800, LinearLayout.LayoutParams.MATCH_PARENT));
+            textView.setTextSize(23);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(textView);
 
             if(hasEnableVariable) {
-                ToggleButton button = new ToggleButton(this);
-                button.setTextOn("Enabled");
-                button.setTextOff("Disabled");
-                button.setChecked(isEnabled);
-                layout.addView(button);
+                Spinner spinner = new Spinner(this);
+                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selections));
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(spinnerArrayAdapter);
+                spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                if(isEnabled)
+                    spinner.setSelection(0);
+                else spinner.setSelection(1);
+                layout.addView(spinner);
             }
             linearlayout.addView(layout);
 
-            for(JSONObject obj: parameter){
-                if(!obj.get("description").toString().substring(0,6).equals("Enable")){
+            for(String obj: parameter){
+                if(!obj.equals("enabled")){
                     LinearLayout pLayout = new LinearLayout(this);
                     layout.setOrientation(LinearLayout.HORIZONTAL);
                     layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
 
                     TextView pTextView = new TextView(this);
-                    pTextView.setText(obj.get("parameter").toString());
-                    pTextView.setTextSize(20);
-                    pTextView.setLayoutParams(new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    pTextView.setText("- " + obj);
+                    pTextView.setTextSize(19);
+                    pTextView.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     EditText editText = new EditText(this);
-                    editText.setText(obj.get("default_value").toString());
-                    editText.setTextSize(18);
+                    editText.setText(parameters.get(key).get(obj).toString());
+                    editText.setTextSize(15);
                     editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                     editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -177,19 +233,13 @@ public class Parameters extends AppCompatActivity {
         }
     }
 
-    public void closeActivity(View v){
-        finish();
-    }
+    public void closeActivity(View v){ finish(); }
 
-    public static void setID(int newid){
-        id = newid;
-    }
+    public static void setID(int newid){ id = newid; }
 
-    public static void setType(String newtype){
-        type = newtype;
-    }
+    public static void setType(String newtype){ type = newtype; }
 
-    public static void setPageTitle(String pagetitle){
-        title = pagetitle;
-    }
+    public static void setName(String pagetitle){ name = pagetitle; }
+
+    public static void setHostGroup(String hostgroup) { hostGroup = hostgroup; }
 }

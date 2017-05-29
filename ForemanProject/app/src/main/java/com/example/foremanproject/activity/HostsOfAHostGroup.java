@@ -38,10 +38,6 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     private static String title = "";
 
     @Override
-    public void onBackPressed() {
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hostsofahost_group);
@@ -95,15 +91,15 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             if(obj.get("global_status_label").equals((Object) "OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 160));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 180));
 
             TextView textView = new TextView(this);
             textView.setText(" " + (String) obj.get("name"));
-            textView.setTextSize(22);
+            textView.setTextSize(25);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
 
             final Button button = new Button(this);
-            button.setLayoutParams(new LinearLayout.LayoutParams(200, 160));
+            button.setLayoutParams(new LinearLayout.LayoutParams(210, 180));
             button.setText("Edit");
             button.setTag(obj.get("name"));
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
@@ -164,7 +160,8 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             if(objName.equals(name)){
                 Parameters.setID((Integer)obj.get("id"));
                 Parameters.setType("HOST");
-                Parameters.setPageTitle(name);
+                Parameters.setName(name);
+                Parameters.setHostGroup((String) obj.get("hostgroup_name"));
                 startActivity(new Intent(this, Parameters.class));
                 break;
             }
