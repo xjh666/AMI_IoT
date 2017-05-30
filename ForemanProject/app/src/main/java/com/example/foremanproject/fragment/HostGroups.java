@@ -133,11 +133,7 @@ public class HostGroups extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             getID(response, tag);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (java.lang.InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                        } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }

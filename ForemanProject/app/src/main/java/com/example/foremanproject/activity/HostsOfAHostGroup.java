@@ -32,7 +32,6 @@ import java.util.Map;
  */
 
 public class HostsOfAHostGroup extends AppCompatActivity {
-    private LinearLayout totalList;
     private static String api = "";
     private static String title = "";
 
@@ -78,7 +77,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = (JSONArray) response.get("results");
-        totalList = (LinearLayout) findViewById(R.id.totallist);
+        LinearLayout totalList = (LinearLayout) findViewById(R.id.totallist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
 
@@ -124,11 +123,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             getID(response, tag);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (java.lang.InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                        } catch (JSONException | IllegalAccessException | InstantiationException e) {
                             e.printStackTrace();
                         }
                     }

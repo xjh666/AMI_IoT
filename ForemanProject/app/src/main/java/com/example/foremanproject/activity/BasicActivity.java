@@ -3,6 +3,7 @@ package com.example.foremanproject.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +28,6 @@ import com.example.foremanproject.fragment.HostGroups;
 public class BasicActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private static String instruction = "Dashboard";
 
@@ -44,19 +44,19 @@ public class BasicActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
 
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
         Fragment fragment = null;
         switch(instruction){
             case "Dashboard":
-                fragment = (Fragment) Dashboard.newInstance();
+                fragment = Dashboard.newInstance();
                 break;
             case "All Hosts":
-                fragment = (Fragment) AllHosts.newInstance();
+                fragment = AllHosts.newInstance();
                 break;
             case "Host Groups":
-                fragment = (Fragment) HostGroups.newInstance();
+                fragment = HostGroups.newInstance();
                 break;
         }
         if (savedInstanceState == null) {
@@ -116,7 +116,7 @@ public class BasicActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         selectDrawerItem(menuItem);
                         return true;
                     }

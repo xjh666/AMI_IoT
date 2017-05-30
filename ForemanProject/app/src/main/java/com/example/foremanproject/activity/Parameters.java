@@ -142,30 +142,33 @@ public class Parameters extends AppCompatActivity {
         Object value = response.get("default_value");
         String parameter = (String)response.get("parameter");
 
-        for(int i=0;i<arr.length();i++){
+        label:
+        for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = (JSONObject) arr.get(i);
             String match = (String) obj.get("match");
-            if(type.equals("HOST")){
-                if(match.substring(0,4).equals("fqdn") && match.substring(5).equals(name) && !((boolean)obj.get("use_puppet_default"))){
-                    value = obj.get("value");
+            switch (type) {
+                case "HOST":
+                    if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                        break label;
+                    } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(hostgroup) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                    }
                     break;
-                }
-                else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(hostgroup) && !((boolean)obj.get("use_puppet_default"))){
-                    value = obj.get("value");
-                }
-            } else if(type.equals("HOSTGROUPS")){
-                if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean)obj.get("use_puppet_default"))){
-                    value = obj.get("value");
+                case "HOSTGROUPS":
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                        break label;
+                    }
                     break;
-                }
-            } else {
-                if(match.substring(0,9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name) && !((boolean)obj.get("use_puppet_default"))){
-                    value = obj.get("value");
+                default:
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                        break label;
+                    } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                    }
                     break;
-                }
-                else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(parent) && !((boolean)obj.get("use_puppet_default"))){
-                    value = obj.get("value");
-                }
             }
         }
 
@@ -244,12 +247,17 @@ public class Parameters extends AppCompatActivity {
                     ArrayAdapter<String> spinnerArrayAdapter;
                     Spinner spinner = new Spinner(this);
 
-                    if(type.equals("HOST"))
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
-                    else if(type.equals("HOSTGROUPS"))
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupOfEnabled));
-                    else
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParentOfEnabled));
+                    switch (type) {
+                        case "HOST":
+                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
+                            break;
+                        case "HOSTGROUPS":
+                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupOfEnabled));
+                            break;
+                        default:
+                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParentOfEnabled));
+                            break;
+                    }
 
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(spinnerArrayAdapter);

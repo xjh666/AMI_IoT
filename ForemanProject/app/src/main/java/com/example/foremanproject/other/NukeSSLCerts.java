@@ -11,15 +11,12 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 public class NukeSSLCerts {
-    protected static final String TAG = "NukeSSLCerts";
-
     public static void nuke() {
         try {
             TrustManager[] trustAllCerts = new TrustManager[] {
                     new X509TrustManager() {
                         public X509Certificate[] getAcceptedIssuers() {
-                            X509Certificate[] myTrustedAnchors = new X509Certificate[0];
-                            return myTrustedAnchors;
+                            return new X509Certificate[0];
                         }
 
                         @Override
@@ -39,7 +36,7 @@ public class NukeSSLCerts {
                     return true;
                 }
             });
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

@@ -49,7 +49,7 @@ public class Login extends AppCompatActivity {
         passwordEdit   = (EditText)findViewById(R.id.PASSWORD);
     }
 
-    public void Login(View view) throws AuthFailureError {
+    public void LogIn(View view) throws AuthFailureError {
         String url = urlEdit.getText().toString();
         final Intent intent = new Intent(this, BasicActivity.class);
 

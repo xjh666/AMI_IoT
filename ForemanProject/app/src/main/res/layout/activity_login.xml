@@ -102,7 +102,7 @@
         android:layout_marginStart="243dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/my_nine_patch"
-        android:onClick="Login"
+        android:onClick="LogIn"
         android:text="Login"
         android:textColor="@android:color/white"
         app:layout_constraintLeft_toLeftOf="parent"
