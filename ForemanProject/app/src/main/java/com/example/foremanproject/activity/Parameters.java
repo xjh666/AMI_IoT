@@ -38,8 +38,10 @@ import java.util.Map;
 public class Parameters extends AppCompatActivity {
     private static int id;
     private static String name;
-    private static String hostGroup;
+    private static String hostgroup;
     private static String type;
+    private static String parent;
+
     private static Map<String, HashMap<String, Object>> parameters;
     private static int requestReceive;
     @Override
@@ -56,9 +58,10 @@ public class Parameters extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String api;
 
-        if(type.equals("HOSTGROUPS"))
+        if(type.equals("HOST"))
+            api = "/api/hosts/"+ id +"/smart_class_parameters";
+        else
             api = "/api/hostgroups/"+ id +"/smart_class_parameters";
-        else api = "/api/hosts/"+ id +"/smart_class_parameters";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
@@ -66,9 +69,7 @@ public class Parameters extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             getParameters(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
+                        } catch (JSONException | InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
@@ -144,14 +145,30 @@ public class Parameters extends AppCompatActivity {
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
             String match = (String) obj.get("match");
-            if(match.substring(0,4).equals("fqdn") && match.substring(5).equals(name) && !((boolean)obj.get("use_puppet_default"))){
-                value = obj.get("value");
-                break;
-            }
-            else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(hostGroup) && !((boolean)obj.get("use_puppet_default"))){
-                value = obj.get("value");
+            if(type.equals("HOST")){
+                if(match.substring(0,4).equals("fqdn") && match.substring(5).equals(name) && !((boolean)obj.get("use_puppet_default"))){
+                    value = obj.get("value");
+                    break;
+                }
+                else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(hostgroup) && !((boolean)obj.get("use_puppet_default"))){
+                    value = obj.get("value");
+                }
+            } else if(type.equals("HOSTGROUPS")){
+                if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean)obj.get("use_puppet_default"))){
+                    value = obj.get("value");
+                    break;
+                }
+            } else {
+                if(match.substring(0,9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name) && !((boolean)obj.get("use_puppet_default"))){
+                    value = obj.get("value");
+                    break;
+                }
+                else if (match.substring(0,9).equals("hostgroup") && match.substring(10).equals(parent) && !((boolean)obj.get("use_puppet_default"))){
+                    value = obj.get("value");
+                }
             }
         }
+
         if(!parameters.containsKey(puppetClassName))
             parameters.put(puppetClassName,new HashMap<String, Object>());
         parameters.get(puppetClassName).put(parameter,value);
@@ -164,7 +181,6 @@ public class Parameters extends AppCompatActivity {
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
         for(String key: arr){
-            boolean hasEnableVariable = false;
             boolean isEnabled = false;
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
@@ -172,14 +188,6 @@ public class Parameters extends AppCompatActivity {
 
             List<String> parameter = new ArrayList<>(parameters.get(key).keySet());
             Collections.sort(parameter);
-            for(String obj: parameter){
-                if(obj.equals("enabled")){
-                    hasEnableVariable = true;
-                    if((boolean)parameters.get(key).get(obj))
-                        isEnabled = true;
-                    break;
-                }
-            }
 
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -190,10 +198,6 @@ public class Parameters extends AppCompatActivity {
             textView.setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(textView);
             linearlayout.addView(layout);
-
-            if(hasEnableVariable) {
-
-            }
 
             for(String obj: parameter){
                 LinearLayout pLayout = new LinearLayout(this);
@@ -213,16 +217,18 @@ public class Parameters extends AppCompatActivity {
 
                     ArrayAdapter<String> spinnerArrayAdapter;
                     Spinner spinner = new Spinner(this);
+
                     if(type.equals("HOSTGROUPS"))
                         spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroup));
                     else
                         spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHosts));
+
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(spinnerArrayAdapter);
                     spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     EditText editText = new EditText(this);
-//                    editText.setText(parameters.get(key).get(obj).toString());
+                    editText.setText(parameters.get(key).get(obj).toString());
                     editText.setTextSize(15);
                     editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -234,14 +240,18 @@ public class Parameters extends AppCompatActivity {
                 else{
                     ArrayAdapter<String> spinnerArrayAdapter;
                     Spinner spinner = new Spinner(this);
-                    if(type.equals("HOSTGROUPS"))
+
+                    if(type.equals("HOST"))
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
+                    else if(type.equals("HOSTGROUPS"))
                         spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupOfEnabled));
                     else
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParentOfEnabled));
+
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(spinnerArrayAdapter);
                     spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    if(isEnabled)
+                    if((boolean)parameters.get(key).get(obj))
                         spinner.setSelection(0);
                     else spinner.setSelection(1);
                     pLayout.addView(spinner);
@@ -257,11 +267,13 @@ public class Parameters extends AppCompatActivity {
 
     public void closeActivity(View v){ finish(); }
 
-    public static void setID(int newid){ id = newid; }
+    public static void setID(int _id){ id = _id; }
 
-    public static void setType(String newtype){ type = newtype; }
+    public static void setType(String _type){ type = _type; }
 
-    public static void setName(String pagetitle){ name = pagetitle; }
+    public static void setName(String _name){ name = _name; }
 
-    public static void setHostGroup(String hostgroup) { hostGroup = hostgroup; }
+    public static void setHostGroup(String _hostgroup) { hostgroup = _hostgroup; }
+
+    public static void setParent(String _parent) { parent = _parent; }
 }
