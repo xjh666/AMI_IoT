@@ -170,7 +170,7 @@ public class Parameters extends AppCompatActivity {
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
 
-            List<String> parameter = new ArrayList<String>(parameters.get(key).keySet());
+            List<String> parameter = new ArrayList<>(parameters.get(key).keySet());
             Collections.sort(parameter);
             for(String obj: parameter){
                 if(obj.equals("enabled")){
@@ -189,47 +189,65 @@ public class Parameters extends AppCompatActivity {
             textView.setTextSize(23);
             textView.setLayoutParams(new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(textView);
-
-            if(hasEnableVariable) {
-                ArrayAdapter<String> spinnerArrayAdapter;
-                Spinner spinner = new Spinner(this);
-                if(type.equals("HOSTGROUPS"))
-                    spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroup));
-                else
-                    spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHosts));
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(spinnerArrayAdapter);
-                spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                if(isEnabled)
-                    spinner.setSelection(0);
-                else spinner.setSelection(1);
-                layout.addView(spinner);
-            }
             linearlayout.addView(layout);
 
-            for(String obj: parameter){
-                if(!obj.equals("enabled")){
-                    LinearLayout pLayout = new LinearLayout(this);
-                    layout.setOrientation(LinearLayout.HORIZONTAL);
-                    layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+            if(hasEnableVariable) {
 
-                    TextView pTextView = new TextView(this);
-                    pTextView.setText("- " + obj);
-                    pTextView.setTextSize(19);
-                    pTextView.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
+
+            for(String obj: parameter){
+                LinearLayout pLayout = new LinearLayout(this);
+                pLayout.setOrientation(LinearLayout.HORIZONTAL);
+                pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
+                TextView pTextView = new TextView(this);
+                pTextView.setText("- " + obj);
+                pTextView.setTextSize(19);
+                pTextView.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
+                pLayout.addView(pTextView);
+
+                if(!obj.equals("enabled")){
+                    LinearLayout mLayout = new LinearLayout(this);
+                    mLayout.setOrientation(LinearLayout.VERTICAL);
+                    mLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
+                    ArrayAdapter<String> spinnerArrayAdapter;
+                    Spinner spinner = new Spinner(this);
+                    if(type.equals("HOSTGROUPS"))
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroup));
+                    else
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHosts));
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(spinnerArrayAdapter);
+                    spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     EditText editText = new EditText(this);
-                    editText.setText(parameters.get(key).get(obj).toString());
+//                    editText.setText(parameters.get(key).get(obj).toString());
                     editText.setTextSize(15);
                     editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                     editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                    pLayout.addView(pTextView);
-                    pLayout.addView(editText);
 
-                    linearlayout.addView(pLayout);
+                    pLayout.addView(editText);
                 }
+                else{
+                    ArrayAdapter<String> spinnerArrayAdapter;
+                    Spinner spinner = new Spinner(this);
+                    if(type.equals("HOSTGROUPS"))
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupOfEnabled));
+                    else
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(spinnerArrayAdapter);
+                    spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    if(isEnabled)
+                        spinner.setSelection(0);
+                    else spinner.setSelection(1);
+                    pLayout.addView(spinner);
+                }
+
+                linearlayout.addView(pLayout);
             }
             TextView space = new TextView(this);
             space.setText("");

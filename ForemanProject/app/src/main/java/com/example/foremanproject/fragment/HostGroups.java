@@ -90,30 +90,30 @@ public class HostGroups extends Fragment {
             grouplist.addView(linearlayout);
 
             TextView textView = new TextView(getActivity());
-            textView.setText(" " + (String) obj.get("name"));
-            textView.setTextSize(16);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            textView.setText(obj.get("title").toString());
+            textView.setTextSize(20);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(720, LinearLayout.LayoutParams.MATCH_PARENT));
 
             final Button button1 = new Button(getActivity());
-            button1.setLayoutParams(new LinearLayout.LayoutParams(180, 140));
+            button1.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
             button1.setText("All");
             button1.setTag(obj.get("name") + "s");
             button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    sendRequestForID((String) button1.getTag());
+                    sendRequestForID(button1.getTag().toString());
                 }
             });
 
 
             final Button button2 = new Button(getActivity());
-            button2.setLayoutParams(new LinearLayout.LayoutParams(180, 140));
+            button2.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
             button2.setText("EDIT");
             button2.setTag(obj.get("name") + "e");
             button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    sendRequestForID((String) button2.getTag());
+                    sendRequestForID(button2.getTag().toString());
                 }
             });
             linearlayout.addView(textView);
@@ -165,7 +165,7 @@ public class HostGroups extends Fragment {
         String name = tag.substring(0,tag.length()-1);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = (JSONObject) arr.get(i);
-            String objName = (String)obj.get("name");
+            String objName = obj.get("name").toString();
             if(objName.equals(name)){
                 selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),objName);
                 break;
