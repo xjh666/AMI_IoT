@@ -191,11 +191,11 @@ public class Parameters extends AppCompatActivity {
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
 
-            TextView textView = new TextView(this);
-            textView.setText(key);
-            textView.setTextSize(25);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            layout.addView(textView);
+            TextView puppetclassName = new TextView(this);
+            puppetclassName.setText(key);
+            puppetclassName.setTextSize(25);
+            puppetclassName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            layout.addView(puppetclassName);
             linearlayout.addView(layout);
 
             for(String obj: parameter){
@@ -203,12 +203,12 @@ public class Parameters extends AppCompatActivity {
                 pLayout.setOrientation(LinearLayout.HORIZONTAL);
                 pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-                TextView pTextView = new TextView(this);
-                pTextView.setText("- " + obj);
-                pTextView.setTextSize(20);
+                TextView parameterName = new TextView(this);
+                parameterName.setText("- " + obj);
+                parameterName.setTextSize(20);
                 if(obj.equals("enabled"))
-                    pTextView.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
-                pLayout.addView(pTextView);
+                    parameterName.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
+                pLayout.addView(parameterName);
 
                 if(!obj.equals("enabled")){
                     LinearLayout mLayout = new LinearLayout(this);
@@ -227,15 +227,16 @@ public class Parameters extends AppCompatActivity {
                     spinner.setAdapter(spinnerArrayAdapter);
                     spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                    EditText editText = new EditText(this);
-                    editText.setText(parameters.get(key).get(obj).toString());
-                    editText.setTextSize(15);
-                    editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    EditText parameterValue = new EditText(this);
+                    parameterValue.setText(parameters.get(key).get(obj).toString());
+                    parameterValue.setTextSize(15);
+                    parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    parameterValue.setEnabled(false);
 
                     mLayout.addView(spinner);
-                    mLayout.addView(editText);
+                    mLayout.addView(parameterValue);
                     linearlayout.addView(pLayout);
                     linearlayout.addView(mLayout);
                 }

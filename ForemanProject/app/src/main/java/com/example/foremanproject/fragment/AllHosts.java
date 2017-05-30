@@ -89,15 +89,15 @@ public class AllHosts extends Fragment  {
             totalList.addView(linearlayout);
 
             ImageView imageView = new ImageView(getActivity());
-            if(obj.get("global_status_label").equals((Object) "OK"))
+            if(obj.get("global_status_label").equals("OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 160));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 150));
 
             TextView textView = new TextView(getActivity());
-            textView.setText(" " + (String) obj.get("name"));
+            textView.setText(" " + obj.get("name"));
             textView.setTextSize(25);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            textView.setLayoutParams(new LinearLayout.LayoutParams(780, LinearLayout.LayoutParams.MATCH_PARENT));
 
             final Button button = new Button(getActivity());
             button.setLayoutParams(new LinearLayout.LayoutParams(210, 180));

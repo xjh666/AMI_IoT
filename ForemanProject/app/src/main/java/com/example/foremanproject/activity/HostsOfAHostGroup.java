@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -88,15 +87,15 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             totalList.addView(linearlayout);
 
             ImageView imageView = new ImageView(this);
-            if(obj.get("global_status_label").equals((Object) "OK"))
+            if(obj.get("global_status_label").equals("OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 180));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 150));
 
             TextView textView = new TextView(this);
-            textView.setText(" " + (String) obj.get("name"));
+            textView.setText(" " + obj.get("name"));
             textView.setTextSize(25);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            textView.setLayoutParams(new LinearLayout.LayoutParams(780, LinearLayout.LayoutParams.MATCH_PARENT));
 
             final Button button = new Button(this);
             button.setLayoutParams(new LinearLayout.LayoutParams(210, 180));
