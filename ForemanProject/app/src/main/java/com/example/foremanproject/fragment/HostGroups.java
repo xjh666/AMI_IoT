@@ -167,21 +167,27 @@ public class HostGroups extends Fragment {
             JSONObject obj = (JSONObject) arr.get(i);
             String objName = obj.get("name").toString();
             if(objName.equals(name)){
-                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),objName);
+                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),obj);
                 break;
             }
         }
     }
 
-    private void selectInstruction(int id, String tag, String name) throws IllegalAccessException, java.lang.InstantiationException {
+    private void selectInstruction(int id, String tag, JSONObject obj) throws IllegalAccessException, java.lang.InstantiationException, JSONException {
+        String name = obj.get("name").toString();
+
         if (tag.equals("s")) {
             HostsOfAHostGroup.setAPI(id);
             HostsOfAHostGroup.setPageTitle(name);
             startActivity(new Intent(getActivity(), HostsOfAHostGroup.class));
         } else {
             Parameters.setID(id);
-            Parameters.setType("HOSTGROUPS");
             Parameters.setName(name);
+            Parameters.setType("HOSTGROUPS");
+            if(!obj.isNull("parent_name")){
+                Parameters.setType("HOSTGROUPSWITHPARENT");
+                Parameters.setParent(obj.get("parent_name").toString());
+            }
             startActivity(new Intent(getActivity(), Parameters.class));
         }
     }
