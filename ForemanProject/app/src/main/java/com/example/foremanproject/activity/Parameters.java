@@ -42,6 +42,7 @@ public class Parameters extends AppCompatActivity {
     private static String type;
     private static String parent;
 
+    private static Map<String,HashMap<String, String>> tag;
     private static Map<String, HashMap<String, Object>> parameters;
     private static int requestReceive;
     @Override
@@ -50,6 +51,7 @@ public class Parameters extends AppCompatActivity {
         setContentView(R.layout.activity_parameters);
         setTitle(name);
         parameters = new HashMap<>();
+        tag = new HashMap<>();
         requestReceive = 0;
         sendRequestToGetParameters();
     }
@@ -141,32 +143,68 @@ public class Parameters extends AppCompatActivity {
         JSONArray arr  = (JSONArray) response.get("override_values");
         Object value = response.get("default_value");
         String parameter = (String)response.get("parameter");
-
         label:
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = (JSONObject) arr.get(i);
             String match = (String) obj.get("match");
+
             switch (type) {
                 case "HOST":
-                    if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
-                        value = obj.get("value");
+                    if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name)) {
+                        if(!((boolean) obj.get("use_puppet_default"))) {
+                            value = obj.get("value");
+                            if(!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"Override");
+                        }
+                        else{
+                            if (!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
                         break label;
                     } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(hostgroup) && !((boolean) obj.get("use_puppet_default"))) {
+                        if (!tag.containsKey(puppetClassName))
+                            tag.put(puppetClassName,new HashMap<String, String>());
+                        tag.get(puppetClassName).put(parameter,"GroupValue");
                         value = obj.get("value");
                     }
                     break;
                 case "HOSTGROUPS":
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
-                        value = obj.get("value");
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)) {
+                        if(!((boolean) obj.get("use_puppet_default"))) {
+                            value = obj.get("value");
+                            if(!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"Override");
+                        }
+                        else{
+                            if (!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
                         break label;
                     }
                     break;
                 default:
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name) && !((boolean) obj.get("use_puppet_default"))) {
-                        value = obj.get("value");
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
+                        if(!((boolean) obj.get("use_puppet_default"))){
+                            value = obj.get("value");
+                            if(!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"Override");
+                        }
+                        else {
+                            if (!tag.containsKey(puppetClassName))
+                                tag.put(puppetClassName,new HashMap<String, String>());
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
                         break label;
                     } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent) && !((boolean) obj.get("use_puppet_default"))) {
                         value = obj.get("value");
+                        if (!tag.containsKey(puppetClassName))
+                            tag.put(puppetClassName,new HashMap<String, String>());
+                        tag.get(puppetClassName).put(parameter,"ParentValue");
                     }
                     break;
             }
@@ -209,66 +247,111 @@ public class Parameters extends AppCompatActivity {
                 TextView parameterName = new TextView(this);
                 parameterName.setText("- " + obj);
                 parameterName.setTextSize(20);
-                if(obj.equals("enabled"))
-                    parameterName.setLayoutParams(new LinearLayout.LayoutParams(680, LinearLayout.LayoutParams.WRAP_CONTENT));
                 pLayout.addView(parameterName);
 
-                if(!obj.equals("enabled")){
-                    LinearLayout mLayout = new LinearLayout(this);
-                    mLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    mLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                LinearLayout mLayout = new LinearLayout(this);
+                mLayout.setOrientation(LinearLayout.HORIZONTAL);
+                mLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                    ArrayAdapter<String> spinnerArrayAdapter;
-                    Spinner spinner = new Spinner(this);
+                ArrayAdapter<String> spinnerArrayAdapter;
+                Spinner spinner = new Spinner(this);
 
-                    if(type.equals("HOSTGROUPS"))
+                switch (type) {
+                    case "HOSTGROUPS":
                         spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroup));
-                    else
+                        break;
+                    case "HOST":
                         spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHosts));
+                        break;
+                    default:
+                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParent));
+                        break;
+                }
 
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(spinnerArrayAdapter);
-                    spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(spinnerArrayAdapter);
+                spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                mLayout.addView(spinner);
 
+                if(!obj.equals("enabled")){
                     EditText parameterValue = new EditText(this);
                     parameterValue.setText(parameters.get(key).get(obj).toString());
                     parameterValue.setTextSize(15);
                     parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    parameterValue.setEnabled(false);
 
-                    mLayout.addView(spinner);
+                    if(type.equals("HOSTGROUPS")) {
+                        if (tag.get(key).get(obj).equals("Override")) {
+                            spinner.setSelection(1);
+                            parameterValue.setEnabled(true);
+                        } else {
+                            spinner.setSelection(0);
+                            parameterValue.setText("");
+                            parameterValue.setEnabled(false);
+                        }
+                    } else {
+                        switch (tag.get(key).get(obj)) {
+                            case "Override":
+                                spinner.setSelection(2);
+                                parameterValue.setEnabled(true);
+                                break;
+                            case "ParentValue":
+                            case "GroupValue":
+                                spinner.setSelection(0);
+                                parameterValue.setEnabled(false);
+                                break;
+                            default:
+                                spinner.setSelection(1);
+                                parameterValue.setEnabled(false);
+                                parameterValue.setText("");
+                                break;
+                        }
+                    }
                     mLayout.addView(parameterValue);
-                    linearlayout.addView(pLayout);
-                    linearlayout.addView(mLayout);
                 }
                 else{
-                    ArrayAdapter<String> spinnerArrayAdapter;
-                    Spinner spinner = new Spinner(this);
+                    ArrayAdapter<String> _spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsOfEnabled));
+                    Spinner _spinner = new Spinner(this);
+                    _spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    _spinner.setAdapter(_spinnerArrayAdapter);
+                    _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                    switch (type) {
-                        case "HOST":
-                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostsOfEnabled));
-                            break;
-                        case "HOSTGROUPS":
-                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupOfEnabled));
-                            break;
-                        default:
-                            spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParentOfEnabled));
-                            break;
-                    }
-
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(spinnerArrayAdapter);
-                    spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     if((boolean)parameters.get(key).get(obj))
-                        spinner.setSelection(0);
-                    else spinner.setSelection(1);
-                    pLayout.addView(spinner);
-                    linearlayout.addView(pLayout);
+                        _spinner.setSelection(0);
+                    else _spinner.setSelection(1);
+
+                    if(type.equals("HOSTGROUPS")) {
+                        if (tag.get(key).get(obj).equals("Override")) {
+                            spinner.setSelection(1);
+                            _spinner.setEnabled(true);
+                        } else {
+                            spinner.setSelection(0);
+                            _spinner.setEnabled(false);
+                        }
+                    }else {
+                        switch (tag.get(key).get(obj)) {
+                            case "Override":
+                                spinner.setSelection(2);
+                                _spinner.setEnabled(true);
+                                break;
+                            case "ParentValue":
+                            case "GroupValue":
+                                spinner.setSelection(0);
+                                _spinner.setEnabled(false);
+                                break;
+                            default:
+                                spinner.setSelection(1);
+                                _spinner.setEnabled(false);
+                                break;
+                        }
+                    }
+                    mLayout.addView(_spinner);
                 }
+                linearlayout.addView(pLayout);
+                linearlayout.addView(mLayout);
             }
+
             TextView space = new TextView(this);
             space.setText("");
             linearlayout.addView(space);
