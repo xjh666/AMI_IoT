@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="selections">
+    <string-array name="selectionsForHosts">
         <item>Enabled</item>
         <item>Disabled</item>
-        <item>Puppet Default </item>
+        <item>HostGroup Value</item>
+        <item>Puppet Default</item>
+    </string-array>
+
+    <string-array name="selectionsForHostGroup">
+        <item>Enabled</item>
+        <item>Disabled</item>
+        <item>Puppet Default</item>
     </string-array>
 </resources>
