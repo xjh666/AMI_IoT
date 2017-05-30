@@ -181,7 +181,6 @@ public class Parameters extends AppCompatActivity {
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
         for(String key: arr){
-            boolean isEnabled = false;
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
