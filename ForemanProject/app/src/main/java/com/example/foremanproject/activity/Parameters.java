@@ -273,7 +273,7 @@ public class Parameters extends AppCompatActivity {
 
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerArrayAdapter);
-                spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, 120));
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -296,7 +296,7 @@ public class Parameters extends AppCompatActivity {
                 if(!obj.equals("enabled")){
                     parameterValue.setText(parameters.get(key).get(obj).toString());
                     parameterValue.setTextSize(15);
-                    parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
                     parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
@@ -333,7 +333,7 @@ public class Parameters extends AppCompatActivity {
                     ArrayAdapter<String> _spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsOfEnabled));
                     _spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     _spinner.setAdapter(_spinnerArrayAdapter);
-                    _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
 
                     if((boolean)parameters.get(key).get(obj))
                         _spinner.setSelection(1);
