@@ -149,6 +149,8 @@ public class Parameters extends AppCompatActivity {
             String match = (String) obj.get("match");
             if(!tag.containsKey(puppetClassName))
                 tag.put(puppetClassName,new HashMap<String, String>());
+            System.out.println(parent);
+            System.out.println(match);
             switch (type) {
                 case "HOST":
                     tag.get(puppetClassName).put(parameter,"GroupValue");
@@ -161,6 +163,13 @@ public class Parameters extends AppCompatActivity {
                         }
                         break label;
                     } else if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() &&match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
+                        if(!((boolean) obj.get("use_puppet_default"))){
+                            value = obj.get("value");
+                            tag.get(puppetClassName).put(parameter,"GroupValue");
+                        }else {
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
+                    } else if(parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
                         if(!((boolean) obj.get("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"GroupValue");
@@ -282,7 +291,6 @@ public class Parameters extends AppCompatActivity {
                             parameterValue.setEnabled(false);
                         }
                     } else {
-                        System.out.println(tag);
                         switch (tag.get(key).get(obj)) {
                             case "Override":
                                 spinner.setSelection(2);

@@ -156,6 +156,9 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                 Parameters.setType("HOST");
                 Parameters.setName(name);
                 Parameters.setHostGroup((String) obj.get("hostgroup_name"));
+                if(!obj.get("hostgroup_name").equals(obj.get("hostgroup_title")))
+                    Parameters.setParent(((String) obj.get("hostgroup_title")).substring(0,(((String) obj.get("hostgroup_title")).length()) - 1 - ((String) obj.get("hostgroup_name")).length()));
+                else Parameters.setParent(null);
                 startActivity(new Intent(this, Parameters.class));
                 break;
             }
