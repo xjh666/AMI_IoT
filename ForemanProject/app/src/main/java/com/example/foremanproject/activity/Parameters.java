@@ -228,6 +228,9 @@ public class Parameters extends AppCompatActivity {
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
         for(final String key: arr){
+            if(!_parameters.containsKey(key))
+                _parameters.put(key,new HashMap<String, Object>());
+
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
@@ -353,8 +356,6 @@ public class Parameters extends AppCompatActivity {
 
                     parameterValue.addTextChangedListener(new TextWatcher() {
                         public void afterTextChanged(Editable s) {
-                            if(!_parameters.containsKey(key))
-                                _parameters.put(key,new HashMap<String, Object>());
                             _parameters.get(key).put(obj,parameterValue.getText());
                         }
 
@@ -403,9 +404,6 @@ public class Parameters extends AppCompatActivity {
                     _spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if(!_parameters.containsKey(key))
-                                _parameters.put(key,new HashMap<String, Object>());
-
                             switch(spinner.getSelectedItem().toString()){
                                 case "Disabled":
                                     _parameters.get(key).put(obj,false);
@@ -443,10 +441,27 @@ public class Parameters extends AppCompatActivity {
     }
 
     public void updateInfo(View view){
-        System.out.println(tag);
-        System.out.println(_tag);
-        System.out.println(parameters);
-        System.out.println(_parameters);
+//        System.out.println(tag);
+//        System.out.println(_tag);
+//        System.out.println(parameters);
+//        System.out.println(_parameters);
+        if(type.equals("HOST")) {
+            for (String puppetClass : _tag.keySet()) {
+                for (String parameterName : _tag.get(puppetClass).keySet()) {
+                    if (_tag.get(puppetClass).get(parameterName).equals("Override")) {
+                        Object value;
+                        if(_parameters.get(puppetClass).containsKey(parameterName))
+                            value = _parameters.get(puppetClass).get(parameterName);
+                        else value = parameters.get(puppetClass).get(parameterName);
+                    } else {
+
+                    }
+                }
+            }
+        } else {
+
+        }
+
         finish();
     }
 
