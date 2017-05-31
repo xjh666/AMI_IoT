@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -178,7 +179,7 @@ public class Parameters extends AppCompatActivity {
                         }
                     }
                     break;
-                case "HOSTGROUPS":;
+                case "HOSTGROUPS":
                     tag.get(puppetClassName).put(parameter,"PuppetDefault");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
                         value = obj.get("value");
@@ -186,7 +187,7 @@ public class Parameters extends AppCompatActivity {
                         break label;
                     }
                     break;
-                default:;
+                default:
                     tag.get(puppetClassName).put(parameter,"ParentValue");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
                         if(!((boolean) obj.get("use_puppet_default"))){
@@ -240,6 +241,10 @@ public class Parameters extends AppCompatActivity {
             linearlayout.addView(layout);
 
             for(String obj: parameter){
+                final EditText parameterValue = new EditText(this);
+                final Spinner spinner = new Spinner(this);
+                ArrayAdapter<String> spinnerArrayAdapter;
+
                 LinearLayout pLayout = new LinearLayout(this);
                 pLayout.setOrientation(LinearLayout.HORIZONTAL);
                 pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -252,9 +257,6 @@ public class Parameters extends AppCompatActivity {
                 LinearLayout mLayout = new LinearLayout(this);
                 mLayout.setOrientation(LinearLayout.HORIZONTAL);
                 mLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                ArrayAdapter<String> spinnerArrayAdapter;
-                Spinner spinner = new Spinner(this);
 
                 switch (type) {
                     case "HOSTGROUPS":
@@ -271,10 +273,22 @@ public class Parameters extends AppCompatActivity {
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerArrayAdapter);
                 spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(spinner.getSelectedItem().toString().equals("Override")){
+                            parameterValue.setEnabled(true);
+                        }
+                        else parameterValue.setEnabled(false);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
                 mLayout.addView(spinner);
 
                 if(!obj.equals("enabled")){
-                    EditText parameterValue = new EditText(this);
                     parameterValue.setText(parameters.get(key).get(obj).toString());
                     parameterValue.setTextSize(15);
                     parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -318,8 +332,8 @@ public class Parameters extends AppCompatActivity {
                     _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     if((boolean)parameters.get(key).get(obj))
-                        _spinner.setSelection(0);
-                    else _spinner.setSelection(1);
+                        _spinner.setSelection(1);
+                    else _spinner.setSelection(0);
 
                     if(type.equals("HOSTGROUPS")) {
                         if (tag.get(key).get(obj).equals("Override")) {
