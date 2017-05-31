@@ -156,24 +156,28 @@ public class Parameters extends AppCompatActivity {
                         if(!((boolean) obj.get("use_puppet_default"))) {
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"Override");
-                        }
-                        else{
+                        } else{
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                         break label;
+                    } else if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() &&match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
+                        if(!((boolean) obj.get("use_puppet_default"))){
+                            value = obj.get("value");
+                            tag.get(puppetClassName).put(parameter,"GroupValue");
+                        }else {
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
                     }
                     break;
-                case "HOSTGROUPS":
+                case "HOSTGROUPS":;
                     tag.get(puppetClassName).put(parameter,"PuppetDefault");
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)) {
-                        if(!((boolean) obj.get("use_puppet_default"))) {
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"Override");
-                        }
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
+                        value = obj.get("value");
+                        tag.get(puppetClassName).put(parameter,"Override");
                         break label;
                     }
                     break;
-                default:
+                default:;
                     tag.get(puppetClassName).put(parameter,"ParentValue");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
                         if(!((boolean) obj.get("use_puppet_default"))){
@@ -184,6 +188,14 @@ public class Parameters extends AppCompatActivity {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                         break label;
+                    }
+                    else if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
+                        if(!((boolean) obj.get("use_puppet_default"))){
+                            value = obj.get("value");
+                            tag.get(puppetClassName).put(parameter,"ParentValue");
+                        } else {
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                        }
                     }
                     break;
             }
