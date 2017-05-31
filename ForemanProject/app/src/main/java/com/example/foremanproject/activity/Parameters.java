@@ -525,6 +525,18 @@ public class Parameters extends AppCompatActivity {
         finish();
     }
 
+    private void sendRequestToPost(){
+
+    }
+
+    private void sendRequestToPut(){
+
+    }
+
+    private void sendRequestToDelete(){
+
+    }
+
     public void closeActivity(View v){ finish(); }
 
     public static void setID(int _id){ id = _id; }
