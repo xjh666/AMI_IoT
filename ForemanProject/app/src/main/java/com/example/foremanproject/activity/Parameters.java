@@ -243,11 +243,12 @@ public class Parameters extends AppCompatActivity {
             for(String obj: parameter){
                 final EditText parameterValue = new EditText(this);
                 final Spinner spinner = new Spinner(this);
+                final Spinner _spinner = new Spinner(this);
                 ArrayAdapter<String> spinnerArrayAdapter;
 
                 LinearLayout pLayout = new LinearLayout(this);
                 pLayout.setOrientation(LinearLayout.HORIZONTAL);
-                pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 80));
 
                 TextView parameterName = new TextView(this);
                 parameterName.setText("- " + obj);
@@ -278,8 +279,12 @@ public class Parameters extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(spinner.getSelectedItem().toString().equals("Override")){
                             parameterValue.setEnabled(true);
+                            _spinner.setEnabled(true);
                         }
-                        else parameterValue.setEnabled(false);
+                        else {
+                            parameterValue.setEnabled(false);
+                            _spinner.setEnabled(false);
+                        }
                     }
 
                     @Override
@@ -326,7 +331,6 @@ public class Parameters extends AppCompatActivity {
                 }
                 else{
                     ArrayAdapter<String> _spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsOfEnabled));
-                    Spinner _spinner = new Spinner(this);
                     _spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     _spinner.setAdapter(_spinnerArrayAdapter);
                     _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
