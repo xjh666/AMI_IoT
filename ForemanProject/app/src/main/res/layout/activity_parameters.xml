@@ -34,6 +34,7 @@
                     android:layout_width="160dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_icon"
+                    android:onClick="updateInfo"
                     android:text="Submit"
                     android:textAlignment="center"
                     android:textAllCaps="true"

@@ -2,7 +2,9 @@ package com.example.foremanproject.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,15 +46,20 @@ public class Parameters extends AppCompatActivity {
     private static String parent;
 
     private static Map<String,HashMap<String, String>> tag;
+    private static Map<String,HashMap<String, String>> _tag;
     private static Map<String, HashMap<String, Object>> parameters;
+    private static Map<String, HashMap<String, Object>> _parameters;
     private static int requestReceive;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
         setTitle(name);
         parameters = new HashMap<>();
+        _parameters = new HashMap<>();
         tag = new HashMap<>();
+        _tag = new HashMap<>();
         requestReceive = 0;
         sendRequestToGetParameters();
     }
@@ -116,7 +123,7 @@ public class Parameters extends AppCompatActivity {
                         try {
                             getValue(response, puppetClassName);
                             if(requestReceive == arr.length())
-                                displayParameters();
+                                displayParametersAndMonitorChange();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -150,8 +157,6 @@ public class Parameters extends AppCompatActivity {
             String match = (String) obj.get("match");
             if(!tag.containsKey(puppetClassName))
                 tag.put(puppetClassName,new HashMap<String, String>());
-            System.out.println(parent);
-            System.out.println(match);
             switch (type) {
                 case "HOST":
                     tag.get(puppetClassName).put(parameter,"GroupValue");
@@ -217,12 +222,12 @@ public class Parameters extends AppCompatActivity {
         requestReceive++;
     }
 
-    private void displayParameters() throws JSONException {
+    private void displayParametersAndMonitorChange() throws JSONException {
         List<String> arr = new ArrayList<>(parameters.keySet());
         Collections.sort(arr);
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
-        for(String key: arr){
+        for(final String key: arr){
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
@@ -240,7 +245,7 @@ public class Parameters extends AppCompatActivity {
             layout.addView(puppetclassName);
             linearlayout.addView(layout);
 
-            for(String obj: parameter){
+            for(final String obj: parameter){
                 final EditText parameterValue = new EditText(this);
                 final Spinner spinner = new Spinner(this);
                 final Spinner _spinner = new Spinner(this);
@@ -274,9 +279,28 @@ public class Parameters extends AppCompatActivity {
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerArrayAdapter);
                 spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, 120));
+
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(!_tag.containsKey(key))
+                            _tag.put(key,new HashMap<String, String>());
+
+                        switch(spinner.getSelectedItem().toString()){
+                            case "Override":
+                                _tag.get(key).put(obj,"Override");
+                                break;
+                            case "HostGroup Value":
+                                _tag.get(key).put(obj,"GroupValue");
+                                break;
+                            case "Puppet Default":
+                                _tag.get(key).put(obj,"PuppetDefault");
+                                break;
+                            case "Parent Value":
+                                _tag.get(key).put(obj,"ParentValue");
+                                break;
+                        }
+
                         if(spinner.getSelectedItem().toString().equals("Override")){
                             parameterValue.setEnabled(true);
                             _spinner.setEnabled(true);
@@ -286,7 +310,6 @@ public class Parameters extends AppCompatActivity {
                             _spinner.setEnabled(false);
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
@@ -327,6 +350,18 @@ public class Parameters extends AppCompatActivity {
                                 break;
                         }
                     }
+
+                    parameterValue.addTextChangedListener(new TextWatcher() {
+                        public void afterTextChanged(Editable s) {
+                            if(!_parameters.containsKey(key))
+                                _parameters.put(key,new HashMap<String, Object>());
+                            _parameters.get(key).put(obj,parameterValue.getText());
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                    });
                     mLayout.addView(parameterValue);
                 }
                 else{
@@ -364,6 +399,37 @@ public class Parameters extends AppCompatActivity {
                                 break;
                         }
                     }
+
+                    _spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if(!_parameters.containsKey(key))
+                                _parameters.put(key,new HashMap<String, Object>());
+
+                            switch(spinner.getSelectedItem().toString()){
+                                case "Disabled":
+                                    _parameters.get(key).put(obj,false);
+                                    break;
+                                case "Enabled":
+                                    _parameters.get(key).put(obj,true);
+                                    break;
+                            }
+
+                            if(spinner.getSelectedItem().toString().equals("Override")){
+                                parameterValue.setEnabled(true);
+                                _spinner.setEnabled(true);
+                            }
+                            else {
+                                parameterValue.setEnabled(false);
+                                _spinner.setEnabled(false);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+
                     mLayout.addView(_spinner);
                 }
                 linearlayout.addView(pLayout);
@@ -374,6 +440,14 @@ public class Parameters extends AppCompatActivity {
             space.setText("");
             linearlayout.addView(space);
         }
+    }
+
+    public void updateInfo(View view){
+        System.out.println(tag);
+        System.out.println(_tag);
+        System.out.println(parameters);
+        System.out.println(_parameters);
+        finish();
     }
 
     public void closeActivity(View v){ finish(); }
