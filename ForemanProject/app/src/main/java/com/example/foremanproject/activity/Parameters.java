@@ -147,64 +147,43 @@ public class Parameters extends AppCompatActivity {
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = (JSONObject) arr.get(i);
             String match = (String) obj.get("match");
-
+            if(!tag.containsKey(puppetClassName))
+                tag.put(puppetClassName,new HashMap<String, String>());
             switch (type) {
                 case "HOST":
+                    tag.get(puppetClassName).put(parameter,"GroupValue");
                     if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name)) {
                         if(!((boolean) obj.get("use_puppet_default"))) {
                             value = obj.get("value");
-                            if(!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
                             tag.get(puppetClassName).put(parameter,"Override");
                         }
                         else{
-                            if (!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                         break label;
-                    } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(hostgroup) && !((boolean) obj.get("use_puppet_default"))) {
-                        if (!tag.containsKey(puppetClassName))
-                            tag.put(puppetClassName,new HashMap<String, String>());
-                        tag.get(puppetClassName).put(parameter,"GroupValue");
-                        value = obj.get("value");
                     }
                     break;
                 case "HOSTGROUPS":
+                    tag.get(puppetClassName).put(parameter,"PuppetDefault");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)) {
                         if(!((boolean) obj.get("use_puppet_default"))) {
                             value = obj.get("value");
-                            if(!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
                             tag.get(puppetClassName).put(parameter,"Override");
-                        }
-                        else{
-                            if (!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                         break label;
                     }
                     break;
                 default:
+                    tag.get(puppetClassName).put(parameter,"ParentValue");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
                         if(!((boolean) obj.get("use_puppet_default"))){
                             value = obj.get("value");
-                            if(!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
                             tag.get(puppetClassName).put(parameter,"Override");
                         }
                         else {
-                            if (!tag.containsKey(puppetClassName))
-                                tag.put(puppetClassName,new HashMap<String, String>());
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                         break label;
-                    } else if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent) && !((boolean) obj.get("use_puppet_default"))) {
-                        value = obj.get("value");
-                        if (!tag.containsKey(puppetClassName))
-                            tag.put(puppetClassName,new HashMap<String, String>());
-                        tag.get(puppetClassName).put(parameter,"ParentValue");
                     }
                     break;
             }
@@ -291,6 +270,7 @@ public class Parameters extends AppCompatActivity {
                             parameterValue.setEnabled(false);
                         }
                     } else {
+                        System.out.println(tag);
                         switch (tag.get(key).get(obj)) {
                             case "Override":
                                 spinner.setSelection(2);
