@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -248,6 +249,10 @@ public class Parameters extends AppCompatActivity {
             linearlayout.setOrientation(LinearLayout.VERTICAL);
             list.addView(linearlayout);
 
+            TextView space = new TextView(this);
+            space.setText("");
+            linearlayout.addView(space);
+
             List<String> parameter = new ArrayList<>(parameters.get(key).keySet());
             Collections.sort(parameter);
 
@@ -428,14 +433,58 @@ public class Parameters extends AppCompatActivity {
                 linearlayout.addView(pLayout);
                 linearlayout.addView(mLayout);
             }
-
-            TextView space = new TextView(this);
-            space.setText("");
-            linearlayout.addView(space);
         }
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView space1 = new TextView(this);
+        space1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        space1.setText("   ");
+        TextView space2 = new TextView(this);
+        space2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        space2.setText("   ");
+        TextView space3 = new TextView(this);
+        space3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        space3.setText("   ");
+
+        Button submit = new Button(this);
+        submit.setText("SUBMIT");
+        submit.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        submit.setLayoutParams(new LinearLayout.LayoutParams(440, 250));
+        submit.setBackground(getResources().getDrawable(R.drawable.button_icon));
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    updateInfo();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Button cancel = new Button(this);
+        cancel.setText("CANCEL");
+        cancel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        cancel.setLayoutParams(new LinearLayout.LayoutParams(440, 250));
+        cancel.setBackground(getResources().getDrawable(R.drawable.button_icon));
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        layout.addView(space1);
+        layout.addView(submit);
+        layout.addView(space2);
+        layout.addView(cancel);
+        layout.addView(space3);
+        list.addView(layout);
+
     }
 
-    public void updateInfo(View view) throws JSONException {
+    public void updateInfo() throws JSONException {
         System.out.println(parameters);
         System.out.println(_parameters);
         for (String puppetClass : _tag.keySet())
