@@ -456,14 +456,14 @@ public class Parameters extends AppCompatActivity {
                                         sendRequestToPut(obj);
                                     }
                                 }
-                                else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
-                                    sendRequestToDelete();
-                                }
-                                else{
+                                else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
                                     JSONObject obj = new JSONObject();
                                     obj.put("use_puppet_default",1);
                                     obj.put("value",null);
                                     sendRequestToPut(obj);
+                                }
+                                else {
+                                    sendRequestToDelete();
                                 }
                             }
 
