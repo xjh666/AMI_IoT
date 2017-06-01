@@ -398,7 +398,7 @@ public class Parameters extends AppCompatActivity {
                     _spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            switch(spinner.getSelectedItem().toString()){
+                            switch(_spinner.getSelectedItem().toString()){
                                 case "Disabled":
                                     _parameters.get(key).put(obj,false);
                                     break;
@@ -435,6 +435,8 @@ public class Parameters extends AppCompatActivity {
     }
 
     public void updateInfo(View view) throws JSONException {
+        System.out.println(parameters);
+        System.out.println(_parameters);
         for (String puppetClass : _tag.keySet())
             for (String parameterName : _tag.get(puppetClass).keySet()){
                 switch(tag.get(puppetClass).get(parameterName)) {
@@ -458,7 +460,7 @@ public class Parameters extends AppCompatActivity {
                     case "Override":
                         {
                             if(_tag.get(puppetClass).get(parameterName).equals("Override")){
-                                if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(_parameters.get(puppetClass).get(parameterName)))) {
+                                if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(parameters.get(puppetClass).get(parameterName)))) {
                                     JSONObject obj = new JSONObject();
                                     obj.put("value", _parameters.get(puppetClass).get(parameterName));
                                     sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
