@@ -435,10 +435,6 @@ public class Parameters extends AppCompatActivity {
     }
 
     public void updateInfo(View view) throws JSONException {
-//        System.out.println(tag);
-//        System.out.println(_tag);
-//        System.out.println(parameters);
-//        System.out.println(_parameters);
         for (String puppetClass : _tag.keySet())
             for (String parameterName : _tag.get(puppetClass).keySet()){
                 switch(tag.get(puppetClass).get(parameterName)) {
@@ -450,11 +446,11 @@ public class Parameters extends AppCompatActivity {
                                 if(_parameters.get(puppetClass).containsKey(parameterName))
                                     obj.put("value",_parameters.get(puppetClass).get(parameterName));
                                 else obj.put("value",parameters.get(puppetClass).get(parameterName));
-                                putAnObject(obj, puppetClass, parameterName);
+                                sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
                             } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")
                                     || _tag.get(puppetClass).get(parameterName).equals("DefaultValue")
                                     || _tag.get(puppetClass).get(parameterName).equals("ParentValue")){
-                                deleteAnObject(puppetClass, parameterName);
+                                sendRequestTogGetOverrideID(null, puppetClass, parameterName);
                             }
                             break;
                         }
@@ -465,15 +461,15 @@ public class Parameters extends AppCompatActivity {
                                 if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(_parameters.get(puppetClass).get(parameterName)))) {
                                     JSONObject obj = new JSONObject();
                                     obj.put("value", _parameters.get(puppetClass).get(parameterName));
-                                    putAnObject(obj, puppetClass, parameterName);
+                                    sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
                                 }
                             } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
                                 JSONObject obj = new JSONObject();
                                 obj.put("use_puppet_default",1);
                                 obj.put("value",JSONObject.NULL);
-                                putAnObject(obj, puppetClass, parameterName);
+                                sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
                             } else {
-                                deleteAnObject(puppetClass, parameterName);
+                                sendRequestTogGetOverrideID(null, puppetClass, parameterName);
                             }
                             break;
                         }
@@ -497,7 +493,7 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + parent + "/" + name);
                                         break;
                                 }
-                                postAnObject(obj, puppetClass, parameterName);
+                                sendRequestToPost(obj, puppetClass, parameterName);
                             } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
                                 JSONObject obj = new JSONObject();
                                 obj.put("use_puppet_default",1);
@@ -512,7 +508,7 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + parent + "/" + name);
                                         break;
                                 }
-                                postAnObject(obj, puppetClass, parameterName);
+                                sendRequestToPost(obj, puppetClass, parameterName);
                             }
                         }
                 }
@@ -520,7 +516,7 @@ public class Parameters extends AppCompatActivity {
         finish();
     }
 
-    private void postAnObject(JSONObject obj, String puppetClass, String parameterName){
+    private void sendRequestToPost(JSONObject obj, String puppetClass, String parameterName){
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -547,12 +543,116 @@ public class Parameters extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-    private void putAnObject(JSONObject obj, String puppetClass, String parameterName){
-
+    private void sendRequestTogGetOverrideID(final JSONObject obj, final String puppetClass, final String parameterName){
+        int parameter_id = parameterID.get(puppetClass).get(parameterName);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray arr = (JSONArray) response.get("results");
+                            int overrideID = 0;
+                            label1:
+                            for(int i=0;i<arr.length();i++) {
+                                JSONObject result = (JSONObject) arr.get(i);
+                                String match = result.get("match").toString();
+                                switch (type) {
+                                    case "HOST":
+                                        if (match.equals("fqdn=" + name)) {
+                                            overrideID = (int) result.get("id");
+                                            break label1;
+                                        }
+                                        break;
+                                    case "HOSTGROUPS":
+                                        if (match.equals("hostgroup=" + name)) {
+                                            overrideID = (int) result.get("id");
+                                            break label1;
+                                        }
+                                        break;
+                                    default:
+                                        if (match.equals("hostgroup=" + parent + "/" + name)) {
+                                            overrideID = (int) result.get("id");
+                                            break label1;
+                                        }
+                                        break;
+                                }
+                            }
+                            if(obj==null)
+                                sendRequestToDelete(puppetClass, parameterName, overrideID);
+                            else sendRequestToPut(obj,puppetClass, parameterName, overrideID);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
     }
 
-    private void deleteAnObject(String puppetClass, String parameterName){
+    private void sendRequestToPut(JSONObject obj, String puppetClass, String parameterName, int overrideID){
+        int parameter_id = parameterID.get(puppetClass).get(parameterName);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.PUT, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), obj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
 
+    private void sendRequestToDelete(String puppetClass, String parameterName, int overrideID){
+        int parameter_id = parameterID.get(puppetClass).get(parameterName);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.DELETE, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
     }
 
     public void closeActivity(View v){ finish(); }
