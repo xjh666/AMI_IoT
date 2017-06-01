@@ -443,8 +443,7 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("value",_parameters.get(puppetClass).get(parameterName));
                                     else obj.put("value",parameters.get(puppetClass).get(parameterName));
                                     sendRequestToPut(obj);
-                                }
-                                else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
+                                } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
                                     sendRequestToDelete();
                                 }
                             }
@@ -489,20 +488,56 @@ public class Parameters extends AppCompatActivity {
                         break;
 
                     case "HOSTGROUPS":
-                            if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
-                                if(tag.get(puppetClass).get(parameterName).equals("Override")){
-                                    //PUT a JSONObject
+                        if(tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                            if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                                JSONObject obj = new JSONObject();
+                                obj.put("use_puppet_default",0);
+                                if(_parameters.get(puppetClass).containsKey(parameterName))
+                                    obj.put("value",_parameters.get(puppetClass).get(parameterName));
+                                else obj.put("value",parameters.get(puppetClass).get(parameterName));
+                                sendRequestToPut(obj);
+                            } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
+                                sendRequestToDelete();
+                            }
+                        }
+
+                            else if(tag.get(puppetClass).get(parameterName).equals("Override")){
+                                if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                                    if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(_parameters.get(puppetClass).get(parameterName)))) {
+                                        JSONObject obj = new JSONObject();
+                                        obj.put("value", _parameters.get(puppetClass).get(parameterName));
+                                        sendRequestToPut(obj);
+                                    }
+                                }
+                                else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("use_puppet_default",1);
+                                    obj.put("value",null);
+                                    sendRequestToPut(obj);
+                                }
+                                else {
+                                    sendRequestToDelete();
                                 }
                             }
 
-                            else {
-                                if(tag.get(puppetClass).get(parameterName).equals("Override")){
-                                    //PUT a JSONObject
-                                } else {
-                                    //PUT a JSONObject
+                            else{
+                                if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("use_puppet_default",0);
+                                    if(_parameters.get(puppetClass).containsKey(parameterName))
+                                        obj.put("value",_parameters.get(puppetClass).get(parameterName));
+                                    else obj.put("value",parameters.get(puppetClass).get(parameterName));
+                                    obj.put("match" , "hostgroup=" + name);
+                                    sendRequestToPost(obj);
+                                }
+                                else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("use_puppet_default",1);
+                                    obj.put("value",null);
+                                    obj.put("match" , "hostgroup=" + name);
+                                    sendRequestToPost(obj);
                                 }
                             }
-
                         break;
 
                     default:
