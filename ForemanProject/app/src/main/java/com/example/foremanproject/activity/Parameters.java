@@ -185,10 +185,15 @@ public class Parameters extends AppCompatActivity {
                     }
                     break;
                 case "HOSTGROUPS":
-                    tag.get(puppetClassName).put(parameter,"PuppetDefault");
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name) && !((boolean) obj.get("use_puppet_default"))) {
-                        value = obj.get("value");
-                        tag.get(puppetClassName).put(parameter,"Override");
+                    tag.get(puppetClassName).put(parameter,"DefaultValue");
+                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)){
+                        if(!((boolean) obj.get("use_puppet_default"))) {
+                            value = obj.get("value");
+                            tag.get(puppetClassName).put(parameter,"Override");
+                        } else{
+                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                            value = null;
+                        }
                         break label;
                     }
                     break;
@@ -326,32 +331,22 @@ public class Parameters extends AppCompatActivity {
                     parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                    if(type.equals("HOSTGROUPS")) {
-                        if (tag.get(key).get(obj).equals("Override")) {
-                            spinner.setSelection(1);
+                    switch (tag.get(key).get(obj)) {
+                        case "Override":
+                            spinner.setSelection(2);
                             parameterValue.setEnabled(true);
-                        } else {
+                            break;
+                        case "ParentValue":
+                        case "GroupValue":
+                        case "DefaultValue":
                             spinner.setSelection(0);
-                            parameterValue.setText("");
                             parameterValue.setEnabled(false);
-                        }
-                    } else {
-                        switch (tag.get(key).get(obj)) {
-                            case "Override":
-                                spinner.setSelection(2);
-                                parameterValue.setEnabled(true);
-                                break;
-                            case "ParentValue":
-                            case "GroupValue":
-                                spinner.setSelection(0);
-                                parameterValue.setEnabled(false);
-                                break;
-                            default:
-                                spinner.setSelection(1);
-                                parameterValue.setEnabled(false);
-                                parameterValue.setText("");
-                                break;
-                        }
+                            break;
+                        default:
+                            spinner.setSelection(1);
+                            parameterValue.setEnabled(false);
+                            parameterValue.setText("");
+                            break;
                     }
 
                     parameterValue.addTextChangedListener(new TextWatcher() {
@@ -375,30 +370,21 @@ public class Parameters extends AppCompatActivity {
                         _spinner.setSelection(1);
                     else _spinner.setSelection(0);
 
-                    if(type.equals("HOSTGROUPS")) {
-                        if (tag.get(key).get(obj).equals("Override")) {
-                            spinner.setSelection(1);
+                    switch (tag.get(key).get(obj)) {
+                        case "Override":
+                            spinner.setSelection(2);
                             _spinner.setEnabled(true);
-                        } else {
+                            break;
+                        case "ParentValue":
+                        case "GroupValue":
+                        case "DefaultValue":
                             spinner.setSelection(0);
                             _spinner.setEnabled(false);
-                        }
-                    }else {
-                        switch (tag.get(key).get(obj)) {
-                            case "Override":
-                                spinner.setSelection(2);
-                                _spinner.setEnabled(true);
-                                break;
-                            case "ParentValue":
-                            case "GroupValue":
-                                spinner.setSelection(0);
-                                _spinner.setEnabled(false);
-                                break;
-                            default:
-                                spinner.setSelection(1);
-                                _spinner.setEnabled(false);
-                                break;
-                        }
+                            break;
+                        default:
+                            spinner.setSelection(1);
+                            _spinner.setEnabled(false);
+                            break;
                     }
 
                     _spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){

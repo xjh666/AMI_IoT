@@ -18,6 +18,7 @@
     </string-array>
 
     <string-array name="selectionsForHostGroup">
+        <item>Default Value</item>
         <item>Puppet Default</item>
         <item>Override</item>
     </string-array>
