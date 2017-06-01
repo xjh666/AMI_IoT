@@ -488,18 +488,18 @@ public class Parameters extends AppCompatActivity {
                         break;
 
                     case "HOSTGROUPS":
-                        if(tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
-                            if(_tag.get(puppetClass).get(parameterName).equals("Override")){
-                                JSONObject obj = new JSONObject();
-                                obj.put("use_puppet_default",0);
-                                if(_parameters.get(puppetClass).containsKey(parameterName))
-                                    obj.put("value",_parameters.get(puppetClass).get(parameterName));
-                                else obj.put("value",parameters.get(puppetClass).get(parameterName));
-                                sendRequestToPut(obj);
-                            } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
-                                sendRequestToDelete();
+                            if(tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                                if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("use_puppet_default",0);
+                                    if(_parameters.get(puppetClass).containsKey(parameterName))
+                                        obj.put("value",_parameters.get(puppetClass).get(parameterName));
+                                    else obj.put("value",parameters.get(puppetClass).get(parameterName));
+                                    sendRequestToPut(obj);
+                                } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")){
+                                    sendRequestToDelete();
+                                }
                             }
-                        }
 
                         else if(tag.get(puppetClass).get(parameterName).equals("Override")){
                             if(_tag.get(puppetClass).get(parameterName).equals("Override")){
