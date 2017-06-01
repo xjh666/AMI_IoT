@@ -49,6 +49,7 @@ public class Parameters extends AppCompatActivity {
     private static Map<String,HashMap<String, String>> _tag;
     private static Map<String, HashMap<String, Object>> parameters;
     private static Map<String, HashMap<String, Object>> _parameters;
+    private static Map<String, HashMap<String, Integer>> parameterID;
     private static int requestReceive;
 
     @Override
@@ -60,6 +61,7 @@ public class Parameters extends AppCompatActivity {
         _parameters = new HashMap<>();
         tag = new HashMap<>();
         _tag = new HashMap<>();
+        parameterID = new HashMap<>();
         requestReceive = 0;
         sendRequestToGetParameters();
     }
@@ -109,6 +111,11 @@ public class Parameters extends AppCompatActivity {
             JSONObject puppetClass = (JSONObject) obj.get("puppetclass_name");
             String puppetClassName = (String) puppetClass.get("name");
             int parameter_id = (Integer) obj.get("id");
+
+            if(!parameterID.containsKey(puppetClassName))
+                parameterID.put(puppetClassName,new HashMap<String, Integer>());
+            parameterID.get(puppetClassName).put(obj.get("parameter").toString(),parameter_id);
+
             sendRequestForValue(arr, parameter_id,puppetClassName);
         }
     }
@@ -443,11 +450,11 @@ public class Parameters extends AppCompatActivity {
                                 if(_parameters.get(puppetClass).containsKey(parameterName))
                                     obj.put("value",_parameters.get(puppetClass).get(parameterName));
                                 else obj.put("value",parameters.get(puppetClass).get(parameterName));
-                                sendRequestToPut(obj);
+                                putAnObject(obj, puppetClass, parameterName);
                             } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")
                                     || _tag.get(puppetClass).get(parameterName).equals("DefaultValue")
                                     || _tag.get(puppetClass).get(parameterName).equals("ParentValue")){
-                                sendRequestToDelete();
+                                deleteAnObject(puppetClass, parameterName);
                             }
                             break;
                         }
@@ -458,15 +465,15 @@ public class Parameters extends AppCompatActivity {
                                 if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(_parameters.get(puppetClass).get(parameterName)))) {
                                     JSONObject obj = new JSONObject();
                                     obj.put("value", _parameters.get(puppetClass).get(parameterName));
-                                    sendRequestToPut(obj);
+                                    putAnObject(obj, puppetClass, parameterName);
                                 }
                             } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
                                 JSONObject obj = new JSONObject();
                                 obj.put("use_puppet_default",1);
-                                obj.put("value",null);
-                                sendRequestToPut(obj);
+                                obj.put("value",JSONObject.NULL);
+                                putAnObject(obj, puppetClass, parameterName);
                             } else {
-                                sendRequestToDelete();
+                                deleteAnObject(puppetClass, parameterName);
                             }
                             break;
                         }
@@ -490,11 +497,10 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + parent + "/" + name);
                                         break;
                                 }
-                                sendRequestToPost(obj);
+                                postAnObject(obj, puppetClass, parameterName);
                             } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
                                 JSONObject obj = new JSONObject();
                                 obj.put("use_puppet_default",1);
-                                obj.put("value",null);
                                 switch (type) {
                                     case "HOST":
                                         obj.put("match", "fqdn=" + name);
@@ -506,7 +512,7 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + parent + "/" + name);
                                         break;
                                 }
-                                sendRequestToPost(obj);
+                                postAnObject(obj, puppetClass, parameterName);
                             }
                         }
                 }
@@ -514,15 +520,38 @@ public class Parameters extends AppCompatActivity {
         finish();
     }
 
-    private void sendRequestToPost(JSONObject obj){
+    private void postAnObject(JSONObject obj, String puppetClass, String parameterName){
+        int parameter_id = parameterID.get(puppetClass).get(parameterName);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), obj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", "Basic " + auth);
+                return headers;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
+
+    private void putAnObject(JSONObject obj, String puppetClass, String parameterName){
 
     }
 
-    private void sendRequestToPut(JSONObject obj){
-
-    }
-
-    private void sendRequestToDelete(){
+    private void deleteAnObject(String puppetClass, String parameterName){
 
     }
 
