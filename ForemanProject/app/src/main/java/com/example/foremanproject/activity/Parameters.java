@@ -365,6 +365,7 @@ public class Parameters extends AppCompatActivity {
                     _spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     _spinner.setAdapter(_spinnerArrayAdapter);
                     _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
+                    _spinner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
 
                     if((boolean)parameters.get(key).get(obj))
                         _spinner.setSelection(1);
