@@ -1,6 +1,5 @@
 package com.example.foremanproject.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,16 +29,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Dashboard extends Fragment {
     private Handler mHandler;
     private int mInterval = 30000;
-
-    public static Dashboard newInstance() {
-        return new Dashboard();
-    }
+    final int ThirtyMinutesInMilliseconds = 1800000;
+    final int ThreeMinutesInMilliseconds = 180000;
+    public static Dashboard newInstance() { return new Dashboard(); }
 
     @Nullable
     @Override
@@ -47,7 +52,6 @@ public class Dashboard extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
         startRepeatingTask();
-        final Activity activity = getActivity();;
         return view;
     }
 
@@ -56,41 +60,32 @@ public class Dashboard extends Fragment {
         super.onDestroy();
         stopRepeatingTask();
     }
+
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
             sendRequestForConfigChartAndStatus();
+            sendRequestForReports();
             mHandler.postDelayed(mStatusChecker, mInterval);
         }
     };
-    void startRepeatingTask() {
-        mStatusChecker.run();
-    }
-    void stopRepeatingTask() {
-        mHandler.removeCallbacks(mStatusChecker);
-    }
 
-    public void showAllHosts(View view){
-    }
+    void startRepeatingTask() { mStatusChecker.run(); }
 
-    public void showHostGroups(View view){
-    }
+    void stopRepeatingTask() { mHandler.removeCallbacks(mStatusChecker); }
 
-    public void refresh(){
-        sendRequestForConfigChartAndStatus();
-        sendRequestForTimeAndEvent();
-    }
-
-    private void sendRequestForTimeAndEvent(){
+    private void sendRequestForReports(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "api/reports/"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getInfoForTimeAndEvent(response);
+                            getReports(response);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
@@ -113,12 +108,48 @@ public class Dashboard extends Fragment {
         queue.add(jsObjRequest);
     }
 
-    private void getInfoForTimeAndEvent(JSONObject response) throws JSONException{
-        JSONArray result = sort((JSONArray)response.get("results"));
-    }
+    private void getReports(JSONObject response) throws JSONException, ParseException {
+        Map<String, Map<String, Integer>> status = new HashMap<>();
+        ArrayList<String> order = new ArrayList<>();
+        int [] runDistribution = {0,0,0,0,0,0,0,0,0,0};
+        int num = 10;
 
-    private JSONArray sort(JSONArray arr){
-        return arr;
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currentTime = sdf.parse(sdf.format(Calendar.getInstance().getTime()));
+
+        JSONArray arr = (JSONArray)response.get("results");
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = (JSONObject) arr.get(i);
+            String host = obj.getString("host_name");
+            if(obj.getJSONObject("metrics").getJSONObject("changes").getInt("total") > 0 && num-->0){
+                order.add(host);
+                status.put(host,new HashMap<String, Integer>());
+                JSONObject hostStatus = (JSONObject) obj.get("status");
+                if((hostStatus.getInt("applied")) > 0)
+                    status.get(host).put("appiled",(hostStatus.getInt("applied")));
+
+                if((hostStatus.getInt("restarted")) > 0)
+                    status.get(host).put("restarted",(hostStatus.getInt("restarted")));
+
+                if((hostStatus.getInt("failed")) > 0)
+                    status.get(host).put("failed",(hostStatus.getInt("failed")));
+
+                if((hostStatus.getInt("failed_restarts")) > 0)
+                    status.get(host).put("failed_restarts",(hostStatus.getInt("failed_restarts")));
+
+                if((hostStatus.getInt("skipped")) > 0)
+                    status.get(host).put("skipped",(hostStatus.getInt("skipped")));
+
+                if((hostStatus.getInt("pending")) > 0)
+                    status.get(host).put("pending",(hostStatus.getInt("pending")));
+            }
+
+            Date time = sdf.parse(obj.getString("created_at").substring(0,10) + " " + obj.getString("created_at").substring(11,19));
+            long timeDifference = currentTime.getTime() - time.getTime();
+            if(timeDifference >= ThirtyMinutesInMilliseconds)
+                continue;
+            runDistribution[(int)timeDifference/ThreeMinutesInMilliseconds]++;
+        }
     }
 
     private void sendRequestForConfigChartAndStatus() {
@@ -129,7 +160,7 @@ public class Dashboard extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getInfoForConfigChartAndStatus(response);
+                            getInfoForChartAndStatus(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -153,7 +184,7 @@ public class Dashboard extends Fragment {
         queue.add(jsObjRequest);
     }
 
-    private void getInfoForConfigChartAndStatus(JSONObject response) throws JSONException {
+    private void getInfoForChartAndStatus(JSONObject response) throws JSONException {
         String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
 
         int totalHosts = response.getInt("total_hosts");
