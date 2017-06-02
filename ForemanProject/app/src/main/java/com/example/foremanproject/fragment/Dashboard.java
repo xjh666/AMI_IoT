@@ -1,5 +1,6 @@
 package com.example.foremanproject.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -22,9 +23,15 @@ import com.example.foremanproject.R;
 import com.example.foremanproject.other.UserInfo;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
 import org.achartengine.model.CategorySeries;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -144,7 +151,7 @@ public class Dashboard extends Fragment {
             String hostName = order.get(i);
             setLatestEvent(i, hostName, status);
         }
-
+        drawHistogram(runDistribution);
     }
 
     private void setLatestEvent(int i, String hostName, Map<String, Map<String, Integer>> status ){
@@ -418,6 +425,7 @@ public class Dashboard extends Fragment {
             defaultRenderer.setLegendTextSize(50f);
             defaultRenderer.setApplyBackgroundColor(false);
             defaultRenderer.addSeriesRenderer(seriesRenderer);
+            defaultRenderer.setPanEnabled(false);
         }
         defaultRenderer.setZoomButtonsVisible(false);
         LinearLayout chartContainer = (LinearLayout) getView().findViewById(R.id.chart_container);
@@ -428,6 +436,45 @@ public class Dashboard extends Fragment {
                 distributionSeries, defaultRenderer);
         // adding the view to the linearlayout
         chartContainer.addView(mChart);
+    }
+
+    private void drawHistogram(int [] runDistribution){
+
+        XYSeries series = new XYSeries("");
+        series.add(0,0);
+        for(int i = 0; i<10; i++)
+            series.add(3*(i+1),runDistribution[i]);
+
+
+
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        dataset.addSeries(series);
+
+        XYSeriesRenderer renderer = new XYSeriesRenderer();
+        renderer.setColor(0xff00608a);
+
+
+        XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+        mRenderer.addSeriesRenderer(renderer);
+        mRenderer.setXLabels(0);
+        for(int i = 3; i<=30; i+=3)
+            mRenderer.addXTextLabel(i, Integer.toString(i));
+
+        mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00));
+        mRenderer.setPanEnabled(false, false);
+        mRenderer.setYAxisMax(7);
+        mRenderer.setYAxisMin(0);
+        mRenderer.setShowGrid(true);
+        mRenderer.setLabelsTextSize(40f);
+        mRenderer.setXLabelsColor(0xff000000);
+        mRenderer.setBarSpacing(0.1);
+        mRenderer.setXTitle("Minutes ago");
+        mRenderer.setAxisTitleTextSize(60);
+        mRenderer.setLabelsColor(0xFF000000);
+
+        GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, mRenderer, BarChart.Type.DEFAULT);
+        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.histogram_container);
+        layout.addView(chartView,0);
     }
 }
 
