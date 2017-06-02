@@ -270,7 +270,7 @@
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/cell_shape"
-                        android:text="Host"
+                        android:text=" Host"
                         android:textAlignment="textStart"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />

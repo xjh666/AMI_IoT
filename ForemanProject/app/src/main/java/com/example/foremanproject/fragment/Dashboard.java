@@ -159,7 +159,7 @@ public class Dashboard extends Fragment {
         switch (i){
             case 0:
                 text = ((TextView) getView().findViewById(R.id.id1));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a1);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r1);
@@ -175,7 +175,7 @@ public class Dashboard extends Fragment {
                 break;
             case 1:
                 text = ((TextView) getView().findViewById(R.id.id2));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a2);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r2);
@@ -191,7 +191,7 @@ public class Dashboard extends Fragment {
                 break;
             case 2:
                 text = ((TextView) getView().findViewById(R.id.id3));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a3);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r3);
@@ -207,7 +207,7 @@ public class Dashboard extends Fragment {
                 break;
             case 3:
                 text = ((TextView) getView().findViewById(R.id.id4));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a4);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r4);
@@ -223,7 +223,7 @@ public class Dashboard extends Fragment {
                 break;
             case 4:
                 text = ((TextView) getView().findViewById(R.id.id5));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a5);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r5);
@@ -239,7 +239,7 @@ public class Dashboard extends Fragment {
                 break;
             case 5:
                 text = ((TextView) getView().findViewById(R.id.id6));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a6);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r6);
@@ -255,7 +255,7 @@ public class Dashboard extends Fragment {
                 break;
             case 6:
                 text = ((TextView) getView().findViewById(R.id.id7));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a7);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r7);
@@ -271,7 +271,7 @@ public class Dashboard extends Fragment {
                 break;
             case 7:
                 text = ((TextView) getView().findViewById(R.id.id8));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a8);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r8);
@@ -287,7 +287,7 @@ public class Dashboard extends Fragment {
                 break;
             case 8:
                 text = ((TextView) getView().findViewById(R.id.id9));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a9);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r9);
@@ -303,7 +303,7 @@ public class Dashboard extends Fragment {
                 break;
             case 9:
                 text = ((TextView) getView().findViewById(R.id.id10));
-                text.setText(hostName);
+                text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a10);
                 text.setText(status.get(hostName).get("applied").toString());
                 text = (TextView) getView().findViewById(R.id.r10);
