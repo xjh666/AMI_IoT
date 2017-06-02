@@ -429,11 +429,6 @@ public class Dashboard extends Fragment {
         // adding the view to the linearlayout
         chartContainer.addView(mChart);
     }
-
-    public interface OnDashboardSelected {
-        void OnDashboardSelected(int imageResId, String name,
-                                 String description, String url);
-    }
 }
 
 
