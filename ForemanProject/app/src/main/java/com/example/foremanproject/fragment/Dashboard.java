@@ -125,23 +125,12 @@ public class Dashboard extends Fragment {
                 order.add(host);
                 status.put(host,new HashMap<String, Integer>());
                 JSONObject hostStatus = (JSONObject) obj.get("status");
-                if((hostStatus.getInt("applied")) > 0)
-                    status.get(host).put("appiled",(hostStatus.getInt("applied")));
-
-                if((hostStatus.getInt("restarted")) > 0)
-                    status.get(host).put("restarted",(hostStatus.getInt("restarted")));
-
-                if((hostStatus.getInt("failed")) > 0)
-                    status.get(host).put("failed",(hostStatus.getInt("failed")));
-
-                if((hostStatus.getInt("failed_restarts")) > 0)
-                    status.get(host).put("failed_restarts",(hostStatus.getInt("failed_restarts")));
-
-                if((hostStatus.getInt("skipped")) > 0)
-                    status.get(host).put("skipped",(hostStatus.getInt("skipped")));
-
-                if((hostStatus.getInt("pending")) > 0)
-                    status.get(host).put("pending",(hostStatus.getInt("pending")));
+                status.get(host).put("applied",(hostStatus.getInt("applied")));
+                status.get(host).put("restarted",(hostStatus.getInt("restarted")));
+                status.get(host).put("failed",(hostStatus.getInt("failed")));
+                status.get(host).put("failed_restarts",(hostStatus.getInt("failed_restarts")));
+                status.get(host).put("skipped",(hostStatus.getInt("skipped")));
+                status.get(host).put("pending",(hostStatus.getInt("pending")));
             }
 
             Date time = sdf.parse(obj.getString("created_at").substring(0,10) + " " + obj.getString("created_at").substring(11,19));
@@ -149,6 +138,178 @@ public class Dashboard extends Fragment {
             if(timeDifference >= ThirtyMinutesInMilliseconds)
                 continue;
             runDistribution[(int)timeDifference/ThreeMinutesInMilliseconds]++;
+        }
+
+        for(int i=0;i<order.size();i++){
+            String hostName = order.get(i);
+            setLatestEvent(i, hostName, status);
+        }
+
+    }
+
+    private void setLatestEvent(int i, String hostName, Map<String, Map<String, Integer>> status ){
+        TextView text;
+        switch (i){
+            case 0:
+                text = ((TextView) getView().findViewById(R.id.id1));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a1);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r1);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f1);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr1);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s1);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p1);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 1:
+                text = ((TextView) getView().findViewById(R.id.id2));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a2);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r2);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f2);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr2);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s2);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p2);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 2:
+                text = ((TextView) getView().findViewById(R.id.id3));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a3);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r3);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f3);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr3);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s3);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p3);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 3:
+                text = ((TextView) getView().findViewById(R.id.id4));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a4);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r4);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f4);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr4);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s4);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p4);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 4:
+                text = ((TextView) getView().findViewById(R.id.id5));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a5);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r5);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f5);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr5);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s5);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p5);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 5:
+                text = ((TextView) getView().findViewById(R.id.id6));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a6);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r6);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f6);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr6);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s6);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p6);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 6:
+                text = ((TextView) getView().findViewById(R.id.id7));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a7);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r7);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f7);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr7);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s7);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p7);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 7:
+                text = ((TextView) getView().findViewById(R.id.id8));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a8);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r8);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f8);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr8);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s8);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p8);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 8:
+                text = ((TextView) getView().findViewById(R.id.id9));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a9);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r9);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f9);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr9);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s9);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p9);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
+            case 9:
+                text = ((TextView) getView().findViewById(R.id.id10));
+                text.setText(hostName);
+                text = (TextView) getView().findViewById(R.id.a10);
+                text.setText(status.get(hostName).get("applied").toString());
+                text = (TextView) getView().findViewById(R.id.r10);
+                text.setText(status.get(hostName).get("restarted").toString());
+                text = (TextView) getView().findViewById(R.id.f10);
+                text.setText(status.get(hostName).get("failed").toString());
+                text = (TextView) getView().findViewById(R.id.fr10);
+                text.setText(status.get(hostName).get("failed_restarts").toString());
+                text = (TextView) getView().findViewById(R.id.s10);
+                text.setText(status.get(hostName).get("skipped").toString());
+                text = (TextView) getView().findViewById(R.id.p10);
+                text.setText(status.get(hostName).get("pending").toString());
+                break;
         }
     }
 
