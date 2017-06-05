@@ -35,7 +35,7 @@ public class AllHosts extends Fragment  {
     public static AllHosts newInstance() {
         return new AllHosts();
     }
-    LinearLayout totalList = (LinearLayout) getView().findViewById(R.id.totallist);
+    LinearLayout totalList;
 
     @Nullable
     @Override
@@ -79,6 +79,7 @@ public class AllHosts extends Fragment  {
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
+        totalList = (LinearLayout) getView().findViewById(R.id.totallist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
 
