@@ -48,7 +48,6 @@ import java.util.Map;
 
 public class Dashboard extends Fragment {
     private Handler mHandler;
-    private int mInterval = 30000;
     final int ThirtyMinutesInMilliseconds = 1800000;
     final int ThreeMinutesInMilliseconds = 180000;
     public static Dashboard newInstance() { return new Dashboard(); }
@@ -73,6 +72,7 @@ public class Dashboard extends Fragment {
         public void run() {
             sendRequestForConfigChartAndStatus();
             sendRequestForReports();
+            int mInterval = 30000;
             mHandler.postDelayed(mStatusChecker, mInterval);
         }
     };
@@ -90,9 +90,7 @@ public class Dashboard extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             getReports(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
+                        } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                         }
                     }
@@ -126,12 +124,12 @@ public class Dashboard extends Fragment {
 
         JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.getJSONObject(i);
+            JSONObject obj = arr.getJSONObject(i);
             String host = obj.getString("host_name");
             if(obj.getJSONObject("metrics").getJSONObject("changes").getInt("total") > 0 && num-->0){
                 order.add(host);
                 status.put(host,new HashMap<String, Integer>());
-                JSONObject hostStatus = (JSONObject) obj.get("status");
+                JSONObject hostStatus = obj.getJSONObject("status");
                 status.get(host).put("applied",(hostStatus.getInt("applied")));
                 status.get(host).put("restarted",(hostStatus.getInt("restarted")));
                 status.get(host).put("failed",(hostStatus.getInt("failed")));
@@ -158,7 +156,7 @@ public class Dashboard extends Fragment {
         TextView text;
         switch (i){
             case 0:
-                text = ((TextView) getView().findViewById(R.id.id1));
+                text = (TextView) getView().findViewById(R.id.id1);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a1);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -174,7 +172,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 1:
-                text = ((TextView) getView().findViewById(R.id.id2));
+                text = (TextView) getView().findViewById(R.id.id2);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a2);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -190,7 +188,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 2:
-                text = ((TextView) getView().findViewById(R.id.id3));
+                text = (TextView) getView().findViewById(R.id.id3);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a3);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -206,7 +204,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 3:
-                text = ((TextView) getView().findViewById(R.id.id4));
+                text = (TextView) getView().findViewById(R.id.id4);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a4);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -222,7 +220,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 4:
-                text = ((TextView) getView().findViewById(R.id.id5));
+                text = (TextView) getView().findViewById(R.id.id5);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a5);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -238,7 +236,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 5:
-                text = ((TextView) getView().findViewById(R.id.id6));
+                text = (TextView) getView().findViewById(R.id.id6);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a6);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -254,7 +252,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 6:
-                text = ((TextView) getView().findViewById(R.id.id7));
+                text = (TextView) getView().findViewById(R.id.id7);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a7);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -270,7 +268,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 7:
-                text = ((TextView) getView().findViewById(R.id.id8));
+                text = (TextView) getView().findViewById(R.id.id8);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a8);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -286,7 +284,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 8:
-                text = ((TextView) getView().findViewById(R.id.id9));
+                text = (TextView) getView().findViewById(R.id.id9);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a9);
                 text.setText(status.get(hostName).get("applied").toString());
@@ -302,7 +300,7 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
             case 9:
-                text = ((TextView) getView().findViewById(R.id.id10));
+                text = (TextView) getView().findViewById(R.id.id10);
                 text.setText(" " + hostName);
                 text = (TextView) getView().findViewById(R.id.a10);
                 text.setText(status.get(hostName).get("applied").toString());

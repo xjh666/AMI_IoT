@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class HostGroups extends Fragment {
     public static HostGroups newInstance() {return new HostGroups(); }
-    LinearLayout grouplist;
+    LinearLayout grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
 
     @Nullable
     @Override
@@ -81,7 +81,6 @@ public class HostGroups extends Fragment {
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
-        grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
 
