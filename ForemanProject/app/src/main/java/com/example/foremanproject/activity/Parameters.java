@@ -107,12 +107,12 @@ public class Parameters extends AppCompatActivity {
     }
 
     private void getParameters(JSONObject response) throws JSONException, InterruptedException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
-            JSONObject puppetClass = (JSONObject) obj.get("puppetclass_name");
-            String puppetClassName = (String) puppetClass.get("name");
-            int parameter_id = (Integer) obj.get("id");
+            JSONObject obj = arr.getJSONObject(i);
+            JSONObject puppetClass = obj.getJSONObject("puppetclass_name");
+            String puppetClassName = puppetClass.getString("name");
+            int parameter_id = obj.getInt("id");
 
             if(!parameterID.containsKey(puppetClassName))
                 parameterID.put(puppetClassName,new HashMap<String, Integer>());
@@ -156,9 +156,9 @@ public class Parameters extends AppCompatActivity {
     }
 
     private void getValue(JSONObject response, String puppetClassName) throws JSONException {
-        JSONArray arr  = (JSONArray) response.get("override_values");
+        JSONArray arr  = response.getJSONArray("override_values");
         Object value = response.get("default_value");
-        String parameter = (String)response.get("parameter");
+        String parameter = response.getString("parameter");
 
         if(!tag.containsKey(puppetClassName))
             tag.put(puppetClassName,new HashMap<String, String>());
@@ -176,12 +176,12 @@ public class Parameters extends AppCompatActivity {
 
         label:
         for (int i = 0; i < arr.length(); i++) {
-            JSONObject obj = (JSONObject) arr.get(i);
-            String match = (String) obj.get("match");
+            JSONObject obj = arr.getJSONObject(i);
+            String match = obj.getString("match");
             switch (type) {
                 case "HOST":
                     if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name)) {
-                        if(!((boolean) obj.get("use_puppet_default"))) {
+                        if(!(obj.getBoolean("use_puppet_default"))) {
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"Override");
                         } else{
@@ -189,14 +189,14 @@ public class Parameters extends AppCompatActivity {
                         }
                         break label;
                     } else if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() &&match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
-                        if(!((boolean) obj.get("use_puppet_default"))){
+                        if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"GroupValue");
                         }else {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
                     } else if(parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
-                        if(!((boolean) obj.get("use_puppet_default"))){
+                        if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"GroupValue");
                         }else {
@@ -206,7 +206,7 @@ public class Parameters extends AppCompatActivity {
                     break;
                 case "HOSTGROUPS":
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)){
-                        if(!((boolean) obj.get("use_puppet_default"))) {
+                        if(!(obj.getBoolean("use_puppet_default"))) {
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"Override");
                         } else{
@@ -218,7 +218,7 @@ public class Parameters extends AppCompatActivity {
                     break;
                 default:
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
-                        if(!((boolean) obj.get("use_puppet_default"))){
+                        if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"Override");
                         }
@@ -228,7 +228,7 @@ public class Parameters extends AppCompatActivity {
                         break label;
                     }
                     else if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
-                        if(!((boolean) obj.get("use_puppet_default"))){
+                        if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"ParentValue");
                         } else {
@@ -712,8 +712,6 @@ public class Parameters extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(jsObjRequest);
     }
-
-    public void closeActivity(View v){ finish(); }
 
     public static void setID(int _id){ id = _id; }
 

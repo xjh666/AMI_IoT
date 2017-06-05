@@ -76,10 +76,10 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     }
 
     private void getHosts(JSONObject response) throws JSONException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         LinearLayout totalList = (LinearLayout) findViewById(R.id.totallist);
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = arr.getJSONObject(i);
 
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -147,17 +147,17 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     }
 
     private void getID(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
-            String objName = (String)obj.get("name");
+            JSONObject obj = arr.getJSONObject(i);
+            String objName = obj.getString("name");
             if(objName.equals(name)){
-                Parameters.setID((Integer)obj.get("id"));
+                Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-                Parameters.setHostGroup((String) obj.get("hostgroup_name"));
+                Parameters.setHostGroup(obj.getString("hostgroup_name"));
                 if(!obj.get("hostgroup_name").equals(obj.get("hostgroup_title")))
-                    Parameters.setParent(((String) obj.get("hostgroup_title")).substring(0,(((String) obj.get("hostgroup_title")).length()) - 1 - ((String) obj.get("hostgroup_name")).length()));
+                    Parameters.setParent((obj.getString("hostgroup_title")).substring(0,((obj.getString("hostgroup_title")).length()) - 1 - (obj.getString("hostgroup_name")).length()));
                 else Parameters.setParent(null);
                 startActivity(new Intent(this, Parameters.class));
                 break;

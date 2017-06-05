@@ -124,9 +124,9 @@ public class Dashboard extends Fragment {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentTime = sdf.parse(sdf.format(Calendar.getInstance().getTime()));
 
-        JSONArray arr = (JSONArray)response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = (JSONObject) arr.getJSONObject(i);
             String host = obj.getString("host_name");
             if(obj.getJSONObject("metrics").getJSONObject("changes").getInt("total") > 0 && num-->0){
                 order.add(host);

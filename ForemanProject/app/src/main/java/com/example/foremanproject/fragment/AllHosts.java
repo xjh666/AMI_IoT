@@ -1,6 +1,5 @@
 package com.example.foremanproject.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -79,10 +78,10 @@ public class AllHosts extends Fragment  {
     }
 
     private void getHosts(JSONObject response) throws JSONException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         totalList = (LinearLayout) getView().findViewById(R.id.totallist);
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = arr.getJSONObject(i);
 
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -151,12 +150,12 @@ public class AllHosts extends Fragment  {
     }
 
     private void getID(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
-            String objName = (String)obj.get("name");
+            JSONObject obj = arr.getJSONObject(i);
+            String objName = obj.getString("name");
             if(objName.equals(name)){
-                Parameters.setID((Integer)obj.get("id"));
+                Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
                 Parameters.setHostGroup(obj.get("hostgroup_name").toString());

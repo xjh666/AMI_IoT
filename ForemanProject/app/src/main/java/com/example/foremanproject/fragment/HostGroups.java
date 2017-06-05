@@ -80,10 +80,10 @@ public class HostGroups extends Fragment {
     }
 
     private void getHosts(JSONObject response) throws JSONException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = arr.getJSONObject(i);
 
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -157,13 +157,13 @@ public class HostGroups extends Fragment {
     }
 
     private void getID(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
-        JSONArray arr = (JSONArray) response.get("results");
+        JSONArray arr = response.getJSONArray("results");
         String name = tag.substring(0,tag.length()-1);
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = arr.getJSONObject(i);
             String objName = obj.get("name").toString();
             if(objName.equals(name)){
-                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),obj);
+                selectInstruction(obj.getInt("id"),tag.substring(tag.length()-1),obj);
                 break;
             }
         }
