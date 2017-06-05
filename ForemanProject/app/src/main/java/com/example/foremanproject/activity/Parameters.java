@@ -124,7 +124,6 @@ public class Parameters extends AppCompatActivity {
 
     private void sendRequestForValue(final JSONArray arr, final int parameter_id, final String puppetClassName) {
         RequestQueue queue = Volley.newRequestQueue(this);
-
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id), null, new Response.Listener<JSONObject>() {
                     @Override
@@ -160,15 +159,27 @@ public class Parameters extends AppCompatActivity {
         JSONArray arr  = (JSONArray) response.get("override_values");
         Object value = response.get("default_value");
         String parameter = (String)response.get("parameter");
+
+        if(!tag.containsKey(puppetClassName))
+            tag.put(puppetClassName,new HashMap<String, String>());
+        switch (type) {
+            case "HOST":
+                tag.get(puppetClassName).put(parameter,"GroupValue");
+                break;
+            case "HOSTGROUPS":
+                tag.get(puppetClassName).put(parameter,"DefaultValue");
+                break;
+            default:
+                tag.get(puppetClassName).put(parameter,"ParentValue");
+                break;
+        }
+
         label:
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = (JSONObject) arr.get(i);
             String match = (String) obj.get("match");
-            if(!tag.containsKey(puppetClassName))
-                tag.put(puppetClassName,new HashMap<String, String>());
             switch (type) {
                 case "HOST":
-                    tag.get(puppetClassName).put(parameter,"GroupValue");
                     if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name)) {
                         if(!((boolean) obj.get("use_puppet_default"))) {
                             value = obj.get("value");
@@ -194,7 +205,6 @@ public class Parameters extends AppCompatActivity {
                     }
                     break;
                 case "HOSTGROUPS":
-                    tag.get(puppetClassName).put(parameter,"DefaultValue");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)){
                         if(!((boolean) obj.get("use_puppet_default"))) {
                             value = obj.get("value");
@@ -207,7 +217,6 @@ public class Parameters extends AppCompatActivity {
                     }
                     break;
                 default:
-                    tag.get(puppetClassName).put(parameter,"ParentValue");
                     if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
                         if(!((boolean) obj.get("use_puppet_default"))){
                             value = obj.get("value");
@@ -485,8 +494,6 @@ public class Parameters extends AppCompatActivity {
     }
 
     public void updateInfo() throws JSONException {
-        System.out.println(parameters);
-        System.out.println(_parameters);
         for (String puppetClass : _tag.keySet())
             for (String parameterName : _tag.get(puppetClass).keySet()){
                 switch(tag.get(puppetClass).get(parameterName)) {
@@ -570,7 +577,6 @@ public class Parameters extends AppCompatActivity {
 
     private void sendRequestToPost(JSONObject obj, String puppetClass, String parameterName){
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
-
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.POST, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), obj, new Response.Listener<JSONObject>() {
