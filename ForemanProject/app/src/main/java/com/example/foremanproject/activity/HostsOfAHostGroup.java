@@ -43,6 +43,11 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         sendRequest();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void sendRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
 

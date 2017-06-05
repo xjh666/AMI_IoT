@@ -68,6 +68,11 @@ public class Parameters extends AppCompatActivity {
         sendRequestToGetParameters();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void sendRequestToGetParameters(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String api;
