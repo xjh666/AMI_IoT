@@ -23,9 +23,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.foremanproject.activity.BasicActivity" />
         </activity>
-
-        <activity android:name=".activity.Parameters" android:theme="@style/SecondActivityTheme">
-        </activity>
+        <activity android:name=".activity.Parameters" android:theme="@style/SecondActivityTheme"></activity>
+        <activity android:name=".activity.ParameterInfo" android:theme="@style/PopupWindowTheme"></activity>
 
     </application>
 

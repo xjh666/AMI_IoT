@@ -158,7 +158,7 @@ public class AllHosts extends Fragment  {
                 Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-                Parameters.setHostGroup(obj.get("hostgroup_name").toString());
+                Parameters.setHostGroup(obj.getString("hostgroup_name"));
                 startActivity(new Intent(getActivity(), Parameters.class));
                 break;
             }

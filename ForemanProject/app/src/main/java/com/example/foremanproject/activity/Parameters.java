@@ -1,5 +1,6 @@
 package com.example.foremanproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -47,12 +48,17 @@ public class Parameters extends AppCompatActivity {
     private static String type;
     private static String parent;
 
-    private static Map<String,HashMap<String, String>> tag;
-    private static Map<String,HashMap<String, String>> _tag;
+    private static Map<String, HashMap<String, String>> tag;
+    private static Map<String, HashMap<String, String>> _tag;
     private static Map<String, HashMap<String, Object>> parameters;
     private static Map<String, HashMap<String, Object>> _parameters;
     private static Map<String, HashMap<String, Integer>> parameterID;
     private static int requestReceive;
+
+    private static Map<String, HashMap<String, String>> description;
+    private static Map<String, HashMap<String, String>> parameterType;
+    private static Map<String, HashMap<String, String>> matcher;
+    private static Map<String, HashMap<String, Object>> inheritedValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,13 +71,17 @@ public class Parameters extends AppCompatActivity {
         _tag = new HashMap<>();
         parameterID = new HashMap<>();
         requestReceive = 0;
+
+        description = new HashMap<>();
+        parameterType = new HashMap<>();
+        matcher = new HashMap<>();
+        inheritedValue = new HashMap<>();
+
         sendRequestToGetParameters();
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
+    public void onBackPressed() { finish();}
 
     private void sendRequestToGetParameters(){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -117,11 +127,35 @@ public class Parameters extends AppCompatActivity {
             JSONObject obj = arr.getJSONObject(i);
             JSONObject puppetClass = obj.getJSONObject("puppetclass_name");
             String puppetClassName = puppetClass.getString("name");
+            String parameterName = obj.getString("parameter");
             int parameter_id = obj.getInt("id");
 
-            if(!parameterID.containsKey(puppetClassName))
-                parameterID.put(puppetClassName,new HashMap<String, Integer>());
-            parameterID.get(puppetClassName).put(obj.get("parameter").toString(),parameter_id);
+            if(!parameterID.containsKey(puppetClassName)) {
+                parameterID.put(puppetClassName, new HashMap<String, Integer>());
+                description.put(puppetClassName, new HashMap<String, String>());
+                parameterType.put(puppetClassName, new HashMap<String, String>());
+                matcher.put(puppetClassName, new HashMap<String, String>());
+                inheritedValue.put(puppetClassName, new HashMap<String, Object>());
+            }
+            parameterID.get(puppetClassName).put(parameterName,parameter_id);
+            description.get(puppetClassName).put(parameterName,obj.getString("description"));
+            parameterType.get(puppetClassName).put(parameterName,obj.getString("parameter_type"));
+            inheritedValue.get(puppetClassName).put(parameterName, obj.get("default_value"));
+
+            switch (type) {
+                case "HOSTGROUP":
+                    matcher.get(puppetClassName).put(parameterName, "Default value");
+                    break;
+                case "HOSTGROUPSWITHPARENT":
+                    matcher.get(puppetClassName).put(parameterName, parent);
+                    break;
+                default:
+                    if(parent!=null)
+                        matcher.get(puppetClassName).put(parameterName, parent);
+                    else
+                        matcher.get(puppetClassName).put(parameterName, hostgroup);
+                    break;
+            }
 
             sendRequestForValue(arr, parameter_id,puppetClassName);
         }
@@ -244,6 +278,24 @@ public class Parameters extends AppCompatActivity {
             }
         }
 
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject obj = arr.getJSONObject(i);
+            String match = obj.getString("match");
+            if (type.equals("HOST")) {
+                if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() && match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
+                    matcher.get(puppetClassName).put(parameter, match.substring(10));
+                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                    break;
+                } else if (parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)) {
+                    matcher.get(puppetClassName).put(parameter, "hostgroup(" + parent + ")");
+                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                }
+            } else if(type.equals("HOSTGROUPSWITHPARENT")){
+                if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
+                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                }
+            }
+        }
         if(!parameters.containsKey(puppetClassName))
             parameters.put(puppetClassName,new HashMap<String, Object>());
         parameters.get(puppetClassName).put(parameter,value);
@@ -275,7 +327,7 @@ public class Parameters extends AppCompatActivity {
 
             TextView puppetclassName = new TextView(this);
             puppetclassName.setText(key);
-            puppetclassName.setTextSize(25);
+            puppetclassName.setTextSize(26);
             puppetclassName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(puppetclassName);
             linearlayout.addView(layout);
@@ -288,11 +340,26 @@ public class Parameters extends AppCompatActivity {
 
                 LinearLayout pLayout = new LinearLayout(this);
                 pLayout.setOrientation(LinearLayout.HORIZONTAL);
-                pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 80));
+                pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                TextView parameterName = new TextView(this);
-                parameterName.setText("- " + obj);
-                parameterName.setTextSize(20);
+                final TextView parameterName = new TextView(this);
+                parameterName.setText(" " + obj);
+                parameterName.setTextSize(22);
+                parameterName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 90));
+
+                Button info = new Button(this);
+                if(tag.get(key).get(obj).equals("PuppetDefault"))
+                    info.setBackgroundResource(R.drawable.warning_icon);
+                else info.setBackgroundResource(R.drawable.i_mark_icon);
+                info.setLayoutParams(new LinearLayout.LayoutParams(70, 70));
+                info.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        showInfo(key, obj);
+                    }
+                });
+
+                pLayout.addView(info);
                 pLayout.addView(parameterName);
 
                 LinearLayout mLayout = new LinearLayout(this);
@@ -716,6 +783,15 @@ public class Parameters extends AppCompatActivity {
         };
         // Add the request to the RequestQueue.
         queue.add(jsObjRequest);
+    }
+
+    private void showInfo(String puppetclassName, String parameterName){
+        ParameterInfo.setInfo(description.get(puppetclassName).get(parameterName),
+                                parameterType.get(puppetclassName).get(parameterName),
+                                matcher.get(puppetclassName).get(parameterName),
+                                inheritedValue.get(puppetclassName).get(parameterName),
+                                tag.get(puppetclassName).get(parameterName));
+        startActivity(new Intent(Parameters.this, ParameterInfo.class));
     }
 
     public static void setID(int _id){ id = _id; }
