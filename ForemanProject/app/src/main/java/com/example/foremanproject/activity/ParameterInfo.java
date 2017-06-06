@@ -75,7 +75,7 @@ public class ParameterInfo extends AppCompatActivity {
         layout.addView(text);
 
         text = new TextView(this);
-        if(!tag.equals("PuppetDefault"))
+        if(!value.toString().equals("null"))
             text.setText("Value: " + value.toString());
         else text.setText("Value: ");
         text.setTextColor(Color.BLACK);
