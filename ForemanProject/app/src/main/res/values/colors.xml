@@ -13,5 +13,5 @@
     <color name="colorOutOfSyncHosts">#3d96ae</color>
     <color name="colorHostsWithNoReports">#db843d</color>
     <color name="colorHostsWithAlertsDisabled">#92abcd</color>
-    <color name="colorPopupWindowBackground">#ccffff</color>
+    <color name="colorPopupWindowBackground">#efeeec</color>
 </resources>

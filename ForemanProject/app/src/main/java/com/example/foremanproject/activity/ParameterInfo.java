@@ -70,7 +70,7 @@ public class ParameterInfo extends AppCompatActivity {
         layout.addView(text);
 
         text = new TextView(this);
-        text.setText("Matcher " + matcher);
+        text.setText("Matcher: " + matcher);
         text.setTextColor(Color.BLACK);
         layout.addView(text);
 
