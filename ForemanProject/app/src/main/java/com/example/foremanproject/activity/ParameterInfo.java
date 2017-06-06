@@ -76,8 +76,8 @@ public class ParameterInfo extends AppCompatActivity {
 
         text = new TextView(this);
         if(!value.toString().equals("null"))
-            text.setText("Value: " + value.toString());
-        else text.setText("Value: ");
+            text.setText("Inherited Value: " + value.toString());
+        else text.setText("Inherited Value: ");
         text.setTextColor(Color.BLACK);
         layout.addView(text);
     }
