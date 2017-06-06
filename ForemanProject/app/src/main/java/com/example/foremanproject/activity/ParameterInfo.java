@@ -1,9 +1,10 @@
 package com.example.foremanproject.activity;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,26 +31,55 @@ public class ParameterInfo extends AppCompatActivity {
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int)(width*0.8), (int)(height*0.3));
+        getWindow().setLayout((int)(width*0.8), (int)(height*0.35));
 
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
         TextView text;
-        text = (TextView) findViewById(R.id.description);
-        text.setText(description);
-        text = (TextView) findViewById(R.id.type);
-        text.setText(type);
-        text = (TextView) findViewById(R.id.matcher);
-        text.setText(matcher);
-        text = (TextView) findViewById(R.id.value);
-        if(value != null)
-            text.setText(value.toString());
-        if(!tag.equals("PuppetDefault"))
+
+        text = new TextView(this);
+        text.setText("Original value info");
+        text.setTextSize(20);
+        layout.addView(text);
+
+        if(tag.equals("PuppetDefault"))
         {
-            LinearLayout layout;
-            layout = (LinearLayout) findViewById(R.id.PuppetInfo1);
-            layout.setVisibility(View.INVISIBLE);
-            layout = (LinearLayout) findViewById(R.id.PuppetInfo2);
-            layout.setVisibility(View.INVISIBLE);
-        }
+            text = new TextView(this);
+            text.setText("Optional parameter without value");
+            text.setTextColor(Color.BLACK);
+            layout.addView(text);
+
+            text = new TextView(this);
+            text.setText("Will not be sent to Puppet");
+            text.setTextColor(Color.BLACK);
+            text.setTypeface(null, Typeface.ITALIC);
+            layout.addView(text);
+
+            text = new TextView(this);
+            text.setText(" ");
+            layout.addView(text);
+        };
+
+        text = new TextView(this);
+        text.setText("Description: " + description);
+        text.setTextColor(Color.BLACK);
+        layout.addView(text);
+
+        text = new TextView(this);
+        text.setText("Type: " + type);
+        text.setTextColor(Color.BLACK);
+        layout.addView(text);
+
+        text = new TextView(this);
+        text.setText("Matcher " + matcher);
+        text.setTextColor(Color.BLACK);
+        layout.addView(text);
+
+        text = new TextView(this);
+        if(!tag.equals("PuppetDefault"))
+            text.setText("Value: " + value.toString());
+        else text.setText("Value: ");
+        text.setTextColor(Color.BLACK);
+        layout.addView(text);
     }
 
     @Override

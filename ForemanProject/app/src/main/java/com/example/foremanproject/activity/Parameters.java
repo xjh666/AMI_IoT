@@ -151,9 +151,9 @@ public class Parameters extends AppCompatActivity {
                     break;
                 default:
                     if(parent!=null)
-                        matcher.get(puppetClassName).put(parameterName, parent);
+                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" +  parent + ")");
                     else
-                        matcher.get(puppetClassName).put(parameterName, hostgroup);
+                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" + hostgroup + ")");
                     break;
             }
 
@@ -213,6 +213,8 @@ public class Parameters extends AppCompatActivity {
                 break;
         }
 
+        boolean flagForHostGroupValue = false;
+
         label:
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
@@ -234,7 +236,8 @@ public class Parameters extends AppCompatActivity {
                         }else {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
-                    } else if(parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
+                        flagForHostGroupValue = true;
+                    } else if(!flagForHostGroupValue && parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
                         if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
                             tag.get(puppetClassName).put(parameter,"GroupValue");
@@ -283,7 +286,7 @@ public class Parameters extends AppCompatActivity {
             String match = obj.getString("match");
             if (type.equals("HOST")) {
                 if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() && match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
-                    matcher.get(puppetClassName).put(parameter, match.substring(10));
+                    matcher.get(puppetClassName).put(parameter, "hostgroup(" + match.substring(10) + ")");
                     inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
                     break;
                 } else if (parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)) {
