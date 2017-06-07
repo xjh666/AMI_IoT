@@ -5,20 +5,8 @@
         <item>Enabled</item>
     </string-array>
 
-    <string-array name="selectionsForHosts">
-        <item>HostGroup Value</item>
-        <item>Puppet Default</item>
-        <item>Override</item>
-    </string-array>
-
-    <string-array name="selectionsForHostGroupWithParent">
-        <item>Parent Value</item>
-        <item>Puppet Default</item>
-        <item>Override</item>
-    </string-array>
-
-    <string-array name="selectionsForHostGroup">
-        <item>Default Value</item>
+    <string-array name="selections">
+        <item>Inherited Value</item>
         <item>Puppet Default</item>
         <item>Override</item>
     </string-array>

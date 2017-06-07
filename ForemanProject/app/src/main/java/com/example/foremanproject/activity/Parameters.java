@@ -201,17 +201,8 @@ public class Parameters extends AppCompatActivity {
 
         if(!tag.containsKey(puppetClassName))
             tag.put(puppetClassName,new HashMap<String, String>());
-        switch (type) {
-            case "HOST":
-                tag.get(puppetClassName).put(parameter,"GroupValue");
-                break;
-            case "HOSTGROUPS":
-                tag.get(puppetClassName).put(parameter,"DefaultValue");
-                break;
-            default:
-                tag.get(puppetClassName).put(parameter,"ParentValue");
-                break;
-        }
+        tag.get(puppetClassName).put(parameter,"InheritedValue");
+
 
         boolean flagForHostGroupValue = false;
 
@@ -232,7 +223,7 @@ public class Parameters extends AppCompatActivity {
                     } else if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() &&match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
                         if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"GroupValue");
+                            tag.get(puppetClassName).put(parameter,"InheritedValue");
                         }else {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
@@ -240,7 +231,7 @@ public class Parameters extends AppCompatActivity {
                     } else if(!flagForHostGroupValue && parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
                         if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"GroupValue");
+                            tag.get(puppetClassName).put(parameter,"InheritedValue");
                         }else {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
@@ -272,7 +263,7 @@ public class Parameters extends AppCompatActivity {
                     else if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
                         if(!(obj.getBoolean("use_puppet_default"))){
                             value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"ParentValue");
+                            tag.get(puppetClassName).put(parameter,"InheritedValue");
                         } else {
                             tag.get(puppetClassName).put(parameter,"PuppetDefault");
                         }
@@ -369,18 +360,7 @@ public class Parameters extends AppCompatActivity {
                 mLayout.setOrientation(LinearLayout.HORIZONTAL);
                 mLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                switch (type) {
-                    case "HOSTGROUPS":
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroup));
-                        break;
-                    case "HOST":
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHosts));
-                        break;
-                    default:
-                        spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsForHostGroupWithParent));
-                        break;
-                }
-
+                spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selections));
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerArrayAdapter);
                 spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, 120));
@@ -395,14 +375,11 @@ public class Parameters extends AppCompatActivity {
                             case "Override":
                                 _tag.get(key).put(obj,"Override");
                                 break;
-                            case "HostGroup Value":
-                                _tag.get(key).put(obj,"GroupValue");
+                            case "Inherited Value":
+                                _tag.get(key).put(obj,"InheritedValue");
                                 break;
                             case "Puppet Default":
                                 _tag.get(key).put(obj,"PuppetDefault");
-                                break;
-                            case "Parent Value":
-                                _tag.get(key).put(obj,"ParentValue");
                                 break;
                         }
 
@@ -433,9 +410,7 @@ public class Parameters extends AppCompatActivity {
                             spinner.setSelection(2);
                             parameterValue.setEnabled(true);
                             break;
-                        case "ParentValue":
-                        case "GroupValue":
-                        case "DefaultValue":
+                        case "InheritedValue":
                             spinner.setSelection(0);
                             parameterValue.setEnabled(false);
                             break;
@@ -473,9 +448,7 @@ public class Parameters extends AppCompatActivity {
                             spinner.setSelection(2);
                             _spinner.setEnabled(true);
                             break;
-                        case "ParentValue":
-                        case "GroupValue":
-                        case "DefaultValue":
+                        case "InheritedValue":
                             spinner.setSelection(0);
                             _spinner.setEnabled(false);
                             break;
