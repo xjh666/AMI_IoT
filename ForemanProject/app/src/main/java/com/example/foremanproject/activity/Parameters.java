@@ -199,7 +199,6 @@ public class Parameters extends AppCompatActivity {
         Object value = response.get("default_value");
         String parameter = response.getString("parameter");
         String[] valueOrder = response.getString("override_value_order").split("\n");
-        System.out.println(valueOrder[1]);
         int hostgroupIndex = -1;
 
         if(!tag.containsKey(puppetClassName))
