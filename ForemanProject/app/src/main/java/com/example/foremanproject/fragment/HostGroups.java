@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -180,9 +182,13 @@ public class HostGroups extends Fragment {
             Parameters.setID(id);
             Parameters.setName(name);
             Parameters.setType("HOSTGROUPS");
-            if(!obj.isNull("parent_name")){
+            if(!obj.get("name").equals(obj.get("title"))){
+                String[] title = obj.getString("title").split("/");
+                ArrayList<String> hostgroup = new ArrayList<>();
+                hostgroup.addAll(Arrays.asList(title));
+                Parameters.setHostGroup(hostgroup);
                 Parameters.setType("HOSTGROUPSWITHPARENT");
-                Parameters.setParent(obj.get("parent_name").toString());
+                System.out.println(hostgroup);
             }
             startActivity(new Intent(getActivity(), Parameters.class));
         }

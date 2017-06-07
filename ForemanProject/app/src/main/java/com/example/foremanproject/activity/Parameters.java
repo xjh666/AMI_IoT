@@ -44,9 +44,8 @@ import java.util.Map;
 public class Parameters extends AppCompatActivity {
     private static int id;
     private static String name;
-    private static String hostgroup;
     private static String type;
-    private static String parent;
+    private static ArrayList<String> hostgroup;
 
     private static Map<String, HashMap<String, String>> tag;
     private static Map<String, HashMap<String, String>> _tag;
@@ -65,6 +64,7 @@ public class Parameters extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
         setTitle(name);
+
         parameters = new HashMap<>();
         _parameters = new HashMap<>();
         tag = new HashMap<>();
@@ -143,17 +143,17 @@ public class Parameters extends AppCompatActivity {
             inheritedValue.get(puppetClassName).put(parameterName, obj.get("default_value"));
 
             switch (type) {
-                case "HOSTGROUP":
+                case "HOSTGROUPS":
                     matcher.get(puppetClassName).put(parameterName, "Default value");
                     break;
                 case "HOSTGROUPSWITHPARENT":
-                    matcher.get(puppetClassName).put(parameterName, parent);
+                    matcher.get(puppetClassName).put(parameterName, hostgroup.get(hostgroup.size()-2));
                     break;
                 default:
-                    if(parent!=null)
-                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" +  parent + ")");
+                    if(hostgroup.size() == 1)
+                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" + hostgroup.get(hostgroup.size()-1) + ")");
                     else
-                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" + hostgroup + ")");
+                        matcher.get(puppetClassName).put(parameterName, "hostgroup(" + hostgroup.get(hostgroup.size()-2) + ")");
                     break;
             }
 
@@ -198,95 +198,119 @@ public class Parameters extends AppCompatActivity {
         JSONArray arr  = response.getJSONArray("override_values");
         Object value = response.get("default_value");
         String parameter = response.getString("parameter");
+        String[] valueOrder = response.getString("override_value_order").split("\n");
+        System.out.println(valueOrder[1]);
+        int hostgroupIndex = -1;
 
         if(!tag.containsKey(puppetClassName))
             tag.put(puppetClassName,new HashMap<String, String>());
         tag.get(puppetClassName).put(parameter,"InheritedValue");
 
-
-        boolean flagForHostGroupValue = false;
-
         label:
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
-            String match = obj.getString("match");
+            String[] match = obj.getString("match").split("=");
             switch (type) {
                 case "HOST":
-                    if (match.substring(0, 4).equals("fqdn") && match.substring(5).equals(name)) {
-                        if(!(obj.getBoolean("use_puppet_default"))) {
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"Override");
-                        } else{
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
-                        }
-                        break label;
-                    } else if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() &&match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
-                        if(!(obj.getBoolean("use_puppet_default"))){
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"InheritedValue");
-                        }else {
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
-                        }
-                        flagForHostGroupValue = true;
-                    } else if(!flagForHostGroupValue && parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)){
-                        if(!(obj.getBoolean("use_puppet_default"))){
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"InheritedValue");
-                        }else {
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                    for(int j=0;j<valueOrder.length;j++){
+                        if(valueOrder[j].equals(match[0])){
+                            if(j==0) {
+                                if(match[1].equals(name)){
+                                    if(!obj.getBoolean("use_puppet_default")){
+                                        value = obj.get("value");
+                                        tag.get(puppetClassName).put(parameter, "Override");
+                                    } else {
+                                        tag.get(puppetClassName).put(parameter, "PuppetDefault");
+                                    }
+                                    break label;
+                                }
+                            }
+                            else if(j==1){
+                                String[] hostgroups = match[1].split("/");
+                                for(int k = hostgroup.size()-1;k>=0;k--){
+                                    if(hostgroups[hostgroups.length-1].equals(hostgroup.get(k)) && k > hostgroupIndex){
+                                        hostgroupIndex = k;
+                                        if(!obj.getBoolean("use_puppet_default")){
+                                            value = obj.get("value");
+                                            tag.get(puppetClassName).put(parameter, "InheritedValue");
+                                        } else tag.get(puppetClassName).put(parameter, "PuppetDefault");
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
                 case "HOSTGROUPS":
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(name)){
-                        if(!(obj.getBoolean("use_puppet_default"))) {
+                    if(match[0].equals(valueOrder[1]) && match[1].equals(name)){
+                        if(!obj.getBoolean("use_puppet_default")){
                             value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"Override");
+                            tag.get(puppetClassName).put(parameter, "Override");
                         } else{
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
                             value = null;
+                            tag.get(puppetClassName).put(parameter, "PuppetDefault");
                         }
-                        break label;
                     }
                     break;
                 default:
-                    if (match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent + "/" + name)) {
-                        if(!(obj.getBoolean("use_puppet_default"))){
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"Override");
-                        }
-                        else {
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
-                        }
-                        break label;
-                    }
-                    else if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
-                        if(!(obj.getBoolean("use_puppet_default"))){
-                            value = obj.get("value");
-                            tag.get(puppetClassName).put(parameter,"InheritedValue");
-                        } else {
-                            tag.get(puppetClassName).put(parameter,"PuppetDefault");
+                    for(int j=1;j<valueOrder.length;j++){
+                        if(valueOrder[j].equals(match[0])){
+                            String[] hostgroups = match[1].split("/");
+                            if(hostgroups[hostgroups.length-1].equals(name)){
+                                if(!obj.getBoolean("use_puppet_default")){
+                                    value = obj.get("value");
+                                    tag.get(puppetClassName).put(parameter, "Override");
+                                } else {
+                                    tag.get(puppetClassName).put(parameter, "PuppetDefault");
+                                }
+                                break label;
+                            } else {
+                                for(int k = hostgroup.size()-1;k>=0;k--){
+                                    if(hostgroups[hostgroups.length-1].equals(hostgroup.get(k)) && k > hostgroupIndex){
+                                        hostgroupIndex = k;
+                                        if(!obj.getBoolean("use_puppet_default")){
+                                            value = obj.get("value");
+                                            tag.get(puppetClassName).put(parameter, "InheritedValue");
+                                        } else tag.get(puppetClassName).put(parameter, "PuppetDefault");
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
             }
         }
 
+        hostgroupIndex = -1;
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
-            String match = obj.getString("match");
+            String[] match = obj.getString("match").split("=");
             if (type.equals("HOST")) {
-                if (match.substring(0, 9).equals("hostgroup") && match.length() > hostgroup.length() && match.substring(match.length() - hostgroup.length()).equals(hostgroup)) {
-                    matcher.get(puppetClassName).put(parameter, "hostgroup(" + match.substring(10) + ")");
-                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
-                    break;
-                } else if (parent != null && match.substring(0, 9).equals("hostgroup") && match.substring(10).equals(parent)) {
-                    matcher.get(puppetClassName).put(parameter, "hostgroup(" + parent + ")");
-                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                String[] hostgroups = match[1].split("/");
+                for(int j = hostgroup.size()-1;j>=0;j--){
+                    if(hostgroups[hostgroups.length-1].equals(hostgroup.get(j)) && j > hostgroupIndex){
+                        hostgroupIndex = j;
+                        String str = "";
+                        for(int k=0;k<j;k++){
+                            str += (hostgroup.get(k) + "/");
+                        }
+                        str += hostgroup.get(j);
+                        matcher.get(puppetClassName).put(parameter, "hostgroup(" + str + ")");
+                        inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                    }
                 }
             } else if(type.equals("HOSTGROUPSWITHPARENT")){
-                if (match.substring(0, 9).equals("hostgroup") && match.length() > parent.length() &&match.substring(match.length() - parent.length()).equals(parent)) {
-                    inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                String[] hostgroups = match[1].split("/");
+                for(int j = hostgroup.size()-2;j>=0;j--){
+                    if(hostgroups[hostgroups.length-1].equals(hostgroup.get(j)) && j > hostgroupIndex){
+                        hostgroupIndex = j;
+                        String str = "";
+                        for(int k=0;k<j;k++){
+                            str += (hostgroup.get(k) + "/");
+                        }
+                        str += hostgroup.get(j);
+                        matcher.get(puppetClassName).put(parameter, str);
+                        inheritedValue.get(puppetClassName).put(parameter, obj.get("value"));
+                    }
                 }
             }
         }
@@ -554,9 +578,7 @@ public class Parameters extends AppCompatActivity {
                                     obj.put("value",_parameters.get(puppetClass).get(parameterName));
                                 else obj.put("value",parameters.get(puppetClass).get(parameterName));
                                 sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
-                            } else if(_tag.get(puppetClass).get(parameterName).equals("GroupValue")
-                                    || _tag.get(puppetClass).get(parameterName).equals("DefaultValue")
-                                    || _tag.get(puppetClass).get(parameterName).equals("ParentValue")){
+                            } else if(_tag.get(puppetClass).get(parameterName).equals("InheritedValue")){
                                 sendRequestTogGetOverrideID(null, puppetClass, parameterName);
                             }
                             break;
@@ -597,7 +619,10 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + name);
                                         break;
                                     default:
-                                        obj.put("match", "hostgroup=" + parent + "/" + name);
+                                        String parent="";
+                                        for(int i=0;i<hostgroup.size()-1;i++)
+                                            parent = parent + hostgroup.get(i) + "/";
+                                        obj.put("match", "hostgroup=" + parent + name);
                                         break;
                                 }
                                 sendRequestToPost(obj, puppetClass, parameterName);
@@ -612,7 +637,10 @@ public class Parameters extends AppCompatActivity {
                                         obj.put("match", "hostgroup=" + name);
                                         break;
                                     default:
-                                        obj.put("match", "hostgroup=" + parent + "/" + name);
+                                        String parent="";
+                                        for(int i=0;i<hostgroup.size()-1;i++)
+                                            parent = parent + hostgroup.get(i) + "/";
+                                        obj.put("match", "hostgroup=" + parent + name);
                                         break;
                                 }
                                 sendRequestToPost(obj, puppetClass, parameterName);
@@ -677,7 +705,10 @@ public class Parameters extends AppCompatActivity {
                                         }
                                         break;
                                     default:
-                                        if (match.equals("hostgroup=" + parent + "/" + name)) {
+                                        String parent="";
+                                        for(int j=0;j<hostgroup.size()-1;j++)
+                                            parent = parent + hostgroup.get(j) + "/";
+                                        if (match.equals("hostgroup=" + parent + name)) {
                                             overrideID = (int) result.get("id");
                                             break label1;
                                         }
@@ -776,7 +807,5 @@ public class Parameters extends AppCompatActivity {
 
     public static void setName(String _name){ name = _name; }
 
-    public static void setHostGroup(String _hostgroup) { hostgroup = _hostgroup; }
-
-    public static void setParent(String _parent) { parent = _parent; }
+    public static void setHostGroup(ArrayList<String> _hostgroup) { hostgroup = _hostgroup; }
 }
