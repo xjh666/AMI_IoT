@@ -714,9 +714,14 @@ public class Parameters extends AppCompatActivity {
                                         break;
                                 }
                             }
-                            if(obj==null)
-                                sendRequestToDelete(puppetClass, parameterName, overrideID);
-                            else sendRequestToPut(obj,puppetClass, parameterName, overrideID);
+                            if(overrideID != 0) {
+                                if (obj == null)
+                                    sendRequestToDelete(puppetClass, parameterName, overrideID);
+                                else sendRequestToPut(obj, puppetClass, parameterName, overrideID);
+                            } else {
+                                obj.put("match", "fqdn=" + name);
+                                sendRequestToPost(obj, puppetClass, parameterName);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
