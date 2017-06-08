@@ -271,7 +271,7 @@ public class Parameters extends AppCompatActivity {
         label:
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
-            String[] match = obj.getString("match").split("=");
+            String[] match = obj.getString("match").split("=",2);
             switch (type) {
                 case "HOST":
                     for(int j=0;j<valueOrder.length;j++){
@@ -287,6 +287,7 @@ public class Parameters extends AppCompatActivity {
                                     break label;
                                 }
                             }
+
                             else if(j==1){
                                 String[] hostgroups = match[1].split("/");
                                 for(int k = hostgroup.size()-1;k>=0;k--){
