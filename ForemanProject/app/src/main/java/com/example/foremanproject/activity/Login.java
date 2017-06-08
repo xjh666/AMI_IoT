@@ -25,6 +25,17 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by Xie Jihui on 5/16/2017.
+ */
+
+/**
+ * This class is an activity for the Login Page
+ * When the user click "Login" button, use the url, username and password to send the a request.
+ * If getting response correctly, then treat login successfully and save the information in UserInfo Class
+ * and open the BasicActivity page
+ */
+
 public class Login extends AppCompatActivity {
 
     Button button;

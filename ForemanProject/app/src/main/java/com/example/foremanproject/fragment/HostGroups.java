@@ -34,7 +34,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Xie Jihui on 5/24/2017.
+ * Created by Xie Jihui on 5/23/2017.
+ */
+
+/**
+ * This class is a fragment to show all host group in the system
+ * This class is similar to show hosts, of which the difference is the api is "GET /api/hostgroups"
  */
 
 public class HostGroups extends Fragment {

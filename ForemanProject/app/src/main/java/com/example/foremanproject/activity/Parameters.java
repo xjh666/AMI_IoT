@@ -41,23 +41,86 @@ import java.util.Map;
  * Created by Xie Jihui on 5/25/2017.
  */
 
+/**
+ * This class is an activity to show the parameters of a host of a host group
+ *
+ *
+ * The type can be three kinds: HOST, HOSTGROUPS, HOSTGROUPSWITHPARENT
+ * This variable is used to clarify the type of the object of which parameters are shown
+ *
+ *
+ * Variables, id, name, type and hostgroup, are set in the last step.
+ * ArrayList hostgroup is set from host group title. If the title is different from name, then the host group (of a host) is a child of a host group
+ *
+ *
+ * Maps tag and _tag stores the type of the value of a parameter uses, which can be InheritedValue, PuppetDefault and Override.
+ * Maps parameters and _parameters stores the values of a parameter
+ * The key is puppetClassName of the parameter and the value is a map, of which the key is the parameterName and the value is the content needed
+ * Compare tag and parameters with _tag and _parameters to determine whether to send request to update parameters and  what is the new value of parameters
+ *
+ *
+ * The logic to determine the value display is:
+ * set all values as default value, tag DefaultValue
+ * if HOST
+ *     get the override value order (here is order[] = {fqdn,hostgroup,os,domain})
+ *         for all results of the override value array
+ *             if match is order[0](fqdn)
+ *                 determine whether use puppet default or not
+ *                 break the loop
+ *             if match is order[1]
+ *                 find the parent of the value, the lower rank has the higher priority
+ * similar for HOSTGROUPSWITHPARENT
+ * if HOSTGROUP
+ *     find "hostgroup=name" and determine whether use puppet default or not
+ *
+ *
+ * Maps description, parameterType, matcher and inheritedValue are for the popup window
+ * Matcher and inheritedValue are gotten similarly as the the values, while description and parameterType are easily gotten
+ *
+ *
+ * The logic to update parameters is:
+ *    (tag -> _tag)
+ * 1. PuppetDefault -> PuppetDefault: do nothing
+ *    PuppetDefault -> InheritedValue: DELETE
+ *    PuppetDefault -> Override: PUT
+ *
+ * 2. InheritedValue -> InheritedValue: do nothing
+ *    InheritedValue -> PuppetDefault: POST
+ *    InheritedValue -> Override: POST
+ *
+ * 3. Override -> InheritedValue: DELETE
+ *    Override -> PuppetDefault: PUT
+ *    Override -> Override: PUT
+ *
+ *
+ * API used:
+ * GET /api/hosts/:host_id/smart_class_parameters
+ * GET /api/hostgroups/:hostgroup_id/smart_class_parameters
+ * GET /api/smart_class_parameters/:id
+ * GET /api/smart_class_parameters/:smart_class_parameter_id/override_values
+ * POST /api/smart_class_parameters/:smart_class_parameter_id/override_values
+ * PUT /api/smart_class_parameters/:smart_class_parameter_id/override_values/:id
+ * DELETE /api/smart_class_parameters/:smart_class_parameter_id/override_values/:id
+ *
+ */
+
 public class Parameters extends AppCompatActivity {
     private static int id;
     private static String name;
     private static String type;
     private static ArrayList<String> hostgroup;
 
-    private static Map<String, HashMap<String, String>> tag;
-    private static Map<String, HashMap<String, String>> _tag;
-    private static Map<String, HashMap<String, Object>> parameters;
-    private static Map<String, HashMap<String, Object>> _parameters;
-    private static Map<String, HashMap<String, Integer>> parameterID;
-    private static int requestReceive;
+    private static Map<String, Map<String, String>> tag;
+    private static Map<String, Map<String, String>> _tag;
+    private static Map<String, Map<String, Object>> parameters;
+    private static Map<String, Map<String, Object>> _parameters;
+    private static Map<String, Map<String, Integer>> parameterID;
+    private static int requestReceive; //to ensure all requests have received responses and then go to next step
 
-    private static Map<String, HashMap<String, String>> description;
-    private static Map<String, HashMap<String, String>> parameterType;
-    private static Map<String, HashMap<String, String>> matcher;
-    private static Map<String, HashMap<String, Object>> inheritedValue;
+    private static Map<String, Map<String, String>> description;
+    private static Map<String, Map<String, String>> parameterType;
+    private static Map<String, Map<String, String>> matcher;
+    private static Map<String, Map<String, Object>> inheritedValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

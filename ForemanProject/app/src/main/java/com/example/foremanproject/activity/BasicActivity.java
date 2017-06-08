@@ -22,7 +22,12 @@ import com.example.foremanproject.fragment.Dashboard;
 import com.example.foremanproject.fragment.HostGroups;
 
 /**
- * Created by labuser on 5/23/2017.
+ * Created by Xie Jihui on 5/23/2017.
+ */
+
+/**
+ * This class is for Home Screen, which is an activity contains 3 fragments (All Hosts, Host Group, Dashboard.)
+ * The Navigation Drawer is used to select which fragment to be shown in the content_frame
  */
 
 public class BasicActivity extends AppCompatActivity {
@@ -31,6 +36,10 @@ public class BasicActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private static String instruction = "Dashboard";
 
+    /**
+     * Created with default instruction to show the dashboard.
+     * Set up Navigation Drawer
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +77,7 @@ public class BasicActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
+    public void onBackPressed() { finish(); }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it

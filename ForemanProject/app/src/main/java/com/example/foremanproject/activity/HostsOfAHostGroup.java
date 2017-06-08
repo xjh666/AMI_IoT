@@ -33,10 +33,20 @@ import java.util.Map;
  * Created by Xie Jihui on 5/24/2017.
  */
 
+
+/**
+ * This class is for an activity to show the page of hosts in a particular group.
+ * The api used is "GET /api/hostgroups/:hostgroup_id/hosts" to list all hosts for a host group
+ * hostgroup_id is gotten from the last activity while clicking the "ALL" button of a host
+ */
+
 public class HostsOfAHostGroup extends AppCompatActivity {
     private static String api = "";
     private static String title = "";
 
+    /**
+     * Created the activity and then send request to get information
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,9 +56,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
+    public void onBackPressed() { finish(); }
 
     private void sendRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -82,6 +90,14 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
+    /**
+     * Created the activity and then send request to get information.
+     * ImageView is to show the status of the hosts (OK/Warning), textView is the name of the host.
+     *
+     * Clicking the "EDIT" button will open Parameter activity to show the parameters and corresponding information of the host.
+     * "GET /api/hosts" is to list all hosts and get the id of the selected host
+     * Then set id and other variables of parameters
+     */
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
         LinearLayout totalList = (LinearLayout) findViewById(R.id.totallist);
@@ -103,6 +119,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             textView.setTextSize(25);
             textView.setLayoutParams(new LinearLayout.LayoutParams(780, LinearLayout.LayoutParams.MATCH_PARENT));
 
+            //The tag of a button is the name of the related host for the further use
             final Button button = new Button(this);
             button.setLayoutParams(new LinearLayout.LayoutParams(210, 180));
             button.setText("Edit");
@@ -121,7 +138,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         }
     }
 
-    private void sendRequestForID(final String tag)  {
+    private void sendRequestForID(final String nameOfHost)  {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -129,7 +146,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getID(response, tag);
+                            getID(response, nameOfHost);
                         } catch (JSONException | IllegalAccessException | InstantiationException e) {
                             e.printStackTrace();
                         }

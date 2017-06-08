@@ -14,6 +14,10 @@ import com.example.foremanproject.R;
  * Created by Xie Jihui on 6/5/2017.
  */
 
+/**
+ * This class is an activity for creating a popup window to show the Original Value Info
+ */
+
 public class ParameterInfo extends AppCompatActivity {
     private static String description;
     private static String type;

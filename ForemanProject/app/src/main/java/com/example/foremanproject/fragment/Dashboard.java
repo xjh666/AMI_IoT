@@ -45,6 +45,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by Xie Jihui on 5/22/2017.
+ */
+
+/**
+ * This class is a fragment for the dashboard
+ * The dashboard consists of 4 components: Host Configuration Chart(Pie Chart), Host Configuration Status(Table),
+ * Run Distribution in the last 30 minutes(Histogram) and Latest Events(Table)
+ * "GET /api/dashboard" is used to get information related to Host Configuration Chart and Host Configuration Status
+ * "GET /api/reports" is used to get information related toRun Distribution in the last 30 minutes and Latest Events
+ * The requests are sent and the dashboard is updated every 30 seconds
+ * "AChartEngine" is used to draw the pie chart and histogram
+ */
 
 public class Dashboard extends Fragment {
     private Handler mHandler;

@@ -33,6 +33,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by Xie Jihui on 5/19/2017.
+ */
+
+/**
+ * This class is a fragment to show all hosts in the system
+ * This class is similar to the HostsOfAHostGroup
+ */
+
 public class AllHosts extends Fragment  {
     public static AllHosts newInstance() {
         return new AllHosts();

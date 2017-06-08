@@ -1,7 +1,11 @@
 package com.example.foremanproject.other;
 
 /**
- * Created by labuser on 5/17/2017.
+ * Created by Xie Jihui on 5/17/2017.
+ */
+
+/**
+ * This class is to store the info of user, which is user for requests in other activities.
  */
 
 public class UserInfo {
