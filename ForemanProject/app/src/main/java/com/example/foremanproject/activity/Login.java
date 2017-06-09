@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
                 url = url + "/";
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url + "api/common_parameters", null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, url + "api/architectures", null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Toast.makeText(Login.this, "Successful", Toast.LENGTH_LONG).show();

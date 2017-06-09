@@ -52,11 +52,11 @@ public class AllHosts extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_allhosts, container, false);
-        sendRequest();
+        sendRequest("");
         return view;
     }
 
-    private void sendRequest() {
+    private void sendRequest(final String name) {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -64,8 +64,14 @@ public class AllHosts extends Fragment  {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getHosts(response);
+                            if(name.equals(""))
+                                getHosts(response);
+                            else getInfoOfHost(response, name);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (java.lang.InstantiationException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }
@@ -116,7 +122,7 @@ public class AllHosts extends Fragment  {
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    sendRequestForID((String) button.getTag());
+                    sendRequest((String) button.getTag());
                 }
             });
 
@@ -128,39 +134,7 @@ public class AllHosts extends Fragment  {
         }
     }
 
-    private void sendRequestForID(final String tag)  {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            getID(response, tag);
-                        } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
-                headers.put("Authorization", "Basic " + auth);
-                return headers;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
-    }
-
-    private void getID(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
+    private void getInfoOfHost(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
         JSONArray arr = response.getJSONArray("results");
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
