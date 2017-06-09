@@ -420,13 +420,10 @@ public class Dashboard extends Fragment {
     }
 
     private void drawHistogram(int [] runDistribution){
-
         XYSeries series = new XYSeries("");
         series.add(0,0);
         for(int i = 0; i<10; i++)
             series.add(3*(i+1),runDistribution[i]);
-
-
 
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         dataset.addSeries(series);

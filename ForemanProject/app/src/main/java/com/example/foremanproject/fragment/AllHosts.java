@@ -67,11 +67,7 @@ public class AllHosts extends Fragment  {
                             if(name.equals(""))
                                 getHosts(response);
                             else getInfoOfHost(response, name);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (java.lang.InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                        } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }

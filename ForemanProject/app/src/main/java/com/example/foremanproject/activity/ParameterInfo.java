@@ -61,7 +61,7 @@ public class ParameterInfo extends AppCompatActivity {
             text = new TextView(this);
             text.setText(" ");
             layout.addView(text);
-        };
+        }
 
         text = new TextView(this);
         text.setText("Description: " + description);

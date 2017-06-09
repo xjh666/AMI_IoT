@@ -25,7 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,14 +66,14 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(name.equals(""))
-                                getHosts(response);
-                            else getInfoOfHost(response, name);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                            if(api.equals("/api/hostgroups/"))
+                                setHostGroup(response);
+                            else {
+                                if (name.equals(""))
+                                    getHosts(response);
+                                else getInfoOfHost(response, name);
+                            }
+                        } catch (JSONException | InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }
@@ -155,14 +155,20 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                 Parameters.setName(name);
 
                 String[] title = obj.getString("hostgroup_title").split("/");
-                ArrayList<String> hostgroup = new ArrayList<>();
-                hostgroup.addAll(Arrays.asList(title));
-                Parameters.setHostGroup(hostgroup);
+                api = "/api/hostgroups/";
+                sendRequest("");
 
-                startActivity(new Intent(this, Parameters.class));
+
                 break;
             }
         }
+    }
+
+    private void setHostGroup(JSONObject response) {
+        ArrayList<String> hostgroup = new ArrayList<>();
+        hostgroup.addAll(Collections.singletonList(title));
+        Parameters.setHostGroup(hostgroup);
+        startActivity(new Intent(this, Parameters.class));
     }
 
     public static void setAPI(int id){

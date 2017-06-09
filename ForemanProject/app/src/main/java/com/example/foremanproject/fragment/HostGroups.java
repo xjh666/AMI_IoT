@@ -65,11 +65,7 @@ public class HostGroups extends Fragment {
                             if(tag.equals(""))
                                 getHostGroup(response);
                             else getInfoOfHostGroup(response, tag);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (java.lang.InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                        } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }
