@@ -388,9 +388,9 @@ public class Parameters extends AppCompatActivity {
         Collections.sort(arr);
         LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
 
-        for(final String key: arr){
-            if(!_parameters.containsKey(key))
-                _parameters.put(key,new HashMap<String, Object>());
+        for(final String puppetClassName: arr){
+            if(!_parameters.containsKey(puppetClassName))
+                _parameters.put(puppetClassName,new HashMap<String, Object>());
 
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.VERTICAL);
@@ -400,20 +400,20 @@ public class Parameters extends AppCompatActivity {
             space.setText("");
             linearlayout.addView(space);
 
-            List<String> parameter = new ArrayList<>(parameters.get(key).keySet());
+            List<String> parameter = new ArrayList<>(parameters.get(puppetClassName).keySet());
             Collections.sort(parameter);
 
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
 
             TextView puppetclassName = new TextView(this);
-            puppetclassName.setText(key);
+            puppetclassName.setText(puppetClassName);
             puppetclassName.setTextSize(26);
             puppetclassName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layout.addView(puppetclassName);
             linearlayout.addView(layout);
 
-            for(final String obj: parameter){
+            for(final String parameterName: parameter){
                 final EditText parameterValue = new EditText(this);
                 final Spinner spinner = new Spinner(this);
                 final Spinner _spinner = new Spinner(this);
@@ -423,25 +423,25 @@ public class Parameters extends AppCompatActivity {
                 pLayout.setOrientation(LinearLayout.HORIZONTAL);
                 pLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                final TextView parameterName = new TextView(this);
-                parameterName.setText(" " + obj);
-                parameterName.setTextSize(22);
-                parameterName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 90));
+                final TextView parameterNameText = new TextView(this);
+                parameterNameText.setText(" " + parameterName);
+                parameterNameText.setTextSize(22);
+                parameterNameText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 90));
 
                 Button info = new Button(this);
-                if(tag.get(key).get(obj).equals("PuppetDefault"))
+                if(tag.get(puppetClassName).get(parameterName).equals("PuppetDefault"))
                     info.setBackgroundResource(R.drawable.warning_icon);
                 else info.setBackgroundResource(R.drawable.i_mark_icon);
                 info.setLayoutParams(new LinearLayout.LayoutParams(70, 70));
                 info.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        showInfo(key, obj);
+                        showInfo(puppetClassName, parameterName);
                     }
                 });
 
                 pLayout.addView(info);
-                pLayout.addView(parameterName);
+                pLayout.addView(parameterNameText);
 
                 LinearLayout mLayout = new LinearLayout(this);
                 mLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -455,18 +455,18 @@ public class Parameters extends AppCompatActivity {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(!_tag.containsKey(key))
-                            _tag.put(key,new HashMap<String, String>());
+                        if(!_tag.containsKey(puppetClassName))
+                            _tag.put(puppetClassName,new HashMap<String, String>());
 
                         switch(spinner.getSelectedItem().toString()){
                             case "Override":
-                                _tag.get(key).put(obj,"Override");
+                                _tag.get(puppetClassName).put(parameterName,"Override");
                                 break;
                             case "Inherited Value":
-                                _tag.get(key).put(obj,"InheritedValue");
+                                _tag.get(puppetClassName).put(parameterName,"InheritedValue");
                                 break;
                             case "Puppet Default":
-                                _tag.get(key).put(obj,"PuppetDefault");
+                                _tag.get(puppetClassName).put(parameterName,"PuppetDefault");
                                 break;
                         }
 
@@ -485,14 +485,14 @@ public class Parameters extends AppCompatActivity {
                 });
                 mLayout.addView(spinner);
 
-                if(!obj.equals("enabled")){
-                    parameterValue.setText(parameters.get(key).get(obj).toString());
+                if(!parameterType.get(puppetClassName).get(parameterName).equals("boolean")){
+                    parameterValue.setText(parameters.get(puppetClassName).get(parameterName).toString());
                     parameterValue.setTextSize(15);
                     parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
                     parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                    switch (tag.get(key).get(obj)) {
+                    switch (tag.get(puppetClassName).get(parameterName)) {
                         case "Override":
                             spinner.setSelection(2);
                             parameterValue.setEnabled(true);
@@ -510,7 +510,7 @@ public class Parameters extends AppCompatActivity {
 
                     parameterValue.addTextChangedListener(new TextWatcher() {
                         public void afterTextChanged(Editable s) {
-                            _parameters.get(key).put(obj,parameterValue.getText());
+                            _parameters.get(puppetClassName).put(parameterName,parameterValue.getText());
                         }
 
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -526,11 +526,11 @@ public class Parameters extends AppCompatActivity {
                     _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
                     _spinner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
 
-                    if((boolean)parameters.get(key).get(obj))
+                    if((boolean)parameters.get(puppetClassName).get(parameterName))
                         _spinner.setSelection(1);
                     else _spinner.setSelection(0);
 
-                    switch (tag.get(key).get(obj)) {
+                    switch (tag.get(puppetClassName).get(parameterName)) {
                         case "Override":
                             spinner.setSelection(2);
                             _spinner.setEnabled(true);
@@ -550,10 +550,10 @@ public class Parameters extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             switch(_spinner.getSelectedItem().toString()){
                                 case "Disabled":
-                                    _parameters.get(key).put(obj,false);
+                                    _parameters.get(puppetClassName).put(parameterName,false);
                                     break;
                                 case "Enabled":
-                                    _parameters.get(key).put(obj,true);
+                                    _parameters.get(puppetClassName).put(parameterName,true);
                                     break;
                             }
 
