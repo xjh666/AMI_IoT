@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,8 @@ import java.util.Map;
 public class HostsOfAHostGroup extends AppCompatActivity {
     private static String api = "";
     private static String title = "";
-
+    private int hostgroupID;
+    private ArrayList<String> hostgroup;
     /**
      * Created the activity and then send request to get information
      */
@@ -66,11 +66,12 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(api.equals("/api/hostgroups/"))
+                            if(!api.substring(api.length()-5).equals("hosts"))
                                 setHostGroup(response);
                             else {
-                                if (name.equals(""))
+                                if (name.equals("")){
                                     getHosts(response);
+                                }
                                 else getInfoOfHost(response, name);
                             }
                         } catch (JSONException | InstantiationException | IllegalAccessException e) {
@@ -133,6 +134,8 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    hostgroup = new ArrayList<>();
+                    api = "api/hosts";
                     sendRequest((String) button.getTag());
                 }
             });
@@ -153,26 +156,29 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                 Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-
-                String[] title = obj.getString("hostgroup_title").split("/");
-                api = "/api/hostgroups/";
+                hostgroupID = obj.getInt("hostgroup_id");
+                api = "api/hostgroups/" + hostgroupID;
                 sendRequest("");
-
-
                 break;
             }
         }
     }
 
-    private void setHostGroup(JSONObject response) {
-        ArrayList<String> hostgroup = new ArrayList<>();
-        hostgroup.addAll(Collections.singletonList(title));
-        Parameters.setHostGroup(hostgroup);
-        startActivity(new Intent(this, Parameters.class));
+    private void setHostGroup(JSONObject response) throws JSONException {
+        hostgroup.add(0,response.getString("name"));
+        if(response.isNull("parent_id")){
+            System.out.println(hostgroup);
+            Parameters.setHostGroup(hostgroup);
+            startActivity(new Intent(this, Parameters.class));
+        } else{
+            hostgroupID = response.getInt("parent_id");
+            api = "/api/hostgroups/" + hostgroupID;
+            sendRequest("");
+        }
     }
 
     public static void setAPI(int id){
-        api = "/api/hostgroups/" + id + "/hosts";
+        api = "api/hostgroups/" + id + "/hosts";
     }
 
     public static void setPageTitle(String str){

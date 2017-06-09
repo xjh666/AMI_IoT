@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,11 +46,14 @@ public class AllHosts extends Fragment  {
         return new AllHosts();
     }
     LinearLayout totalList;
+    String api;
+    ArrayList<String> hostgroup;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_allhosts, container, false);
+        api = "api/hosts";
         sendRequest("");
         return view;
     }
@@ -60,13 +62,17 @@ public class AllHosts extends Fragment  {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hosts"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(name.equals(""))
-                                getHosts(response);
-                            else getInfoOfHost(response, name);
+                            if(api.equals("api/hosts")) {
+                                if (name.equals(""))
+                                    getHosts(response);
+                                else getInfoOfHost(response, name);
+                            } else {
+                                setHostGroup(response);
+                            }
                         } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -118,6 +124,8 @@ public class AllHosts extends Fragment  {
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    hostgroup = new ArrayList<>();
+                    api = "api/hosts";
                     sendRequest((String) button.getTag());
                 }
             });
@@ -139,15 +147,22 @@ public class AllHosts extends Fragment  {
                 Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-
-                String[] title = obj.getString("hostgroup_title").split("/");
-                ArrayList<String> hostgroup = new ArrayList<>();
-                hostgroup.addAll(Arrays.asList(title));
-                Parameters.setHostGroup(hostgroup);
-
-                startActivity(new Intent(getActivity(), Parameters.class));
+                api = "/api/hostgroups/" + obj.getInt("hostgroup_id");
+                sendRequest("");
                 break;
             }
+        }
+    }
+
+    private void setHostGroup(JSONObject response) throws JSONException {
+        hostgroup.add(0,response.getString("name"));
+        if(response.isNull("parent_id")){
+            System.out.println(hostgroup);
+            Parameters.setHostGroup(hostgroup);
+            startActivity(new Intent(getActivity(), Parameters.class));
+        } else{
+            api = "/api/hostgroups/" + response.getInt("parent_id");
+            sendRequest("");
         }
     }
 }

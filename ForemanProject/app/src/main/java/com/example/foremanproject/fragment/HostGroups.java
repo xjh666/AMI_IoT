@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,11 +44,13 @@ import java.util.Map;
 public class HostGroups extends Fragment {
     public static HostGroups newInstance() {return new HostGroups(); }
     LinearLayout grouplist;
-
+    ArrayList<String> hostgroup;
+    String api;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_hostgroup, container, false);
+        api = "api/hostgroups";
         sendRequest("");
         return view;
     }
@@ -58,13 +59,17 @@ public class HostGroups extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hostgroups"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(tag.equals(""))
-                                getHostGroup(response);
-                            else getInfoOfHostGroup(response, tag);
+                            if(api.equals("api/hostgroups")) {
+                                if (tag.equals(""))
+                                    getHostGroup(response);
+                                else getInfoOfHostGroup(response, tag);
+                            } else {
+                                setHostGroup(response);
+                            }
                         } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -110,6 +115,7 @@ public class HostGroups extends Fragment {
             button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    api = "api/hostgroups";
                     sendRequest(button1.getTag().toString());
                 }
             });
@@ -122,6 +128,7 @@ public class HostGroups extends Fragment {
             button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    api = "api/hostgroups";
                     sendRequest(button2.getTag().toString());
                 }
             });
@@ -157,15 +164,26 @@ public class HostGroups extends Fragment {
             Parameters.setID(id);
             Parameters.setName(name);
             Parameters.setType("HOSTGROUPS");
-            if(!obj.get("name").equals(obj.get("title"))){
-                String[] title = obj.getString("title").split("/");
-                ArrayList<String> hostgroup = new ArrayList<>();
-                hostgroup.addAll(Arrays.asList(title));
-                Parameters.setHostGroup(hostgroup);
+            if(obj.get("name").equals(obj.get("title"))) {
+                startActivity(new Intent(getActivity(), Parameters.class));
+            } else {
                 Parameters.setType("HOSTGROUPSWITHPARENT");
-                System.out.println(hostgroup);
+                hostgroup = new ArrayList<>();
+                api = "api/hostgroups/" + obj.getInt("id");
+                sendRequest("");
             }
-            startActivity(new Intent(getActivity(), Parameters.class));
         }
     }
+
+        private void setHostGroup(JSONObject response) throws JSONException {
+            hostgroup.add(0,response.getString("name"));
+            if(response.isNull("parent_id")){
+                System.out.println(hostgroup);
+                Parameters.setHostGroup(hostgroup);
+                startActivity(new Intent(getActivity(), Parameters.class));
+            } else{
+                api = "/api/hostgroups/" + response.getInt("parent_id");
+                sendRequest("");
+            }
+        }
 }
