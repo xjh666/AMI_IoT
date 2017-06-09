@@ -83,8 +83,8 @@ public class Dashboard extends Fragment {
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
-            sendRequestForConfigChartAndStatus();
-            sendRequestForReports();
+            sendRequest("reports");
+            sendRequest("dashboard");
             int mInterval = 30000;
             mHandler.postDelayed(mStatusChecker, mInterval);
         }
@@ -94,15 +94,17 @@ public class Dashboard extends Fragment {
 
     void stopRepeatingTask() { mHandler.removeCallbacks(mStatusChecker); }
 
-    private void sendRequestForReports(){
+    private void sendRequest(final String api){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/reports/"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (UserInfo.getUrl() + "api/" + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getReports(response);
+                            if (api.equals("reports"))
+                                getReports(response);
+                            else  getInfoForChartAndStatus(response);
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                         }
@@ -329,38 +331,6 @@ public class Dashboard extends Fragment {
                 text.setText(status.get(hostName).get("pending").toString());
                 break;
         }
-    }
-
-    private void sendRequestForConfigChartAndStatus() {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/dashboard"), null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            getInfoForChartAndStatus(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
-                headers.put("Authorization", "Basic " + auth);
-                return headers;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
     }
 
     private void getInfoForChartAndStatus(JSONObject response) throws JSONException {
