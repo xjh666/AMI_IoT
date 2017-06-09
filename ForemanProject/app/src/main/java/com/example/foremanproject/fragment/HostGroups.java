@@ -50,11 +50,11 @@ public class HostGroups extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_hostgroup, container, false);
-        sendRequest();
+        sendRequest("");
         return view;
     }
 
-    private void sendRequest() {
+    private void sendRequest(final String tag) {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -62,8 +62,14 @@ public class HostGroups extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getHosts(response);
+                            if(tag.equals(""))
+                                getHostGroup(response);
+                            else getInfoOfHostGroup(response, tag);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (java.lang.InstantiationException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
                     }
@@ -86,7 +92,7 @@ public class HostGroups extends Fragment {
         queue.add(jsObjRequest);
     }
 
-    private void getHosts(JSONObject response) throws JSONException {
+    private void getHostGroup(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
         grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
         for(int i=0;i<arr.length();i++){
@@ -108,7 +114,7 @@ public class HostGroups extends Fragment {
             button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    sendRequestForID(button1.getTag().toString());
+                    sendRequest(button1.getTag().toString());
                 }
             });
 
@@ -120,7 +126,7 @@ public class HostGroups extends Fragment {
             button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    sendRequestForID(button2.getTag().toString());
+                    sendRequest(button2.getTag().toString());
                 }
             });
             linearlayout.addView(textView);
@@ -131,39 +137,7 @@ public class HostGroups extends Fragment {
         }
     }
 
-    private void sendRequestForID(final String tag)  {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hostgroups"), null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            getID(response, tag);
-                        } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
-                headers.put("Authorization", "Basic " + auth);
-                return headers;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
-    }
-
-    private void getID(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
+    private void getInfoOfHostGroup(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
         JSONArray arr = response.getJSONArray("results");
         String name = tag.substring(0,tag.length()-1);
         for(int i=0;i<arr.length();i++){
