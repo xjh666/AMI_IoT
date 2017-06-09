@@ -178,7 +178,6 @@ public class HostGroups extends Fragment {
         private void setHostGroup(JSONObject response) throws JSONException {
             hostgroup.add(0,response.getString("name"));
             if(response.isNull("parent_id")){
-                System.out.println(hostgroup);
                 Parameters.setHostGroup(hostgroup);
                 startActivity(new Intent(getActivity(), Parameters.class));
             } else{
