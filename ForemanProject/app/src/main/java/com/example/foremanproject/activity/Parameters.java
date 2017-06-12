@@ -1,6 +1,7 @@
 package com.example.foremanproject.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -128,6 +129,7 @@ public class Parameters extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameters);
         setTitle(name);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         parameters = new HashMap<>();
         _parameters = new HashMap<>();

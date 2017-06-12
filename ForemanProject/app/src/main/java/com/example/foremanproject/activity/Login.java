@@ -1,6 +1,7 @@
 package com.example.foremanproject.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -16,8 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foremanproject.other.NukeSSLCerts;
 import com.example.foremanproject.R;
+import com.example.foremanproject.other.NukeSSLCerts;
 import com.example.foremanproject.other.UserInfo;
 
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class Login extends AppCompatActivity {
         NukeSSLCerts.nuke();
         setTitle("Welcome to Foreman");
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         button = (Button)findViewById(R.id.button);
         urlEdit   = (EditText)findViewById(R.id.URL);
