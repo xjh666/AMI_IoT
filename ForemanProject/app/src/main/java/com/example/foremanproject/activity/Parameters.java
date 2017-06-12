@@ -26,7 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
-import com.example.foremanproject.other.UserInfo;
+import com.example.foremanproject.other.Configuration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -159,7 +159,7 @@ public class Parameters extends AppCompatActivity {
             api = "/api/hostgroups/"+ id +"/smart_class_parameters";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -178,7 +178,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -230,7 +230,7 @@ public class Parameters extends AppCompatActivity {
     private void sendRequestForValue(final JSONArray arr, final int parameter_id, final String puppetClassName) {
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + "api/smart_class_parameters/" + parameter_id), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -251,7 +251,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -729,7 +729,7 @@ public class Parameters extends AppCompatActivity {
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.POST, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), obj, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, (Configuration.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), obj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                     }
@@ -742,7 +742,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -755,7 +755,7 @@ public class Parameters extends AppCompatActivity {
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/"), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -810,7 +810,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -823,7 +823,7 @@ public class Parameters extends AppCompatActivity {
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.PUT, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), obj, new Response.Listener<JSONObject>() {
+                (Request.Method.PUT, (Configuration.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), obj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                     }
@@ -836,7 +836,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -849,7 +849,7 @@ public class Parameters extends AppCompatActivity {
         int parameter_id = parameterID.get(puppetClass).get(parameterName);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.DELETE, (UserInfo.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), null, new Response.Listener<JSONObject>() {
+                (Request.Method.DELETE, (Configuration.getUrl() + "api/smart_class_parameters/" + parameter_id + "/override_values/" + overrideID), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                     }
@@ -862,7 +862,7 @@ public class Parameters extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }

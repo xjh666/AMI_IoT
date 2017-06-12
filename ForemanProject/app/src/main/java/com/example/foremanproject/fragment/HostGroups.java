@@ -22,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
 import com.example.foremanproject.activity.HostsOfAHostGroup;
 import com.example.foremanproject.activity.Parameters;
-import com.example.foremanproject.other.UserInfo;
+import com.example.foremanproject.other.Configuration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class HostGroups extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -84,7 +84,7 @@ public class HostGroups extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }

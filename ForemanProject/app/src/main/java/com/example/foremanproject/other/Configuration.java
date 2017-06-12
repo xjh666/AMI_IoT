@@ -8,10 +8,13 @@ package com.example.foremanproject.other;
  * This class is to store the info of user, which is user for requests in other activities.
  */
 
-public class UserInfo {
+public class Configuration {
     private static String url;
     private static String username;
     private static String password;
+
+    private static int width;
+    private static int height;
 
     public static void setUrl(String newUrl) {
         url = newUrl;
@@ -29,4 +32,11 @@ public class UserInfo {
 
     public static String getUNandPW(){ return (username + ":" + password);}
 
+    public static void setWidth(int _width){ width = _width; }
+
+    public static void setHeight(int _height){ height = _height; }
+
+    public static int getWidth(){ return width;}
+
+    public static int getHeight(){ return height;}
 }

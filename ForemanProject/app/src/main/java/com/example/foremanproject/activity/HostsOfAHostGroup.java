@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
-import com.example.foremanproject.other.UserInfo;
+import com.example.foremanproject.other.Configuration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +64,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + api), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -91,7 +91,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -122,16 +122,16 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             if(obj.get("global_status_label").equals("OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 150));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getWidth()* 0.1)));
 
             TextView textView = new TextView(this);
             textView.setText(" " + obj.get("name"));
-            textView.setTextSize(25);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(780, LinearLayout.LayoutParams.MATCH_PARENT));
+            textView.setTextSize(24);
+            textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), LinearLayout.LayoutParams.WRAP_CONTENT));
 
             //The tag of a button is the name of the related host for the further use
             final Button button = new Button(this);
-            button.setLayoutParams(new LinearLayout.LayoutParams(210, 180));
+            button.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.2), (int)(Configuration.getWidth()* 0.15)));
             button.setText("Edit");
             button.setTag(obj.get("name"));
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
@@ -145,9 +145,10 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             linearlayout.addView(imageView);
             linearlayout.addView(textView);
             linearlayout.addView(button);
-
-            totalList.addView(new LinearLayout(this));
         }
+        TextView space = new TextView(this);
+        space.setText("");
+        totalList.addView(space);
     }
 
     private void getInfoOfHost(JSONObject response, String name) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
