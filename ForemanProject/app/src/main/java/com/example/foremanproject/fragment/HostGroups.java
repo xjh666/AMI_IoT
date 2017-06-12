@@ -108,11 +108,11 @@ public class HostGroups extends Fragment {
 
             TextView textView = new TextView(getActivity());
             textView.setText(obj.get("title").toString());
-            textView.setTextSize(20);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(720, LinearLayout.LayoutParams.MATCH_PARENT));
+            textView.setTextSize(21);
+            textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.64), LinearLayout.LayoutParams.WRAP_CONTENT));
 
             final Button button1 = new Button(getActivity());
-            button1.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
+            button1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.17), (int)(Configuration.getHeight()* 0.1)));
             button1.setText("All");
             button1.setTag(obj.get("name") + "s");
             button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
@@ -125,7 +125,7 @@ public class HostGroups extends Fragment {
 
 
             final Button button2 = new Button(getActivity());
-            button2.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
+            button2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.17), (int)(Configuration.getHeight()* 0.1)));
             button2.setText("EDIT");
             button2.setTag(obj.get("name") + "e");
             button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
@@ -135,12 +135,20 @@ public class HostGroups extends Fragment {
                     sendRequest(button2.getTag().toString());
                 }
             });
+
+            TextView space = new TextView(getActivity());
+            space.setText("");
+            space.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.02), (int)(Configuration.getHeight()* 0.1)));
+
             linearlayout.addView(textView);
             linearlayout.addView(button1);
+            linearlayout.addView(space);
             linearlayout.addView(button2);
-
-            grouplist.addView(new LinearLayout(getActivity()));
         }
+        TextView space = new TextView(getActivity());
+        space.setText("");
+        grouplist.addView(space);
+
         Parameters.setAllHosGroup(allHostGroup);
     }
 
