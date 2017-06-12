@@ -90,6 +90,7 @@ public class Dashboard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
+        table = (TableLayout) view.findViewById(R.id.tablelayout);
         initializeHostConfigurationStatusTable();
         startRepeatingTask();
         return view;
@@ -380,7 +381,6 @@ public class Dashboard extends Fragment {
     }
 
     private void initializeHostConfigurationStatusTable(){
-        table = (TableLayout) getView().findViewById(R.id.tablelayout);
         TableRow row = new TableRow(getActivity());
 
         totalHostText = new TextView(getActivity());
@@ -414,7 +414,7 @@ public class Dashboard extends Fragment {
         badHostText = new TextView(getActivity());
         badHostText.setTextColor(0xffaa4343);
         badHostText.setTextSize(14);
-        badHostText.setText("Hosts that had performed modifications without error");
+        badHostText.setText("Hosts in error state");
         badHost = new TextView(getActivity());
         badHost.setText("");
         badHost.setTextColor(0xffaa4343);
@@ -428,7 +428,7 @@ public class Dashboard extends Fragment {
         okHostText = new TextView(getActivity());
         okHostText.setTextColor(0xff89a54e);
         okHostText.setTextSize(14);
-        okHostText.setText("Hosts that had performed modifications without error");
+        okHostText.setText("Good host reports in the last 35 minutes");
         okHost = new TextView(getActivity());
         okHost.setText("");
         okHost.setTextColor(0xff89a54e);
@@ -442,7 +442,7 @@ public class Dashboard extends Fragment {
         pendingHostText = new TextView(getActivity());
         pendingHostText.setTextColor(0xff80699b);
         pendingHostText.setTextSize(14);
-        pendingHostText.setText("Hosts that had performed modifications without error");
+        pendingHostText.setText("Hosts that had pending changes");
         pendingHost = new TextView(getActivity());
         pendingHost.setText("");
         pendingHost.setTextColor(0xff80699b);
@@ -456,7 +456,7 @@ public class Dashboard extends Fragment {
         outOfSyncHostText = new TextView(getActivity());
         outOfSyncHostText.setTextColor(0xff3d96ae);
         outOfSyncHostText.setTextSize(14);
-        outOfSyncHostText.setText("Hosts that had performed modifications without error");
+        outOfSyncHostText.setText("Out of sync hosts");
         outOfSyncHost = new TextView(getActivity());
         outOfSyncHost.setText("");
         outOfSyncHost.setTextColor(0xff3d96ae);
@@ -470,7 +470,7 @@ public class Dashboard extends Fragment {
         reportMissingText = new TextView(getActivity());
         reportMissingText.setTextColor(0xffdb843d);
         reportMissingText.setTextSize(14);
-        reportMissingText.setText("s that had performed modifications without error");
+        reportMissingText.setText("Hosts with no reports");
         reportMissing = new TextView(getActivity());
         reportMissing.setText("");
         reportMissing.setTextColor(0xffdb843d);
@@ -484,7 +484,7 @@ public class Dashboard extends Fragment {
         disabledHostText = new TextView(getActivity());
         disabledHostText.setTextColor(0xff92abcd);
         disabledHostText.setTextSize(14);
-        disabledHostText.setText("Hosts that had performed modifications without error");
+        disabledHostText.setText("Hosts with Alerts disabled");
         disabledHost = new TextView(getActivity());
         disabledHost.setText("");
         disabledHost.setTextColor(0xff92abcd);
