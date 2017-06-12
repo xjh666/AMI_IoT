@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -65,11 +67,30 @@ public class Dashboard extends Fragment {
     final int ThreeMinutesInMilliseconds = 180000;
     public static Dashboard newInstance() { return new Dashboard(); }
 
+    TextView totalHost;
+    TextView totalHostText;
+    TextView activeHost;
+    TextView activeHostText;
+    TextView badHost;
+    TextView badHostText;
+    TextView okHost;
+    TextView okHostText;
+    TextView pendingHost;
+    TextView pendingHostText;
+    TextView outOfSyncHost;
+    TextView outOfSyncHostText;
+    TextView reportMissing;
+    TextView reportMissingText;
+    TextView disabledHost;
+    TextView disabledHostText;
+    TableLayout table;
+    int i = 0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
+        initializeHostConfigurationStatusTable();
         startRepeatingTask();
         return view;
     }
@@ -354,34 +375,135 @@ public class Dashboard extends Fragment {
             }
         }
 
-        setText(totalHosts, data, (max*100/totalHosts + "%  " + display));
+        setHostConfigurationStatusTable(totalHosts, data, (max*100/totalHosts + "%  " + display));
         drawPieChart(labels,data);
     }
 
-    private void setText(int totalHost, int[] data, String percentage){
-        TextView total = (TextView) getView().findViewById(R.id.totalHost);
-        total.setText(totalHost + "");
+    private void initializeHostConfigurationStatusTable(){
+        table = (TableLayout) getView().findViewById(R.id.tablelayout);
+        TableRow row = new TableRow(getActivity());
 
-        TextView active = (TextView) getView().findViewById(R.id.activeHost);
-        active.setText(data[0] + "");
+        totalHostText = new TextView(getActivity());
+        totalHostText.setText("Total Hosts");
+        totalHostText.setTextColor(Color.BLACK);
+        totalHostText.setTextSize(20);
+        totalHost = new TextView(getActivity());
+        totalHost.setText("");
+        totalHost.setTextColor(Color.BLACK);
+        totalHost.setTextSize(25);
+        totalHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(totalHostText);
+        row.addView(totalHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView bad = (TextView) getView().findViewById(R.id.badHost);
-        bad.setText(data[1] + "");
+        activeHostText = new TextView(getActivity());
+        activeHostText.setTextColor(0xff4572a7);
+        activeHostText.setTextSize(14);
+        activeHostText.setText("Hosts that had performed modifications without error");
+        activeHost = new TextView(getActivity());
+        activeHost.setText("");
+        activeHost.setTextColor(0xff4572a7);
+        activeHost.setTextSize(20);
+        activeHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(activeHostText);
+        row.addView(activeHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView ok = (TextView) getView().findViewById(R.id.okHost);
-        ok.setText(data[2] + "");
+        badHostText = new TextView(getActivity());
+        badHostText.setTextColor(0xffaa4343);
+        badHostText.setTextSize(14);
+        badHostText.setText("Hosts that had performed modifications without error");
+        badHost = new TextView(getActivity());
+        badHost.setText("");
+        badHost.setTextColor(0xffaa4343);
+        badHost.setTextSize(20);
+        badHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(badHostText);
+        row.addView(badHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView pending = (TextView) getView().findViewById(R.id.pendingHost);
-        pending.setText(data[3] + "");
+        okHostText = new TextView(getActivity());
+        okHostText.setTextColor(0xff89a54e);
+        okHostText.setTextSize(14);
+        okHostText.setText("Hosts that had performed modifications without error");
+        okHost = new TextView(getActivity());
+        okHost.setText("");
+        okHost.setTextColor(0xff89a54e);
+        okHost.setTextSize(20);
+        okHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(okHostText);
+        row.addView(okHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView outOfSync = (TextView) getView().findViewById(R.id.outOfSyncHost);
-        outOfSync.setText(data[4] + "");
+        pendingHostText = new TextView(getActivity());
+        pendingHostText.setTextColor(0xff80699b);
+        pendingHostText.setTextSize(14);
+        pendingHostText.setText("Hosts that had performed modifications without error");
+        pendingHost = new TextView(getActivity());
+        pendingHost.setText("");
+        pendingHost.setTextColor(0xff80699b);
+        pendingHost.setTextSize(20);
+        pendingHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(pendingHostText);
+        row.addView(pendingHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView miss = (TextView) getView().findViewById(R.id.reportMissing);
-        miss.setText(data[5] + "");
+        outOfSyncHostText = new TextView(getActivity());
+        outOfSyncHostText.setTextColor(0xff3d96ae);
+        outOfSyncHostText.setTextSize(14);
+        outOfSyncHostText.setText("Hosts that had performed modifications without error");
+        outOfSyncHost = new TextView(getActivity());
+        outOfSyncHost.setText("");
+        outOfSyncHost.setTextColor(0xff3d96ae);
+        outOfSyncHost.setTextSize(20);
+        outOfSyncHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(outOfSyncHostText);
+        row.addView(outOfSyncHost);
+        table.addView(row);
+        row = new TableRow(getActivity());
 
-        TextView disabled = (TextView) getView().findViewById(R.id.disabledHost);
-        disabled.setText(data[6] + "");
+        reportMissingText = new TextView(getActivity());
+        reportMissingText.setTextColor(0xffdb843d);
+        reportMissingText.setTextSize(14);
+        reportMissingText.setText("s that had performed modifications without error");
+        reportMissing = new TextView(getActivity());
+        reportMissing.setText("");
+        reportMissing.setTextColor(0xffdb843d);
+        reportMissing.setTextSize(20);
+        reportMissing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(reportMissingText);
+        row.addView(reportMissing);
+        table.addView(row);
+        row = new TableRow(getActivity());
+
+        disabledHostText = new TextView(getActivity());
+        disabledHostText.setTextColor(0xff92abcd);
+        disabledHostText.setTextSize(14);
+        disabledHostText.setText("Hosts that had performed modifications without error");
+        disabledHost = new TextView(getActivity());
+        disabledHost.setText("");
+        disabledHost.setTextColor(0xff92abcd);
+        disabledHost.setTextSize(20);
+        disabledHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        row.addView(disabledHostText);
+        row.addView(disabledHost);
+        table.addView(row);
+    }
+
+    private void setHostConfigurationStatusTable(int total, int[] data, String percentage){
+        totalHost.setText(total + "");
+        activeHost.setText(data[0] + "");
+        badHost.setText(data[1] + "");
+        okHost.setText(data[2] + "");
+        pendingHost.setText(data[3] + "");
+        outOfSyncHost.setText(data[4] + "");
+        reportMissing.setText(data[5] + "");
+        disabledHost.setText(data[6] + "");
 
         TextView percent = (TextView) getView().findViewById(R.id.percentage);
         percent.setText(percentage);
