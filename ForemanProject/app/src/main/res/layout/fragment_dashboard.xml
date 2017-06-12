@@ -51,10 +51,12 @@
                 android:textStyle="bold|italic" />
 
             <TableLayout
+                android:id="@+id/tablelayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TableRow
+                    android:id="@+id/a"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
