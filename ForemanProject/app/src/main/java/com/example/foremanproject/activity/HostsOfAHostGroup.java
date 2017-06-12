@@ -66,13 +66,14 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(!api.substring(api.length()-5).equals("hosts"))
-                                setHostGroup(response);
-                            else {
-                                if (name.equals("")){
+                            if(api.substring(api.length()-5).equals("hosts")) {
+                                if (name.equals("")) {
                                     getHosts(response);
-                                }
-                                else getInfoOfHost(response, name);
+                                } else getInfoOfHost(response, name);
+                            } else if(api.equals("api/hostgroups")){
+                                getAllHostGroup(response);
+                            } else {
+                                setHostGroup(response);
                             }
                         } catch (JSONException | InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
@@ -168,12 +169,22 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         hostgroup.add(0,response.getString("name"));
         if(response.isNull("parent_id")){
             Parameters.setHostGroup(hostgroup);
-            startActivity(new Intent(this, Parameters.class));
+            api = "api/hostgroups";
+            sendRequest("");
         } else{
             hostgroupID = response.getInt("parent_id");
             api = "/api/hostgroups/" + hostgroupID;
             sendRequest("");
         }
+    }
+
+    private void getAllHostGroup(JSONObject response) throws JSONException {
+        Map<String, Integer> allHostGroup = new HashMap<>();
+        JSONArray arr = response.getJSONArray("results");
+        for(int i=0;i<arr.length();i++)
+            allHostGroup.put(arr.getJSONObject(i).getString("name"),1);
+        Parameters.setAllHosGroup(allHostGroup);
+        startActivity(new Intent(this, Parameters.class));
     }
 
     public static void setAPI(int id){

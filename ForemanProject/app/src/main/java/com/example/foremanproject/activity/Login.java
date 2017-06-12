@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
     EditText passwordEdit;
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() { finish(); }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

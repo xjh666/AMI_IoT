@@ -66,12 +66,18 @@ public class AllHosts extends Fragment  {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(api.equals("api/hosts")) {
-                                if (name.equals(""))
-                                    getHosts(response);
-                                else getInfoOfHost(response, name);
-                            } else {
-                                setHostGroup(response);
+                            switch (api) {
+                                case "api/hosts":
+                                    if (name.equals(""))
+                                        getHosts(response);
+                                    else getInfoOfHost(response, name);
+                                    break;
+                                case "api/hostgroups":
+                                    getAllHostGroup(response);
+                                    break;
+                                default:
+                                    setHostGroup(response);
+                                    break;
                             }
                         } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
@@ -147,7 +153,7 @@ public class AllHosts extends Fragment  {
                 Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-                api = "/api/hostgroups/" + obj.getInt("hostgroup_id");
+                api = "api/hostgroups/" + obj.getInt("hostgroup_id");
                 sendRequest("");
                 break;
             }
@@ -158,10 +164,20 @@ public class AllHosts extends Fragment  {
         hostgroup.add(0,response.getString("name"));
         if(response.isNull("parent_id")){
             Parameters.setHostGroup(hostgroup);
-            startActivity(new Intent(getActivity(), Parameters.class));
+            api = "api/hostgroups";
+            sendRequest("");
         } else{
-            api = "/api/hostgroups/" + response.getInt("parent_id");
+            api = "api/hostgroups/" + response.getInt("parent_id");
             sendRequest("");
         }
+    }
+
+    private void getAllHostGroup(JSONObject response) throws JSONException {
+        Map<String, Integer> allHostGroup = new HashMap<>();
+        JSONArray arr = response.getJSONArray("results");
+        for(int i=0;i<arr.length();i++)
+            allHostGroup.put(arr.getJSONObject(i).getString("name"),1);
+        Parameters.setAllHosGroup(allHostGroup);
+        startActivity(new Intent(getActivity(), Parameters.class));
     }
 }

@@ -94,10 +94,13 @@ public class HostGroups extends Fragment {
     }
 
     private void getHostGroup(JSONObject response) throws JSONException {
+        Map<String, Integer> allHostGroup = new HashMap<>();
         JSONArray arr = response.getJSONArray("results");
         grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
+
+            allHostGroup.put(obj.getString("name"),1);
 
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -138,6 +141,7 @@ public class HostGroups extends Fragment {
 
             grouplist.addView(new LinearLayout(getActivity()));
         }
+        Parameters.setAllHosGroup(allHostGroup);
     }
 
     private void getInfoOfHostGroup(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
