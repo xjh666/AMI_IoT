@@ -1256,7 +1256,7 @@ public class Dashboard extends Fragment {
         mRenderer.setLabelsTextSize(40f);
         mRenderer.setXLabelsColor(0xff000000);
         mRenderer.setBarSpacing(0.1);
-        mRenderer.setXTitle("Minutes ago");
+        mRenderer.setXTitle("Within x Minutes");
         mRenderer.setAxisTitleTextSize(60);
         mRenderer.setLabelsColor(0xFF000000);
 
