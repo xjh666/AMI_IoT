@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -83,14 +81,14 @@ public class Dashboard extends Fragment {
     TextView reportMissingText;
     TextView disabledHost;
     TextView disabledHostText;
-    TableLayout table;
-    int i = 0;
+    LinearLayout table;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
-        table = (TableLayout) view.findViewById(R.id.tablelayout);
+        table = (LinearLayout) view.findViewById(R.id.tablelayout);
         initializeHostConfigurationStatusTable();
         startRepeatingTask();
         return view;
@@ -381,115 +379,138 @@ public class Dashboard extends Fragment {
     }
 
     private void initializeHostConfigurationStatusTable(){
-        TableRow row = new TableRow(getActivity());
-
+        LinearLayout row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         totalHostText = new TextView(getActivity());
         totalHostText.setText("Total Hosts");
         totalHostText.setTextColor(Color.BLACK);
+        totalHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.92), (int)(Configuration.getHeight()* 0.05)));
         totalHostText.setTextSize(20);
         totalHost = new TextView(getActivity());
         totalHost.setText("");
         totalHost.setTextColor(Color.BLACK);
         totalHost.setTextSize(25);
         totalHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        totalHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getHeight()* 0.05)));
         row.addView(totalHostText);
         row.addView(totalHost);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         activeHostText = new TextView(getActivity());
         activeHostText.setTextColor(0xff4572a7);
         activeHostText.setTextSize(14);
         activeHostText.setText("Hosts that had performed modifications without error");
+        activeHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         activeHost = new TextView(getActivity());
         activeHost.setText("");
         activeHost.setTextColor(0xff4572a7);
         activeHost.setTextSize(20);
         activeHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        activeHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(activeHostText);
         row.addView(activeHost);
         table.addView(row);
-        row = new TableRow(getActivity());
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
 
         badHostText = new TextView(getActivity());
         badHostText.setTextColor(0xffaa4343);
         badHostText.setTextSize(14);
         badHostText.setText("Hosts in error state");
+        badHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         badHost = new TextView(getActivity());
         badHost.setText("");
         badHost.setTextColor(0xffaa4343);
         badHost.setTextSize(20);
         badHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        badHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(badHostText);
         row.addView(badHost);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         okHostText = new TextView(getActivity());
         okHostText.setTextColor(0xff89a54e);
         okHostText.setTextSize(14);
         okHostText.setText("Good host reports in the last 35 minutes");
+        okHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         okHost = new TextView(getActivity());
         okHost.setText("");
         okHost.setTextColor(0xff89a54e);
         okHost.setTextSize(20);
         okHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        okHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(okHostText);
         row.addView(okHost);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         pendingHostText = new TextView(getActivity());
         pendingHostText.setTextColor(0xff80699b);
         pendingHostText.setTextSize(14);
         pendingHostText.setText("Hosts that had pending changes");
+        pendingHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         pendingHost = new TextView(getActivity());
         pendingHost.setText("");
         pendingHost.setTextColor(0xff80699b);
         pendingHost.setTextSize(20);
         pendingHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        pendingHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(pendingHostText);
         row.addView(pendingHost);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         outOfSyncHostText = new TextView(getActivity());
         outOfSyncHostText.setTextColor(0xff3d96ae);
         outOfSyncHostText.setTextSize(14);
         outOfSyncHostText.setText("Out of sync hosts");
+        outOfSyncHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         outOfSyncHost = new TextView(getActivity());
         outOfSyncHost.setText("");
         outOfSyncHost.setTextColor(0xff3d96ae);
         outOfSyncHost.setTextSize(20);
         outOfSyncHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        outOfSyncHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(outOfSyncHostText);
         row.addView(outOfSyncHost);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         reportMissingText = new TextView(getActivity());
         reportMissingText.setTextColor(0xffdb843d);
         reportMissingText.setTextSize(14);
         reportMissingText.setText("Hosts with no reports");
+        reportMissingText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         reportMissing = new TextView(getActivity());
         reportMissing.setText("");
         reportMissing.setTextColor(0xffdb843d);
         reportMissing.setTextSize(20);
         reportMissing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        reportMissing.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(reportMissingText);
         row.addView(reportMissing);
         table.addView(row);
-        row = new TableRow(getActivity());
 
+        row = new LinearLayout(getActivity());
+        row.setOrientation(LinearLayout.HORIZONTAL);
         disabledHostText = new TextView(getActivity());
         disabledHostText.setTextColor(0xff92abcd);
         disabledHostText.setTextSize(14);
         disabledHostText.setText("Hosts with Alerts disabled");
+        disabledHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
         disabledHost = new TextView(getActivity());
         disabledHost.setText("");
         disabledHost.setTextColor(0xff92abcd);
         disabledHost.setTextSize(20);
         disabledHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        disabledHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
         row.addView(disabledHostText);
         row.addView(disabledHost);
         table.addView(row);

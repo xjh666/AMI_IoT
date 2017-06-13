@@ -36,7 +36,8 @@
                 android:id="@+id/chart_container"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="0.32">
 
             </LinearLayout>
 
@@ -50,12 +51,11 @@
                 android:textSize="26sp"
                 android:textStyle="bold|italic" />
 
-            <TableLayout
+            <LinearLayout
                 android:id="@+id/tablelayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </TableLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <TextView
                 android:id="@+id/textView28"

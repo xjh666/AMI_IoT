@@ -116,7 +116,7 @@ public class AllHosts extends Fragment  {
             if(obj.get("global_status_label").equals("OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getWidth()* 0.1)));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getHeight()* 0.1)));
 
             TextView textView = new TextView(getActivity());
             textView.setText(" " + obj.get("name"));
@@ -124,7 +124,7 @@ public class AllHosts extends Fragment  {
             textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), LinearLayout.LayoutParams.WRAP_CONTENT));
 
             final Button button = new Button(getActivity());
-            button.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.2), (int)(Configuration.getWidth()* 0.15)));
+            button.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.2), (int)(Configuration.getHeight()* 0.1)));
             button.setText("Edit");
             button.setTag(obj.get("name"));
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
