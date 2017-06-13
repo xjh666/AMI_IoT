@@ -421,7 +421,7 @@ public class Parameters extends AppCompatActivity {
             TextView puppetclassName = new TextView(this);
             puppetclassName.setText(puppetClassName);
             puppetclassName.setTextSize(26);
-            puppetclassName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            puppetclassName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (int)(Configuration.getHeight()* 0.07)));
             layout.addView(puppetclassName);
             linearlayout.addView(layout);
 
@@ -438,13 +438,13 @@ public class Parameters extends AppCompatActivity {
                 final TextView parameterNameText = new TextView(this);
                 parameterNameText.setText(" " + parameterName);
                 parameterNameText.setTextSize(22);
-                parameterNameText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 90));
+                parameterNameText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                 Button info = new Button(this);
                 if(tag.get(puppetClassName).get(parameterName).equals("PuppetDefault"))
                     info.setBackgroundResource(R.drawable.warning_icon);
                 else info.setBackgroundResource(R.drawable.i_mark_icon);
-                info.setLayoutParams(new LinearLayout.LayoutParams(70, 70));
+                info.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getHeight()* 0.04), (int)(Configuration.getHeight()* 0.04)));
                 info.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
@@ -462,7 +462,7 @@ public class Parameters extends AppCompatActivity {
                 spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selections));
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinnerArrayAdapter);
-                spinner.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, 120));
+                spinner.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), (int)(Configuration.getHeight()* 0.08)));
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                     @Override
@@ -500,7 +500,7 @@ public class Parameters extends AppCompatActivity {
                 if(!parameterType.get(puppetClassName).get(parameterName).equals("boolean")){
                     parameterValue.setText(parameters.get(puppetClassName).get(parameterName).toString());
                     parameterValue.setTextSize(15);
-                    parameterValue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
+                    parameterValue.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), (int)(Configuration.getHeight()* 0.08)));
                     parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
@@ -535,8 +535,8 @@ public class Parameters extends AppCompatActivity {
                     ArrayAdapter<String> _spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectionsOfEnabled));
                     _spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     _spinner.setAdapter(_spinnerArrayAdapter);
-                    _spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
-                    _spinner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                    _spinner.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), (int)(Configuration.getHeight()* 0.08)));
+                    _spinner.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
                     if((boolean)parameters.get(puppetClassName).get(parameterName))
                         _spinner.setSelection(1);
@@ -608,7 +608,7 @@ public class Parameters extends AppCompatActivity {
         Button submit = new Button(this);
         submit.setText("SUBMIT");
         submit.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        submit.setLayoutParams(new LinearLayout.LayoutParams(440, 250));
+        submit.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.4), (int)(Configuration.getHeight()* 0.12)));
         submit.setBackground(getResources().getDrawable(R.drawable.button_icon));
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -623,7 +623,7 @@ public class Parameters extends AppCompatActivity {
         Button cancel = new Button(this);
         cancel.setText("CANCEL");
         cancel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        cancel.setLayoutParams(new LinearLayout.LayoutParams(440, 250));
+        cancel.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.4), (int)(Configuration.getHeight()* 0.12)));
         cancel.setBackground(getResources().getDrawable(R.drawable.button_icon));
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -637,92 +637,6 @@ public class Parameters extends AppCompatActivity {
         layout.addView(cancel);
         layout.addView(space3);
         list.addView(layout);
-    }
-
-    public void updateInfo() throws JSONException {
-        for (String puppetClass : _tag.keySet())
-            for (String parameterName : _tag.get(puppetClass).keySet()){
-                switch(tag.get(puppetClass).get(parameterName)) {
-                    case "PuppetDefault":
-                        {
-                            if(_tag.get(puppetClass).get(parameterName).equals("Override")){
-                                JSONObject obj = new JSONObject();
-                                obj.put("use_puppet_default",0);
-                                if(_parameters.get(puppetClass).containsKey(parameterName))
-                                    obj.put("value",_parameters.get(puppetClass).get(parameterName));
-                                else obj.put("value",parameters.get(puppetClass).get(parameterName));
-                                sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
-                            } else if(_tag.get(puppetClass).get(parameterName).equals("InheritedValue")){
-                                sendRequestTogGetOverrideID(null, puppetClass, parameterName);
-                            }
-                            break;
-                        }
-
-                    case "Override":
-                        {
-                            if(_tag.get(puppetClass).get(parameterName).equals("Override")){
-                                if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(parameters.get(puppetClass).get(parameterName)))) {
-                                    JSONObject obj = new JSONObject();
-                                    obj.put("value", _parameters.get(puppetClass).get(parameterName));
-                                    sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
-                                }
-                            } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
-                                JSONObject obj = new JSONObject();
-                                obj.put("use_puppet_default",1);
-                                obj.put("value",JSONObject.NULL);
-                                sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
-                            } else {
-                                sendRequestTogGetOverrideID(null, puppetClass, parameterName);
-                            }
-                            break;
-                        }
-
-                    default:
-                        {
-                            if(_tag.get(puppetClass).get(parameterName).equals("Override")){
-                                JSONObject obj = new JSONObject();
-                                obj.put("use_puppet_default",0);
-                                if(_parameters.get(puppetClass).containsKey(parameterName))
-                                    obj.put("value",_parameters.get(puppetClass).get(parameterName));
-                                else obj.put("value",parameters.get(puppetClass).get(parameterName));
-                                switch (type) {
-                                    case "HOST":
-                                        obj.put("match", "fqdn=" + name);
-                                        break;
-                                    case "HOSTGROUPS":
-                                        obj.put("match", "hostgroup=" + name);
-                                        break;
-                                    default:
-                                        String parent="";
-                                        for(int i=0;i<hostgroup.size()-1;i++)
-                                            parent = parent + hostgroup.get(i) + "/";
-                                        obj.put("match", "hostgroup=" + parent + name);
-                                        break;
-                                }
-                                sendRequestToPost(obj, puppetClass, parameterName);
-                            } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
-                                JSONObject obj = new JSONObject();
-                                obj.put("use_puppet_default",1);
-                                switch (type) {
-                                    case "HOST":
-                                        obj.put("match", "fqdn=" + name);
-                                        break;
-                                    case "HOSTGROUPS":
-                                        obj.put("match", "hostgroup=" + name);
-                                        break;
-                                    default:
-                                        String parent="";
-                                        for(int i=0;i<hostgroup.size()-1;i++)
-                                            parent = parent + hostgroup.get(i) + "/";
-                                        obj.put("match", "hostgroup=" + parent + name);
-                                        break;
-                                }
-                                sendRequestToPost(obj, puppetClass, parameterName);
-                            }
-                        }
-                }
-        }
-        finish();
     }
 
     private void sendRequestToPost(JSONObject obj, String puppetClass, String parameterName){
@@ -878,6 +792,92 @@ public class Parameters extends AppCompatActivity {
                                 inheritedValue.get(puppetclassName).get(parameterName),
                                 tag.get(puppetclassName).get(parameterName));
         startActivity(new Intent(Parameters.this, ParameterInfo.class));
+    }
+
+    public void updateInfo() throws JSONException {
+        for (String puppetClass : _tag.keySet())
+            for (String parameterName : _tag.get(puppetClass).keySet()){
+                switch(tag.get(puppetClass).get(parameterName)) {
+                    case "PuppetDefault":
+                    {
+                        if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                            JSONObject obj = new JSONObject();
+                            obj.put("use_puppet_default",0);
+                            if(_parameters.get(puppetClass).containsKey(parameterName))
+                                obj.put("value",_parameters.get(puppetClass).get(parameterName));
+                            else obj.put("value",parameters.get(puppetClass).get(parameterName));
+                            sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
+                        } else if(_tag.get(puppetClass).get(parameterName).equals("InheritedValue")){
+                            sendRequestTogGetOverrideID(null, puppetClass, parameterName);
+                        }
+                        break;
+                    }
+
+                    case "Override":
+                    {
+                        if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                            if(_parameters.get(puppetClass).containsKey(parameterName) && !(_parameters.get(puppetClass).get(parameterName).equals(parameters.get(puppetClass).get(parameterName)))) {
+                                JSONObject obj = new JSONObject();
+                                obj.put("value", _parameters.get(puppetClass).get(parameterName));
+                                sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
+                            }
+                        } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                            JSONObject obj = new JSONObject();
+                            obj.put("use_puppet_default",1);
+                            obj.put("value",JSONObject.NULL);
+                            sendRequestTogGetOverrideID(obj, puppetClass, parameterName);
+                        } else {
+                            sendRequestTogGetOverrideID(null, puppetClass, parameterName);
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        if(_tag.get(puppetClass).get(parameterName).equals("Override")){
+                            JSONObject obj = new JSONObject();
+                            obj.put("use_puppet_default",0);
+                            if(_parameters.get(puppetClass).containsKey(parameterName))
+                                obj.put("value",_parameters.get(puppetClass).get(parameterName));
+                            else obj.put("value",parameters.get(puppetClass).get(parameterName));
+                            switch (type) {
+                                case "HOST":
+                                    obj.put("match", "fqdn=" + name);
+                                    break;
+                                case "HOSTGROUPS":
+                                    obj.put("match", "hostgroup=" + name);
+                                    break;
+                                default:
+                                    String parent="";
+                                    for(int i=0;i<hostgroup.size()-1;i++)
+                                        parent = parent + hostgroup.get(i) + "/";
+                                    obj.put("match", "hostgroup=" + parent + name);
+                                    break;
+                            }
+                            sendRequestToPost(obj, puppetClass, parameterName);
+                        } else if(_tag.get(puppetClass).get(parameterName).equals("PuppetDefault")){
+                            JSONObject obj = new JSONObject();
+                            obj.put("use_puppet_default",1);
+                            switch (type) {
+                                case "HOST":
+                                    obj.put("match", "fqdn=" + name);
+                                    break;
+                                case "HOSTGROUPS":
+                                    obj.put("match", "hostgroup=" + name);
+                                    break;
+                                default:
+                                    String parent="";
+                                    for(int i=0;i<hostgroup.size()-1;i++)
+                                        parent = parent + hostgroup.get(i) + "/";
+                                    obj.put("match", "hostgroup=" + parent + name);
+                                    break;
+                            }
+                            sendRequestToPost(obj, puppetClass, parameterName);
+                        }
+                    }
+                }
+            }
+        finish();
     }
 
     public static void setID(int _id){ id = _id; }
