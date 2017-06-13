@@ -584,6 +584,7 @@ public class Dashboard extends Fragment {
         id1.setTextColor(Color.BLACK);
         id1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id1.setBackgroundResource(R.drawable.cell_shape);
+        id1.setTextSize(16);
 
         a1 = new TextView(getActivity());
         a1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -591,6 +592,7 @@ public class Dashboard extends Fragment {
         a1.setTextColor(Color.BLACK);
         a1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a1.setBackgroundResource(R.drawable.cell_shape);
+        a1.setTextSize(16);
 
         r1 = new TextView(getActivity());
         r1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -598,6 +600,7 @@ public class Dashboard extends Fragment {
         r1.setTextColor(Color.BLACK);
         r1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r1.setBackgroundResource(R.drawable.cell_shape);
+        r1.setTextSize(16);
 
         f1 = new TextView(getActivity());
         f1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -605,6 +608,7 @@ public class Dashboard extends Fragment {
         f1.setTextColor(Color.BLACK);
         f1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f1.setBackgroundResource(R.drawable.cell_shape);
+        f1.setTextSize(16);
 
         fr1 = new TextView(getActivity());
         fr1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -612,6 +616,7 @@ public class Dashboard extends Fragment {
         fr1.setTextColor(Color.BLACK);
         fr1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr1.setBackgroundResource(R.drawable.cell_shape);
+        fr1.setTextSize(16);
 
         s1 = new TextView(getActivity());
         s1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -619,6 +624,7 @@ public class Dashboard extends Fragment {
         s1.setTextColor(Color.BLACK);
         s1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s1.setBackgroundResource(R.drawable.cell_shape);
+        s1.setTextSize(16);
 
         p1 = new TextView(getActivity());
         p1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -626,6 +632,7 @@ public class Dashboard extends Fragment {
         p1.setTextColor(Color.BLACK);
         p1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p1.setBackgroundResource(R.drawable.cell_shape);
+        p1.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -644,6 +651,7 @@ public class Dashboard extends Fragment {
         id2.setTextColor(Color.BLACK);
         id2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id2.setBackgroundResource(R.drawable.cell_shape);
+        id2.setTextSize(16);
 
         a2 = new TextView(getActivity());
         a2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -651,6 +659,7 @@ public class Dashboard extends Fragment {
         a2.setTextColor(Color.BLACK);
         a2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a2.setBackgroundResource(R.drawable.cell_shape);
+        a2.setTextSize(16);
 
         r2 = new TextView(getActivity());
         r2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -658,6 +667,7 @@ public class Dashboard extends Fragment {
         r2.setTextColor(Color.BLACK);
         r2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r2.setBackgroundResource(R.drawable.cell_shape);
+        r2.setTextSize(16);
 
         f2 = new TextView(getActivity());
         f2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -665,6 +675,7 @@ public class Dashboard extends Fragment {
         f2.setTextColor(Color.BLACK);
         f2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f2.setBackgroundResource(R.drawable.cell_shape);
+        f2.setTextSize(16);
 
         fr2 = new TextView(getActivity());
         fr2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -672,6 +683,7 @@ public class Dashboard extends Fragment {
         fr2.setTextColor(Color.BLACK);
         fr2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr2.setBackgroundResource(R.drawable.cell_shape);
+        fr2.setTextSize(16);
 
         s2 = new TextView(getActivity());
         s2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -679,6 +691,7 @@ public class Dashboard extends Fragment {
         s2.setTextColor(Color.BLACK);
         s2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s2.setBackgroundResource(R.drawable.cell_shape);
+        s2.setTextSize(16);
 
         p2 = new TextView(getActivity());
         p2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -686,6 +699,7 @@ public class Dashboard extends Fragment {
         p2.setTextColor(Color.BLACK);
         p2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p2.setBackgroundResource(R.drawable.cell_shape);
+        p2.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -704,6 +718,7 @@ public class Dashboard extends Fragment {
         id3.setTextColor(Color.BLACK);
         id3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id3.setBackgroundResource(R.drawable.cell_shape);
+        id3.setTextSize(16);
 
         a3 = new TextView(getActivity());
         a3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -711,6 +726,7 @@ public class Dashboard extends Fragment {
         a3.setTextColor(Color.BLACK);
         a3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a3.setBackgroundResource(R.drawable.cell_shape);
+        a3.setTextSize(16);
 
         r3 = new TextView(getActivity());
         r3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -718,6 +734,7 @@ public class Dashboard extends Fragment {
         r3.setTextColor(Color.BLACK);
         r3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r3.setBackgroundResource(R.drawable.cell_shape);
+        r3.setTextSize(16);
 
         f3 = new TextView(getActivity());
         f3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -725,6 +742,7 @@ public class Dashboard extends Fragment {
         f3.setTextColor(Color.BLACK);
         f3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f3.setBackgroundResource(R.drawable.cell_shape);
+        f3.setTextSize(16);
 
         fr3 = new TextView(getActivity());
         fr3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -732,6 +750,7 @@ public class Dashboard extends Fragment {
         fr3.setTextColor(Color.BLACK);
         fr3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr3.setBackgroundResource(R.drawable.cell_shape);
+        fr3.setTextSize(16);
 
         s3 = new TextView(getActivity());
         s3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -739,6 +758,7 @@ public class Dashboard extends Fragment {
         s3.setTextColor(Color.BLACK);
         s3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s3.setBackgroundResource(R.drawable.cell_shape);
+        s3.setTextSize(16);
 
         p3 = new TextView(getActivity());
         p3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -746,6 +766,7 @@ public class Dashboard extends Fragment {
         p3.setTextColor(Color.BLACK);
         p3.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p3.setBackgroundResource(R.drawable.cell_shape);
+        p3.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -764,6 +785,7 @@ public class Dashboard extends Fragment {
         id4.setTextColor(Color.BLACK);
         id4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id4.setBackgroundResource(R.drawable.cell_shape);
+        id4.setTextSize(16);
 
         a4 = new TextView(getActivity());
         a4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -771,6 +793,7 @@ public class Dashboard extends Fragment {
         a4.setTextColor(Color.BLACK);
         a4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a4.setBackgroundResource(R.drawable.cell_shape);
+        a4.setTextSize(16);
 
         r4 = new TextView(getActivity());
         r4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -778,6 +801,7 @@ public class Dashboard extends Fragment {
         r4.setTextColor(Color.BLACK);
         r4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r4.setBackgroundResource(R.drawable.cell_shape);
+        r4.setTextSize(16);
 
         f4 = new TextView(getActivity());
         f4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -785,6 +809,7 @@ public class Dashboard extends Fragment {
         f4.setTextColor(Color.BLACK);
         f4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f4.setBackgroundResource(R.drawable.cell_shape);
+        f4.setTextSize(16);
 
         fr4 = new TextView(getActivity());
         fr4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -792,6 +817,7 @@ public class Dashboard extends Fragment {
         fr4.setTextColor(Color.BLACK);
         fr4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr4.setBackgroundResource(R.drawable.cell_shape);
+        fr4.setTextSize(16);
 
         s4 = new TextView(getActivity());
         s4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -799,6 +825,7 @@ public class Dashboard extends Fragment {
         s4.setTextColor(Color.BLACK);
         s4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s4.setBackgroundResource(R.drawable.cell_shape);
+        s4.setTextSize(16);
 
         p4 = new TextView(getActivity());
         p4.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -806,6 +833,7 @@ public class Dashboard extends Fragment {
         p4.setTextColor(Color.BLACK);
         p4.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p4.setBackgroundResource(R.drawable.cell_shape);
+        p4.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -824,6 +852,7 @@ public class Dashboard extends Fragment {
         id5.setTextColor(Color.BLACK);
         id5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id5.setBackgroundResource(R.drawable.cell_shape);
+        id5.setTextSize(16);
 
         a5 = new TextView(getActivity());
         a5.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -831,6 +860,7 @@ public class Dashboard extends Fragment {
         a5.setTextColor(Color.BLACK);
         a5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a5.setBackgroundResource(R.drawable.cell_shape);
+        a5.setTextSize(16);
 
         r5 = new TextView(getActivity());
         r5.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -838,6 +868,7 @@ public class Dashboard extends Fragment {
         r5.setTextColor(Color.BLACK);
         r5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r5.setBackgroundResource(R.drawable.cell_shape);
+        r5.setTextSize(16);
 
         f5 = new TextView(getActivity());
         f5.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -845,6 +876,7 @@ public class Dashboard extends Fragment {
         f5.setTextColor(Color.BLACK);
         f5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f5.setBackgroundResource(R.drawable.cell_shape);
+        f5.setTextSize(16);
 
         fr5 = new TextView(getActivity());
         fr5.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -852,6 +884,7 @@ public class Dashboard extends Fragment {
         fr5.setTextColor(Color.BLACK);
         fr5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr5.setBackgroundResource(R.drawable.cell_shape);
+        fr5.setTextSize(16);
 
         s5 = new TextView(getActivity());
         s5.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -859,6 +892,7 @@ public class Dashboard extends Fragment {
         s5.setTextColor(Color.BLACK);
         s5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s5.setBackgroundResource(R.drawable.cell_shape);
+        s5.setTextSize(16);
 
         p5 = new TextView(getActivity());
         p5.setText("");
@@ -866,6 +900,7 @@ public class Dashboard extends Fragment {
         p5.setTextColor(Color.BLACK);
         p5.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p5.setBackgroundResource(R.drawable.cell_shape);
+        p5.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -884,6 +919,7 @@ public class Dashboard extends Fragment {
         id6.setTextColor(Color.BLACK);
         id6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id6.setBackgroundResource(R.drawable.cell_shape);
+        id6.setTextSize(16);
 
         a6 = new TextView(getActivity());
         a6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -891,6 +927,7 @@ public class Dashboard extends Fragment {
         a6.setTextColor(Color.BLACK);
         a6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a6.setBackgroundResource(R.drawable.cell_shape);
+        a6.setTextSize(16);
 
         r6 = new TextView(getActivity());
         r6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -898,6 +935,7 @@ public class Dashboard extends Fragment {
         r6.setTextColor(Color.BLACK);
         r6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r6.setBackgroundResource(R.drawable.cell_shape);
+        r6.setTextSize(16);
 
         f6 = new TextView(getActivity());
         f6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -905,6 +943,7 @@ public class Dashboard extends Fragment {
         f6.setTextColor(Color.BLACK);
         f6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f6.setBackgroundResource(R.drawable.cell_shape);
+        f6.setTextSize(16);
 
         fr6 = new TextView(getActivity());
         fr6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -912,6 +951,7 @@ public class Dashboard extends Fragment {
         fr6.setTextColor(Color.BLACK);
         fr6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr6.setBackgroundResource(R.drawable.cell_shape);
+        fr6.setTextSize(16);
 
         s6 = new TextView(getActivity());
         s6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -919,6 +959,7 @@ public class Dashboard extends Fragment {
         s6.setTextColor(Color.BLACK);
         s6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s6.setBackgroundResource(R.drawable.cell_shape);
+        s6.setTextSize(16);
 
         p6 = new TextView(getActivity());
         p6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -926,6 +967,7 @@ public class Dashboard extends Fragment {
         p6.setTextColor(Color.BLACK);
         p6.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p6.setBackgroundResource(R.drawable.cell_shape);
+        p6.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -944,6 +986,7 @@ public class Dashboard extends Fragment {
         id7.setTextColor(Color.BLACK);
         id7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id7.setBackgroundResource(R.drawable.cell_shape);
+        id7.setTextSize(16);
 
         a7 = new TextView(getActivity());
         a7.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -951,6 +994,7 @@ public class Dashboard extends Fragment {
         a7.setTextColor(Color.BLACK);
         a7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a7.setBackgroundResource(R.drawable.cell_shape);
+        a7.setTextSize(16);
 
         r7 = new TextView(getActivity());
         r7.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -958,6 +1002,7 @@ public class Dashboard extends Fragment {
         r7.setTextColor(Color.BLACK);
         r7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r7.setBackgroundResource(R.drawable.cell_shape);
+        r7.setTextSize(16);
 
         f7 = new TextView(getActivity());
         f7.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -965,6 +1010,7 @@ public class Dashboard extends Fragment {
         f7.setTextColor(Color.BLACK);
         f7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f7.setBackgroundResource(R.drawable.cell_shape);
+        f7.setTextSize(16);
 
         fr7 = new TextView(getActivity());
         fr7.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -972,6 +1018,7 @@ public class Dashboard extends Fragment {
         fr7.setTextColor(Color.BLACK);
         fr7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr7.setBackgroundResource(R.drawable.cell_shape);
+        fr7.setTextSize(16);
 
         s7 = new TextView(getActivity());
         s7.setText("");
@@ -979,6 +1026,7 @@ public class Dashboard extends Fragment {
         s7.setTextColor(Color.BLACK);
         s7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s7.setBackgroundResource(R.drawable.cell_shape);
+        s7.setTextSize(16);
 
         p7 = new TextView(getActivity());
         p7.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -986,6 +1034,7 @@ public class Dashboard extends Fragment {
         p7.setTextColor(Color.BLACK);
         p7.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p7.setBackgroundResource(R.drawable.cell_shape);
+        p7.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -1004,6 +1053,7 @@ public class Dashboard extends Fragment {
         id8.setTextColor(Color.BLACK);
         id8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id8.setBackgroundResource(R.drawable.cell_shape);
+        id8.setTextSize(16);
 
         a8 = new TextView(getActivity());
         a8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1011,6 +1061,7 @@ public class Dashboard extends Fragment {
         a8.setTextColor(Color.BLACK);
         a8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a8.setBackgroundResource(R.drawable.cell_shape);
+        a8.setTextSize(16);
 
         r8 = new TextView(getActivity());
         r8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1018,6 +1069,7 @@ public class Dashboard extends Fragment {
         r8.setTextColor(Color.BLACK);
         r8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r8.setBackgroundResource(R.drawable.cell_shape);
+        r8.setTextSize(16);
 
         f8 = new TextView(getActivity());
         f8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1025,6 +1077,7 @@ public class Dashboard extends Fragment {
         f8.setTextColor(Color.BLACK);
         f8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f8.setBackgroundResource(R.drawable.cell_shape);
+        f8.setTextSize(16);
 
         fr8 = new TextView(getActivity());
         fr8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1032,6 +1085,7 @@ public class Dashboard extends Fragment {
         fr8.setTextColor(Color.BLACK);
         fr8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr8.setBackgroundResource(R.drawable.cell_shape);
+        fr8.setTextSize(16);
 
         s8 = new TextView(getActivity());
         s8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1039,6 +1093,7 @@ public class Dashboard extends Fragment {
         s8.setTextColor(Color.BLACK);
         s8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s8.setBackgroundResource(R.drawable.cell_shape);
+        s8.setTextSize(16);
 
         p8 = new TextView(getActivity());
         p8.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1046,6 +1101,7 @@ public class Dashboard extends Fragment {
         p8.setTextColor(Color.BLACK);
         p8.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p8.setBackgroundResource(R.drawable.cell_shape);
+        p8.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -1064,6 +1120,7 @@ public class Dashboard extends Fragment {
         id9.setTextColor(Color.BLACK);
         id9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
         id9.setBackgroundResource(R.drawable.cell_shape);
+        id9.setTextSize(16);
 
         a9 = new TextView(getActivity());
         a9.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1071,6 +1128,7 @@ public class Dashboard extends Fragment {
         a9.setTextColor(Color.BLACK);
         a9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         a9.setBackgroundResource(R.drawable.cell_shape);
+        a9.setTextSize(16);
 
         r9 = new TextView(getActivity());
         r9.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1078,6 +1136,7 @@ public class Dashboard extends Fragment {
         r9.setTextColor(Color.BLACK);
         r9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         r9.setBackgroundResource(R.drawable.cell_shape);
+        r9.setTextSize(16);
 
         f9 = new TextView(getActivity());
         f9.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1085,6 +1144,7 @@ public class Dashboard extends Fragment {
         f9.setTextColor(Color.BLACK);
         f9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         f9.setBackgroundResource(R.drawable.cell_shape);
+        f9.setTextSize(16);
 
         fr9 = new TextView(getActivity());
         fr9.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1092,6 +1152,7 @@ public class Dashboard extends Fragment {
         fr9.setTextColor(Color.BLACK);
         fr9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         fr9.setBackgroundResource(R.drawable.cell_shape);
+        fr9.setTextSize(16);
 
         s9 = new TextView(getActivity());
         s9.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1099,6 +1160,7 @@ public class Dashboard extends Fragment {
         s9.setTextColor(Color.BLACK);
         s9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
         s9.setBackgroundResource(R.drawable.cell_shape);
+        s9.setTextSize(16);
 
         p9 = new TextView(getActivity());
         p9.setText("");
@@ -1106,6 +1168,7 @@ public class Dashboard extends Fragment {
         p9.setTextColor(Color.BLACK);
         p9.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
         p9.setBackgroundResource(R.drawable.cell_shape);
+        p9.setTextSize(16);
 
         row = new LinearLayout(getActivity());
         row.setOrientation(LinearLayout.HORIZONTAL);
