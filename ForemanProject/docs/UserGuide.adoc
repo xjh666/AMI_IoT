@@ -39,14 +39,22 @@ The following 3 components can be switched using navigation drawer, opening by s
 * The following 3 components can be switched using navigation drawer, opening by slide the screen from left to right or clicking the button on the tool bar.
 
 * Host Configuration Chart
-This pie chart illustrating the numerical proportion of numbers of hosts in different status.
+** This pie chart illustrating the numerical proportion of numbers of hosts in different status.
 The percentage of the most kinds of hosts are shown above the chart. 
-
-
-* Items in `SQUARE_BRACKETS` are optional.
-* Items with `...` after them can have multiple instances.
-* Parameters can be in any order.
 ====
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 === Adding a person: `add`
 
