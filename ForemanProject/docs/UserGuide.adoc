@@ -74,4 +74,15 @@ The following 3 components can be switched using navigation drawer, opening by s
 * Click the button “EDIT” to go to the page to view all parameters of the host and editing them.
 ====
 
+=== Editing Page
+* The page contains all puppet classes of a host or a host group.
+* Under each puppet class, the name of parameters and the conditions and values are listed. 
+* There is an icon beside the name of the parameters showing its condition and when clicking it, a window showing the information of original value of the parameter will pop up. The Original Value Info window contains description, type, matcher and inherited value of the parameter.
+* There are three kinds of values for parameters.
+** Inherited Value.
+*** By default, a host will inherit value from its host group. 
+*** A host group will inherit value from its parent. 
+*** If a host group is not a child group of the others, it will inherit from the default value. 
+*** In this condition, the value will show the value it inherits and is not editable.
+
 
