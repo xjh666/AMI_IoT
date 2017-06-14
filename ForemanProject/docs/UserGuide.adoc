@@ -36,7 +36,8 @@ The following 3 components can be switched using navigation drawer, opening by s
 ====
 *Dashboard*
 
-* The following 3 components can be switched using navigation drawer, opening by slide the screen from left to right or clicking the button on the tool bar.
+* There are four components in the dashboard page. 
+* The data are updated every 30 seconds.
 
 * Host Configuration Chart
 ** This pie chart illustrating the numerical proportion of numbers of hosts in different status.
