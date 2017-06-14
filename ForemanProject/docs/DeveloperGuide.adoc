@@ -23,3 +23,10 @@ endif::[]
 .  Click `File` > `New` >`Import Project...`
 .  Locate the project's directory and select `ForemanProject`
 .  Click `OK`
+
+=== Troubleshooting project setup
+
+* Problem: Android Studio reports compile errors after new commits are pulled from Git*
+
+* Reason: Android Studio fails to recognize new files that appeared due to the Git pull.
+* Solution: Refresh the project in Android Studio: Click `Build` > `Rebuild Project` 
