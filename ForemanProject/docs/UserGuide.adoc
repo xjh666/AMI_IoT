@@ -29,18 +29,23 @@ image::UI.png[width="300"]
 
 == Features
 
-====
-*Command Format*
+=== Monitor Page
 
-* Words in `UPPER_CASE` are the parameters.
+The following 3 components can be switched using navigation drawer, opening by slide the screen from left to right or clicking the button on the tool bar.
+
+====
+*Dashboard*
+The following 3 components can be switched using navigation drawer, opening by slide the screen from left to right or clicking the button on the tool bar.
+
+* Host Configuration Chart
+This pie chart illustrating the numerical proportion of numbers of hosts in different status.
+The percentage of the most kinds of hosts are shown above the chart. 
+
+
 * Items in `SQUARE_BRACKETS` are optional.
 * Items with `...` after them can have multiple instances.
 * Parameters can be in any order.
 ====
-
-=== Viewing help : `help`
-
-Format: `help`
 
 === Adding a person: `add`
 
