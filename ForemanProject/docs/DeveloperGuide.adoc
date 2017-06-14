@@ -43,3 +43,8 @@ After forking the repo, links in the documentation will link to the wrong repo. 
 
 * Login Page
 ** link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Login.java[`Login`] & link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_login.xml[`activity_login`]
+** This page is designed as an activity.
+** The UI of this page is designed all designed in the xml file.
+** It is resposible for getting and storing the user's info
+
+
