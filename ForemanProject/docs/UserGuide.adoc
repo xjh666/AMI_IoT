@@ -61,7 +61,7 @@ The following 3 components can be switched using navigation drawer, opening by s
 *List of All Hosts*
 
 * This page shows a list of hosts on the server.
-* Each host is listed as an icon showing its status, its name and a button “EDIT”.
+* Each host is listed as an icon showing its status, its name and a button 'EDIT'.
 * Click the button to go to the page to view all parameters of the host and editing them.
 ====
 
@@ -69,9 +69,9 @@ The following 3 components can be switched using navigation drawer, opening by s
 *List of All Host Groups*
 
 * This page shows a list of host groups on the server.
-* Each host group is listed as its name, a button “ALL” and a button “EDIT”.
-* Click the button “ALL” to go to the page viewing all hosts in the host group. The page is similar to the list of all hosts.
-* Click the button “EDIT” to go to the page to view all parameters of the host and editing them.
+* Each host group is listed as its name, a button 'ALL' and a button 'EDIT'.
+* Click the button 'ALL' to go to the page viewing all hosts in the host group. The page is similar to the list of all hosts.
+* Click the button 'EDIT' to go to the page to view all parameters of the host and editing them.
 ====
 
 === Editing Page
@@ -94,7 +94,7 @@ The following 3 components can be switched using navigation drawer, opening by s
 *** The parameter will use the value behind.
 *** The value is editable in this condition.
 
-* There are two buttons at the bottom of the page. "SUBMIT" and "CANCEL"
-** Click “SUBMIT” to confirm the changes and send it to the server. 
-** Click “CANCEL” to release all changes and return to the last page.
+* There are two buttons at the bottom of the page. 'SUBMIT' and 'CANCEL'
+** Click 'SUBMIT' to confirm the changes and send it to the server. 
+** Click 'CANCEL' to release all changes and return to the last page.
 
