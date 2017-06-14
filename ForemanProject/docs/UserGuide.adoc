@@ -85,4 +85,16 @@ The following 3 components can be switched using navigation drawer, opening by s
 *** If a host group is not a child group of the others, it will inherit from the default value. 
 *** In this condition, the value will show the value it inherits and is not editable.
 
+** Puppet Default
+*** The parameter will use the value of Puppet. 
+*** In this condition, the value will show nothing and is not editable.
+*** The Original Value Info window will show “Optional parameter without value. Will not be sent to Puppet”.
+
+** Override
+*** The parameter will use the value behind.
+*** The value is editable in this condition.
+
+* There are two buttons at the bottom of the page. "SUBMIT" and "CANCEL"
+** Click “SUBMIT” to confirm the changes and send it to the server. 
+** Click “CANCEL” to release all changes and return to the last page.
 
