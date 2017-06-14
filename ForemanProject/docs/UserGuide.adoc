@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Foreman Mobile App - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,17 +10,10 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
-
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` from the link:../../../releases[releases] tab.
+.  Ensure you have Android Version 5.0 or later installed on your mobile device.
+.  Download the latest `foreman.apk` from the link:../../../releases[releases] tab.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
