@@ -40,7 +40,19 @@ The following 3 components can be switched using navigation drawer, opening by s
 
 * Host Configuration Chart
 ** This pie chart illustrating the numerical proportion of numbers of hosts in different status.
-The percentage of the most kinds of hosts are shown above the chart. 
+** The percentage of the most kinds of hosts are shown above the chart. 
+
+* Host Configuration Status
+** This table showing the number of hosts in different status
+** The color code of the same kind of hosts in the status table and chart are corresponding.
+
+* Run distribution in the last 30 min
+** This histogram shows the distribution of numbers of hosts which have run and reported with in the last 30 minutes. The time interval is 3 minutes.
+** e.g. The number of which the x-coordinate is 6 shows the number of hosts which reported within the last 3-6 minutes.
+
+* Latest Event
+** This able shows nine latest events with its host and its status.
+** There are six status of a host. “A” means “applied”. “R” means “restarted”. “F” means “failed”. “FR” means “failed restarts”. “S” means “skipped”. “P” means “pending”.
 ====
 
 
