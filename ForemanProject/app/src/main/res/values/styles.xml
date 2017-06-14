@@ -26,4 +26,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackgroundApp</item>
     </style>
+
+    <!-- Popup window theme. -->
+    <style name="PopupWindowTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:colorBackground">@color/colorPopupWindowBackground</item>
+    </style>
 </resources>

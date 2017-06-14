@@ -22,117 +22,54 @@ import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
 import com.example.foremanproject.activity.HostsOfAHostGroup;
 import com.example.foremanproject.activity.Parameters;
-import com.example.foremanproject.other.UserInfo;
+import com.example.foremanproject.other.Configuration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Xie Jihui on 5/24/2017.
+ * Created by Xie Jihui on 5/23/2017.
+ */
+
+/**
+ * This class is a fragment to show all host group in the system
+ * This class is similar to show hosts, of which the difference is the api is "GET /api/hostgroups"
  */
 
 public class HostGroups extends Fragment {
     public static HostGroups newInstance() {return new HostGroups(); }
     LinearLayout grouplist;
-
+    ArrayList<String> hostgroup;
+    String api;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_hostgroup, container, false);
-        sendRequest();
+        api = "api/hostgroups";
+        sendRequest("");
         return view;
     }
 
-    private void sendRequest() {
+    private void sendRequest(final String tag) {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hostgroups"), null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, (Configuration.getUrl() + api), null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getHosts(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
-                headers.put("Authorization", "Basic " + auth);
-                return headers;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
-    }
-
-    private void getHosts(JSONObject response) throws JSONException {
-        JSONArray arr = (JSONArray) response.get("results");
-        grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
-        for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
-
-            LinearLayout linearlayout = new LinearLayout(getActivity());
-            linearlayout.setOrientation(LinearLayout.HORIZONTAL);
-            grouplist.addView(linearlayout);
-
-            TextView textView = new TextView(getActivity());
-            textView.setText(obj.get("title").toString());
-            textView.setTextSize(20);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(720, LinearLayout.LayoutParams.MATCH_PARENT));
-
-            final Button button1 = new Button(getActivity());
-            button1.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
-            button1.setText("All");
-            button1.setTag(obj.get("name") + "s");
-            button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
-            button1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    sendRequestForID(button1.getTag().toString());
-                }
-            });
-
-
-            final Button button2 = new Button(getActivity());
-            button2.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
-            button2.setText("EDIT");
-            button2.setTag(obj.get("name") + "e");
-            button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
-            button2.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    sendRequestForID(button2.getTag().toString());
-                }
-            });
-            linearlayout.addView(textView);
-            linearlayout.addView(button1);
-            linearlayout.addView(button2);
-
-            grouplist.addView(new LinearLayout(getActivity()));
-        }
-    }
-
-    private void sendRequestForID(final String tag)  {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, (UserInfo.getUrl() + "api/hostgroups"), null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            getID(response, tag);
+                            if(api.equals("api/hostgroups")) {
+                                if (tag.equals(""))
+                                    getHostGroup(response);
+                                else getInfoOfHostGroup(response, tag);
+                            } else {
+                                setHostGroup(response);
+                            }
                         } catch (JSONException | java.lang.InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
                         }
@@ -147,7 +84,7 @@ public class HostGroups extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                String auth = Base64.encodeToString(UserInfo.getUNandPW().getBytes(), Base64.NO_WRAP);
+                String auth = Base64.encodeToString(Configuration.getUNandPW().getBytes(), Base64.NO_WRAP);
                 headers.put("Authorization", "Basic " + auth);
                 return headers;
             }
@@ -156,14 +93,73 @@ public class HostGroups extends Fragment {
         queue.add(jsObjRequest);
     }
 
-    private void getID(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
-        JSONArray arr = (JSONArray) response.get("results");
+    private void getHostGroup(JSONObject response) throws JSONException {
+        Map<String, Integer> allHostGroup = new HashMap<>();
+        JSONArray arr = response.getJSONArray("results");
+        grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = arr.getJSONObject(i);
+
+            allHostGroup.put(obj.getString("name"),1);
+
+            LinearLayout linearlayout = new LinearLayout(getActivity());
+            linearlayout.setOrientation(LinearLayout.HORIZONTAL);
+            grouplist.addView(linearlayout);
+
+            TextView textView = new TextView(getActivity());
+            textView.setText(obj.get("title").toString());
+            textView.setTextSize(21);
+            textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.64), LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            final Button button1 = new Button(getActivity());
+            button1.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.17), (int)(Configuration.getHeight()* 0.1)));
+            button1.setText("All");
+            button1.setTag(obj.get("name") + "s");
+            button1.setBackground(getResources().getDrawable(R.drawable.button_icon));
+            button1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    api = "api/hostgroups";
+                    sendRequest(button1.getTag().toString());
+                }
+            });
+
+
+            final Button button2 = new Button(getActivity());
+            button2.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.17), (int)(Configuration.getHeight()* 0.1)));
+            button2.setText("EDIT");
+            button2.setTag(obj.get("name") + "e");
+            button2.setBackground(getResources().getDrawable(R.drawable.button_icon));
+            button2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    api = "api/hostgroups";
+                    sendRequest(button2.getTag().toString());
+                }
+            });
+
+            TextView space = new TextView(getActivity());
+            space.setText("");
+            space.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.02), (int)(Configuration.getHeight()* 0.1)));
+
+            linearlayout.addView(textView);
+            linearlayout.addView(button1);
+            linearlayout.addView(space);
+            linearlayout.addView(button2);
+        }
+        TextView space = new TextView(getActivity());
+        space.setText("");
+        grouplist.addView(space);
+
+        Parameters.setAllHosGroup(allHostGroup);
+    }
+
+    private void getInfoOfHostGroup(JSONObject response, String tag) throws JSONException, java.lang.InstantiationException, IllegalAccessException {
+        JSONArray arr = response.getJSONArray("results");
         String name = tag.substring(0,tag.length()-1);
         for(int i=0;i<arr.length();i++){
-            JSONObject obj = (JSONObject) arr.get(i);
+            JSONObject obj = arr.getJSONObject(i);
             String objName = obj.get("name").toString();
             if(objName.equals(name)){
-                selectInstruction((Integer)obj.get("id"),tag.substring(tag.length()-1),obj);
+                selectInstruction(obj.getInt("id"),tag.substring(tag.length()-1),obj);
                 break;
             }
         }
@@ -180,11 +176,25 @@ public class HostGroups extends Fragment {
             Parameters.setID(id);
             Parameters.setName(name);
             Parameters.setType("HOSTGROUPS");
-            if(!obj.isNull("parent_name")){
+            if(obj.get("name").equals(obj.get("title"))) {
+                startActivity(new Intent(getActivity(), Parameters.class));
+            } else {
                 Parameters.setType("HOSTGROUPSWITHPARENT");
-                Parameters.setParent(obj.get("parent_name").toString());
+                hostgroup = new ArrayList<>();
+                api = "api/hostgroups/" + obj.getInt("id");
+                sendRequest("");
             }
-            startActivity(new Intent(getActivity(), Parameters.class));
         }
     }
+
+        private void setHostGroup(JSONObject response) throws JSONException {
+            hostgroup.add(0,response.getString("name"));
+            if(response.isNull("parent_id")){
+                Parameters.setHostGroup(hostgroup);
+                startActivity(new Intent(getActivity(), Parameters.class));
+            } else{
+                api = "/api/hostgroups/" + response.getInt("parent_id");
+                sendRequest("");
+            }
+        }
 }

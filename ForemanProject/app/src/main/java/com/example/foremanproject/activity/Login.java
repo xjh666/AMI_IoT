@@ -1,9 +1,11 @@
 package com.example.foremanproject.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,14 +18,25 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foremanproject.other.NukeSSLCerts;
 import com.example.foremanproject.R;
-import com.example.foremanproject.other.UserInfo;
+import com.example.foremanproject.other.Configuration;
+import com.example.foremanproject.other.NukeSSLCerts;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+/**
+ * Created by Xie Jihui on 5/16/2017.
+ */
+
+/**
+ * This class is an activity for the Login Page
+ * When the user click "Login" button, use the url, username and password to send the a request.
+ * If getting response correctly, then treat login successfully and save the information in Configuration Class
+ * and open the BasicActivity page
+ */
 
 public class Login extends AppCompatActivity {
 
@@ -33,8 +46,7 @@ public class Login extends AppCompatActivity {
     EditText passwordEdit;
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,12 @@ public class Login extends AppCompatActivity {
         NukeSSLCerts.nuke();
         setTitle("Welcome to Foreman");
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Configuration.setWidth(dm.widthPixels);
+        Configuration.setHeight(dm.heightPixels);
 
         button = (Button)findViewById(R.id.button);
         urlEdit   = (EditText)findViewById(R.id.URL);
@@ -71,13 +89,13 @@ public class Login extends AppCompatActivity {
                 url = url + "/";
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url + "api/common_parameters", null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, url + "api/architectures", null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Toast.makeText(Login.this, "Successful", Toast.LENGTH_LONG).show();
-                            UserInfo.setUrl(urlEdit.getText().toString());
-                            UserInfo.setUsername(userNameEdit.getText().toString());
-                            UserInfo.setPassword(passwordEdit.getText().toString());
+                            Configuration.setUrl(urlEdit.getText().toString());
+                            Configuration.setUsername(userNameEdit.getText().toString());
+                            Configuration.setPassword(passwordEdit.getText().toString());
                             startActivity(intent);
                         }
                     }, new Response.ErrorListener() {

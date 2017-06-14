@@ -1,6 +1,7 @@
 package com.example.foremanproject.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,23 +23,32 @@ import com.example.foremanproject.fragment.Dashboard;
 import com.example.foremanproject.fragment.HostGroups;
 
 /**
- * Created by labuser on 5/23/2017.
+ * Created by Xie Jihui on 5/23/2017.
+ */
+
+/**
+ * This class is for Home Screen, which is an activity contains 3 fragments (All Hosts, Host Group, Dashboard.)
+ * The Navigation Drawer is used to select which fragment to be shown in the content_frame
  */
 
 public class BasicActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
-    private static String instruction = "Dashboard";
 
+    /**
+     * Created with default instruction to show the dashboard.
+     * Set up Navigation Drawer
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basicactivity);
-        setTitle(instruction);
+        setTitle("Dashboard");
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -47,18 +57,7 @@ public class BasicActivity extends AppCompatActivity {
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-        Fragment fragment = null;
-        switch(instruction){
-            case "Dashboard":
-                fragment = Dashboard.newInstance();
-                break;
-            case "All Hosts":
-                fragment = AllHosts.newInstance();
-                break;
-            case "Host Groups":
-                fragment = HostGroups.newInstance();
-                break;
-        }
+        Fragment fragment = Dashboard.newInstance();
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -66,6 +65,9 @@ public class BasicActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    @Override
+    public void onBackPressed() { finish(); }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
@@ -129,15 +131,12 @@ public class BasicActivity extends AppCompatActivity {
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_dashboard_fragment:
-                instruction = "Dashboard";
                 fragmentClass = Dashboard.class;
                 break;
             case R.id.nav_allhost_fragment:
-                instruction = "All Hosts";
                 fragmentClass = AllHosts.class;
                 break;
             case R.id.nav_hostgroup_fragment:
-                instruction = "Host Groups";
                 fragmentClass = HostGroups.class;
                 break;
             default:

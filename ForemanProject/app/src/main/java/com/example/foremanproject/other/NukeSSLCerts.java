@@ -10,6 +10,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+/**
+ * Created by Xie Jihui on 5/18/2017.
+ */
+
+/**
+ * This class is used to make the app to trust all certificate as the security certificate of the foreman url is not trusted by OS
+ */
+
 public class NukeSSLCerts {
     public static void nuke() {
         try {
