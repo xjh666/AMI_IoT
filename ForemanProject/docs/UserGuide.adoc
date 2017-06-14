@@ -20,7 +20,6 @@ endif::[]
 [NOTE]
 Before opening the app, ensure the time zone of your device is the same as the domain system.
 +
-+
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
