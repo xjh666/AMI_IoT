@@ -1,14 +1,4 @@
 = Foreman Mobile App - User Guide
-:toc:
-:toc-title:
-:toc-placement: preamble
-:sectnums:
-:imagesDir: images
-:experimental:
-ifdef::env-github[]
-:tip-caption: :bulb:
-:note-caption: :information_source:
-endif::[]
 
 == Quick Start
 
