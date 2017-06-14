@@ -20,7 +20,7 @@ endif::[]
 [NOTE]
 Before opening the app, ensure the time zone of your device is the same as the domain system.
 +
-image::UI.png[width="790"]
+image::UI.png[width="300"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
