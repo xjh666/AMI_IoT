@@ -14,8 +14,12 @@ endif::[]
 
 .  Ensure you have Android Version 5.0 or later installed on your mobile device.
 .  Download the latest `foreman.apk` from the link:https://github.com/xjh666/AMI_IoT/releases[releases] tab.
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Open the file and install the app on your mobile device.
+.  Click the icon to start the app. The GUI should appear in a few seconds.
++
+[NOTE]
+Before opening the app, ensure the time zone of your device is the same as the domain system.
++
 +
 image::Ui.png[width="790"]
 +
