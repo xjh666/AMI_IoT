@@ -8,6 +8,8 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/xjh666/AMI_IoT/tree/master
 
 == Setting up
 
@@ -30,3 +32,14 @@ endif::[]
 
 * Reason: Android Studio fails to recognize new files that appeared due to the Git pull.
 * Solution: Refresh the project in Android Studio: Click `Build` > `Rebuild Project` 
+
+=== Updating documentation
+
+After forking the repo, links in the documentation will link to the wrong repo. You should replace the URL in the variable `repoURL` in DeveloperGuide.adoc with the URL of your fork.
+
+== Design
+
+=== UI component
+
+* Login Page
+** link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Login.java[`Login`] & link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_login.xml[`activity_login`]
