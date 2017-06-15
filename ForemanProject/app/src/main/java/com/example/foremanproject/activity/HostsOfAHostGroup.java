@@ -51,7 +51,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hostsofahost_group);
+        setContentView(R.layout.hostlist);
         setTitle(title);
         sendRequest("");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
