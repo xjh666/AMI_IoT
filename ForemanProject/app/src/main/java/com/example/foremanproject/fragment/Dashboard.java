@@ -162,7 +162,7 @@ public class Dashboard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
-        statusTable = (LinearLayout) view.findViewById(R.id.tablelayout);
+        statusTable = (LinearLayout) view.findViewById(R.id.StatusTable);
         eventTable = (LinearLayout) view.findViewById(R.id.LatestEvents);
         initializeHostConfigurationStatusTable();
         initializeLatestEventTable();
