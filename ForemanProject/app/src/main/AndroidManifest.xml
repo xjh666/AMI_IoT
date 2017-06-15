@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BasicActivity" android:theme="@style/BasicActivityTheme"></activity>
+        <activity android:name=".activity.MonitorPage" android:theme="@style/BasicActivityTheme"></activity>
         <activity android:name=".activity.HostsOfAHostGroup" android:theme="@style/SecondActivityTheme" ></activity>
         <activity android:name=".activity.Parameters" android:theme="@style/SecondActivityTheme"></activity>
         <activity android:name=".activity.ParameterInfo" android:theme="@style/PopupWindowTheme"></activity>

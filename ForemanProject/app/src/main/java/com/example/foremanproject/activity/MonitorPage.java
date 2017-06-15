@@ -31,7 +31,7 @@ import com.example.foremanproject.fragment.HostGroups;
  * The Navigation Drawer is used to select which fragment to be shown in the content_frame
  */
 
-public class BasicActivity extends AppCompatActivity {
+public class MonitorPage extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
@@ -43,7 +43,7 @@ public class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basicactivity);
+        setContentView(R.layout.activity_monitorpage);
         setTitle("Dashboard");
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);

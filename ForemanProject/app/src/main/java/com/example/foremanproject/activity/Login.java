@@ -35,7 +35,7 @@ import java.util.Map;
  * This class is an activity for the Login Page
  * When the user click "Login" button, use the url, username and password to send the a request.
  * If getting response correctly, then treat login successfully and save the information in Configuration Class
- * and open the BasicActivity page
+ * and open the MonitorPage page
  */
 
 public class Login extends AppCompatActivity {
@@ -69,7 +69,7 @@ public class Login extends AppCompatActivity {
 
     public void LogIn(View view) throws AuthFailureError {
         String url = urlEdit.getText().toString();
-        final Intent intent = new Intent(this, BasicActivity.class);
+        final Intent intent = new Intent(this, MonitorPage.class);
 
         if(url.equals(""))
             Toast.makeText(Login.this, "Please Enter url", Toast.LENGTH_LONG).show();
