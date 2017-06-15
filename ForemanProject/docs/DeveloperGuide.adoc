@@ -20,18 +20,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 === Importing the project into Eclipse
 
-.  Fork this repo, and clone the fork to your computer
-.  Open Android Studio 
-.  Click `File` > `New` >`Import Project...`
-.  Locate the project's directory and select `ForemanProject`
-.  Click `OK`
+.  Fork this repo, and clone the fork to your computer.
+.  Open Android Studio .
+.  Click `File` > `New` >`Import Project...`.
+.  Locate the project's directory and select `ForemanProject`.
+.  Click `OK`.
 
 === Troubleshooting project setup
 
-* Problem: Android Studio reports compile errors after new commits are pulled from Git*
+* Problem: Android Studio reports compile errors after new commits are pulled from Git*.
 
 * Reason: Android Studio fails to recognize new files that appeared due to the Git pull.
-* Solution: Refresh the project in Android Studio: Click `Build` > `Rebuild Project` 
+* Solution: Refresh the project in Android Studio: Click `Build` > `Rebuild Project`.
 
 === Updating documentation
 
@@ -43,10 +43,10 @@ After forking the repo, links in the documentation will link to the wrong repo. 
 
 ==== Login Page
 
-* link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Login.java[`Login`] & link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_login.xml[`activity_login`]
+* link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Login.java[`Login`] & link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_login.xml[`activity_login`].
 * This page is designed as an activity.
 * The UI of this page is designed completely in the xml file.
-* It is resposible for getting and storing the user's info
+* It is resposible for getting and storing the user's info.
 
 image::UI.png[height="400"]
 
@@ -54,53 +54,59 @@ image::UI.png[height="400"]
 ==== Monitor Page
 
 * This page is designed as an activity with three fragments for viewing dashboard, host list and host group list.
-* The fragments are shown in the `content_frame` of link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_monitorpage.xml[`activity_monitorpage`]
-* The fragments are swtiched by the navigation drawer `nvView`
+* The fragments are shown in the `content_frame` of link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_monitorpage.xml[`activity_monitorpage`].
+* The fragments are swtiched by the navigation drawer `nvView`.
 
 ===== Dashboard
 
-* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/fragment_dashboard.xml[`fragment_dashboard`]
-* The content including the tables and graphs are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/Dashboard.java[`Dashboard`]
-* The color code for the status table and the pie chart is in link:{repoURL}/ForemanProject/app/src/main/res/layout/colors.xml[`colors`]
-* The grid of the Latest Event table is link:{repoURL}/ForemanProject/app/src/main/res/drawable/cell_shape.xml[`cell_shape`]
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/fragment_dashboard.xml[`fragment_dashboard`].
+* The content including the tables and graphs are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/Dashboard.java[`Dashboard`].
+* The color code for the status table and the pie chart is in link:{repoURL}/ForemanProject/app/src/main/res/layout/colors.xml[`colors`].
+* The grid of the Latest Event table is link:{repoURL}/ForemanProject/app/src/main/res/drawable/cell_shape.xml[`cell_shape`].
 
 ===== Host List
 
-* For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`]
-* The content including the status icon, host name and `EDIT` button are set in the java file programmatically
-* The framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
+* For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`].
+* The content including the status icon, host name and `EDIT` button are set in the java file programmatically.
+* The framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`].
 
 ===== Host Group List
 
-* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
-* The content including host group name, `ALL` button and `EDIT` button are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/HostGroups.java[`HostGroups`]
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`].
+* The content including host group name, `ALL` button and `EDIT` button are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/HostGroups.java[`HostGroups`].
 
 
 ==== Editing Page
-* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
-* The contents including puppet class name, original info icon, parameter name, value and two buttons are are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Parameters.java[`Parameters`]
-* The popup window is link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ParameterInfo.java[`ParameterInfo`], which is an activity with smaller size
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`].
+* The contents including puppet class name, original info icon, parameter name, value and two buttons are are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Parameters.java[`Parameters`].
+* The popup window is link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ParameterInfo.java[`ParameterInfo`], which is an activity with smaller size.
 
 === Implementation
 
 ==== Network with foreman system
-* As the security certificate of foreman url is not trusted by Android OS, link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/NukeSSLCerts.java[`NukeSSLCerts`] is used to make the app trust all certificates
+* As the security certificate of foreman url is not trusted by Android OS, link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/NukeSSLCerts.java[`NukeSSLCerts`] is used to make the app trust all certificates.
 * Library link:https://developer.android.com/training/volley/index.html[Volley] is used for network tosend request to the foreman server.
 * The url, username and password(for api and header of request) and screen size(used for flexible UI for different devices) is stored if login is successful in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/Configuration.java[`Configuration`]. 
 
 ==== Dashboard
-* The pie chart and histogram is drawn by using link:http://achartengine.org/[AChartEngine]
+* The pie chart and histogram is drawn by using link:http://achartengine.org/[AChartEngine].
 * The fragment starts a repeating task with period of 30 seconds.
-* `"GET /api/dashboard"` is used to get information related to Host Configuration Chart and Host Configuration Status
+* `"GET /api/dashboard"` is used to get information related to Host Configuration Chart and Host Configuration Status.
 ** This api returns a JSONObject containing the number of hosts in different status.
-* `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events
-** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order 
+* `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events.
+** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order.
 
 ==== Host Group List
-* `"GET /api/hostgroups"` is used to get all host groups and the details
-* Each button is set programmatically with a tag to clarify which instruction to implement
-** The tag of `ALL` is the host group's name followed by an 's' (show all hosts)
-** The tag of `EDIT` is the host group's name followed by an 'e' (edit)
-* When adding buttons, OnClickListener is also set
-** If `ALL` is clicked, activity HostsOfAHostGroup will be started
-** If `EDIT` is clciked, `"GET /api/hostgroups/:id "` is used repeatedly to get the hierachy of the host group, which will be used to detect inherited value of parameters
+* `"GET /api/hostgroups"` is used to get all host groups and the details.
+* Each button is set programmatically with a tag to clarify which instruction to implement.
+** The tag of `ALL` is the host group's name followed by an 's' (show all hosts).
+** The tag of `EDIT` is the host group's name followed by an 'e' (edit).
+* When adding buttons, OnClickListener is also set.
+** If `ALL` is clicked, activity HostsOfAHostGroup will be started.
+** If `EDIT` is clciked, `"GET /api/hostgroups/:hostgroup_id"` is used repeatedly to get the hierachy of the host group, which will be used to detect inherited value of parameters. Finally, statr the `Parameters` activity.
+
+==== Host List
+* For the list of all hosts, `"GET /api/hosts"` is used.
+* For the list of hosts of a host group, `"GET /api/hostgroups/:hostgroup_id/hosts"` is used.
+* The `EDIT` button is set with tag of the button's name.
+* When clicked 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id" will be used to get the hierachy of the host's host group. Finally, statr the `Parameters` activity.
