@@ -49,7 +49,7 @@ public class HostGroups extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_hostgroup, container, false);
+        View view=inflater.inflate(R.layout.list, container, false);
         api = "api/hostgroups";
         sendRequest("");
         return view;
@@ -96,7 +96,7 @@ public class HostGroups extends Fragment {
     private void getHostGroup(JSONObject response) throws JSONException {
         Map<String, Integer> allHostGroup = new HashMap<>();
         JSONArray arr = response.getJSONArray("results");
-        grouplist = (LinearLayout) getView().findViewById(R.id.grouplist);
+        grouplist = (LinearLayout) getView().findViewById(R.id.list);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
 

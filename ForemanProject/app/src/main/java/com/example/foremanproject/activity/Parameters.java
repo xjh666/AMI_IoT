@@ -127,7 +127,7 @@ public class Parameters extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parameters);
+        setContentView(R.layout.list);
         setTitle(name);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -398,7 +398,7 @@ public class Parameters extends AppCompatActivity {
     private void displayParametersAndMonitorChange() throws JSONException {
         List<String> arr = new ArrayList<>(parameters.keySet());
         Collections.sort(arr);
-        LinearLayout list = (LinearLayout)findViewById(R.id.paramlist);
+        LinearLayout list = (LinearLayout)findViewById(R.id.list);
 
         for(final String puppetClassName: arr){
             if(!_parameters.containsKey(puppetClassName))

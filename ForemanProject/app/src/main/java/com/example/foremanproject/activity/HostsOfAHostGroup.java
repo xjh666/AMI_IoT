@@ -51,7 +51,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hostlist);
+        setContentView(R.layout.list);
         setTitle(title);
         sendRequest("");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -110,7 +110,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
      */
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
-        LinearLayout totalList = (LinearLayout) findViewById(R.id.totallist);
+        LinearLayout totalList = (LinearLayout) findViewById(R.id.list);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
 

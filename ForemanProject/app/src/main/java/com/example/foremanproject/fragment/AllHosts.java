@@ -52,7 +52,7 @@ public class AllHosts extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.hostlist, container, false);
+        View view=inflater.inflate(R.layout.list, container, false);
         api = "api/hosts";
         sendRequest("");
         return view;
@@ -104,7 +104,7 @@ public class AllHosts extends Fragment  {
 
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
-        totalList = (LinearLayout) getView().findViewById(R.id.totallist);
+        totalList = (LinearLayout) getView().findViewById(R.id.list);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
 
