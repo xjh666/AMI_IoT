@@ -48,10 +48,8 @@ import java.util.Map;
  *
  * The type can be three kinds: HOST, HOSTGROUPS, HOSTGROUPSWITHPARENT
  * This variable is used to clarify the type of the object of which parameters are shown
- *
- *
  * Variables, id, name, type and hostgroup, are set in the last step.
- * ArrayList hostgroup is set from host group title. If the title is different from name, then the host group (of a host) is a child of a host group
+ * ArrayList hostgroup is the hierarchy  
  *
  *
  * Maps tag and _tag stores the type of the value of a parameter uses, which can be InheritedValue, PuppetDefault and Override.
