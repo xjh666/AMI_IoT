@@ -124,7 +124,7 @@ image::UI.png[height="400"]
 ** The key is puppetClassName of the parameter and the value is a map, of which the key is the parameterName and the value is the content needed
 ** Compare tag and parameters with _tag and _parameters to determine whether to send request to update parameters and  what is the new value of parameters
 
-* Maps description, parameterType, matcher and inheritedValue are for the popup window of the original value info
+* Maps `description`, `parameterType`, `matcher` and `inheritedValue` are for the popup window of the original value info
 
 * API used:
 ** `GET /api/hosts/:host_id/smart_class_parameters`
