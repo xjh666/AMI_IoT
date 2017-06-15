@@ -47,6 +47,6 @@ After forking the repo, links in the documentation will link to the wrong repo. 
 ** The UI of this page is designed all designed in the xml file.
 ** It is resposible for getting and storing the user's info
 +
-image::UI.png[width="300"]
+image::UI.png[height="400"]
 +
 
