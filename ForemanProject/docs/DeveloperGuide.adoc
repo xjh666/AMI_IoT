@@ -96,3 +96,11 @@ image::UI.png[height="400"]
 * `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events
 ** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order 
 
+==== Host Group List
+* `"GET /api/hostgroups"` is used to get all host groups and the details
+* Each button is set programmatically with a tag to clarify which instruction to implement
+** The tag of `ALL` is the host group's name followed by an 's' (show all hosts)
+** The tag of `EDIT` is the host group's name followed by an 'e' (edit)
+* When adding buttons, OnClickListener is also set
+** If `ALL` is clicked, activity HostsOfAHostGroup will be started
+** If `EDIT` is clciked, `"GET /api/hostgroups/:id "` is used repeatedly to get the hierachy of the host group, which will be used to detect inherited value of parameters
