@@ -22,7 +22,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 .  Fork this repo, and clone the fork to your computer.
 .  Open Android Studio .
-.  Click `File` > `New` >`Import Project...`.
+.  Click `File` > `New` >`Import Project...`
 .  Locate the project's directory and select `ForemanProject`.
 .  Click `OK`.
 
