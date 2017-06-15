@@ -66,9 +66,9 @@ image::UI.png[height="400"]
 
 ===== Host List
 
-* For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`]
-* Contents including the status icon, host name and `EDIT` button are set in the java file programmatically
-* Framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
+For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`]
+* The content including the status icon, host name and `EDIT` button are set in the java file programmatically
+* the framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
 
 ===== Host Group List
 
