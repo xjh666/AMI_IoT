@@ -11,6 +11,8 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/xjh666/AMI_IoT/tree/master
 
+By: `Xie Jihui`      Since: `May 2017`
+
 == Setting up
 
 === Prerequisites
