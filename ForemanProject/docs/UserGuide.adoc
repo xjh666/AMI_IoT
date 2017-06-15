@@ -10,6 +10,8 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 
+By: `Xie Jihui`      Since: `May 2017`
+
 == Quick Start
 
 .  Ensure you have Android Version 5.0 or later installed on your mobile device.
