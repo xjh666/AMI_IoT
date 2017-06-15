@@ -142,7 +142,6 @@ image::UI.png[height="400"]
  ** InheritedValue -> InheritedValue: do nothing
  ** InheritedValue -> PuppetDefault: `POST`
  ** InheritedValue -> Override: `POST`
- **
  ** Override -> InheritedValue: `DELETE`
  ** Override -> PuppetDefault: `PUT`
  ** Override -> Override: `PUT`
