@@ -54,7 +54,12 @@ image::UI.png[height="400"]
 ==== Monitor Page
 
 * This page is designed as an activity with three fragments for viewing dashboard, host list and host group list.
-* The fragments are shown in the 'content_frame' of link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_monitorpage.xml[`activity_monitorpage`]
-* The fragments are swtiched by the navigation drawer 'nvView'
+* The fragments are shown in the `content_frame` of link:{repoURL}/ForemanProject/app/src/main/res/layout/activity_monitorpage.xml[`activity_monitorpage`]
+* The fragments are swtiched by the navigation drawer `nvView`
 
 ===== Dashboard
+
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/fragment_dashboard.xml[`fragment_dashboard`]
+* The content including the tables and graphs are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/Dashboard.java[`Dashboard`]
+* The color code for the status table and the pie chart is in link:{repoURL}/ForemanProject/app/src/main/res/layout/colors.xml[`colors`]
+* The grid of the Latest Event table is link:{repoURL}/ForemanProject/app/src/main/res/drawable/cell_shape.xml[`cell_shape`]
