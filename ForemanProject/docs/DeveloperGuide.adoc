@@ -103,10 +103,46 @@ image::UI.png[height="400"]
 ** The tag of `EDIT` is the host group's name followed by an 'e' (edit).
 * When adding buttons, OnClickListener is also set.
 ** If `ALL` is clicked, activity HostsOfAHostGroup will be started.
-** If `EDIT` is clciked, `"GET /api/hostgroups/:hostgroup_id"` is used repeatedly to get the hierachy of the host group, which will be used to detect inherited value of parameters. Finally, statr the `Parameters` activity.
+** If `EDIT` is clciked, `"GET /api/hostgroups/:hostgroup_id"` is used repeatedly to get the hierarchy of the host group, which will be used to detect inherited value of parameters. Finally, statr the `Parameters` activity.
 
 ==== Host List
 * For the list of all hosts, `"GET /api/hosts"` is used.
 * For the list of hosts of a host group, `"GET /api/hostgroups/:hostgroup_id/hosts"` is used.
 * The `EDIT` button is set with tag of the button's name.
-* When clicked 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id" will be used to get the hierachy of the host's host group. Finally, statr the `Parameters` activity.
+* When clicked 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id"` will be used to get the hierarchy of the host's host group. Finally, statr the `Parameters` activity.
+
+==== Editing Page
+* Variables, `id`, `name`, `type` and `hostgroup`, are set in the last step.
+** `id` is the id of the host or the host group.
+** 'name' is the name of the host or the host group.
+** `type` can be three kinds: HOST, HOSTGROUPS, HOSTGROUPSWITHPARENT, which is used to clarify the type of the object of which parameters are shown.
+** ArrayList `hostgroup` is the hierarchy.
+
+* Maps `tag`, `_tag`, `parameters`, and `_parameters` are used to detect whether send request to change the parameters.
+** Maps tag and _tag stores the type of the value of a parameter uses, which can be InheritedValue, PuppetDefault and Override.
+** Maps parameters and _parameters stores the values of a parameter
+** The key is puppetClassName of the parameter and the value is a map, of which the key is the parameterName and the value is the content needed
+** Compare tag and parameters with _tag and _parameters to determine whether to send request to update parameters and  what is the new value of parameters
+
+* Maps description, parameterType, matcher and inheritedValue are for the popup window of the original value info
+
+* API used:
+** `GET /api/hosts/:host_id/smart_class_parameters`
+** `GET /api/hostgroups/:hostgroup_id/smart_class_parameters`
+** `GET /api/smart_class_parameters/:id`
+** `GET /api/smart_class_parameters/:smart_class_parameter_id/override_values`
+** `POST /api/smart_class_parameters/:smart_class_parameter_id/override_values`
+** `PUT /api/smart_class_parameters/:smart_class_parameter_id/override_values/:id`
+** `DELETE /api/smart_class_parameters/:smart_class_parameter_id/override_values/:id`
+
+ * Logic to update parameters is:(tag -> _tag)
+ ** PuppetDefault -> PuppetDefault: do nothing
+ ** PuppetDefault -> InheritedValue: `DELETE`
+ ** PuppetDefault -> Override: `PUT`
+ ** InheritedValue -> InheritedValue: do nothing
+ ** InheritedValue -> PuppetDefault: `POST`
+ ** InheritedValue -> Override: `POST`
+ **
+ ** Override -> InheritedValue: `DELETE`
+ ** Override -> PuppetDefault: `PUT`
+ ** Override -> Override: `PUT`
