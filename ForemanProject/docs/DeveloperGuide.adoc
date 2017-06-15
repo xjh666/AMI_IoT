@@ -68,7 +68,7 @@ image::UI.png[height="400"]
 
 * For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`]
 * The content including the status icon, host name and `EDIT` button are set in the java file programmatically
-* the framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
+* The framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
 
 ===== Host Group List
 
@@ -77,3 +77,6 @@ image::UI.png[height="400"]
 
 
 ==== Editing Page
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/list.xml[`list`]
+* The contents including puppet class name, original info icon, parameter name, value and two buttons are are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/Parameters.java[`Parameters`]
+* The popup window is link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ParameterInfo.java[`ParameterInfo`], which is an activity with smaller size.
