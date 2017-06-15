@@ -90,4 +90,9 @@ image::UI.png[height="400"]
 
 ==== Dashboard
 * The pie chart and histogram is drawn by using link:http://achartengine.org/[AChartEngine]
-* 
+* The fragment starts a repeating task with period of 30 seconds.
+* `"GET /api/dashboard"` is used to get information related to Host Configuration Chart and Host Configuration Status
+** This api returns a JSONObject containing the number of hosts in different status.
+* `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events
+** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order 
+
