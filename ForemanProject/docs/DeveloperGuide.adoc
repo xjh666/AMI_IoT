@@ -63,3 +63,14 @@ image::UI.png[height="400"]
 * The content including the tables and graphs are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/Dashboard.java[`Dashboard`]
 * The color code for the status table and the pie chart is in link:{repoURL}/ForemanProject/app/src/main/res/layout/colors.xml[`colors`]
 * The grid of the Latest Event table is link:{repoURL}/ForemanProject/app/src/main/res/drawable/cell_shape.xml[`cell_shape`]
+
+===== Host List
+
+* For both fragment link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/AllHosts.java[`AllHosts`] and activity link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostsOfAHostGroup.java[`HostsOfAHostGroup`]
+* Contents including the status icon, host name and `EDIT` button are set in the java file programmatically
+* Framework is in link:{repoURL}/ForemanProject/app/src/main/res/layout/hostlist.xml[`hostlist`]
+
+===== Host Group List
+
+* The framework is designed in link:{repoURL}/ForemanProject/app/src/main/res/layout/fragment_hostgroup.xml[`fragment_hostgroup`]
+* The content including host group name, `ALL` button and `EDIT` button are set programmatically in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/fragment/HostGroups.java[`HostGroups`]
