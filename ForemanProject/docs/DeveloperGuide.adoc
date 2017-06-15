@@ -82,7 +82,12 @@ image::UI.png[height="400"]
 * The popup window is link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ParameterInfo.java[`ParameterInfo`], which is an activity with smaller size
 
 === Implementation
+
 ==== Network with foreman system
 * As the security certificate of foreman url is not trusted by Android OS, link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/NukeSSLCerts.java[`NukeSSLCerts`] is used to make the app trust all certificates
-* Library link:https://developer.android.com/training/volley/index.html[Volley] is used for network tosend request to the foreman server
-* The url, username and password and screen size(used for flexible UI for different devices) is stored if login is successful in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/Configuration.java[`Configuration`]. 
+* Library link:https://developer.android.com/training/volley/index.html[Volley] is used for network tosend request to the foreman server.
+* The url, username and password(for api and header of request) and screen size(used for flexible UI for different devices) is stored if login is successful in link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/other/Configuration.java[`Configuration`]. 
+
+==== Dashboard
+* The pie chart and histogram is drawn by using link:http://achartengine.org/[AChartEngine]
+* 
