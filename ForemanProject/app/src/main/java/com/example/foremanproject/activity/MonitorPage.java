@@ -67,7 +67,7 @@ public class MonitorPage extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { finish(); }
+    public void onBackPressed() {}
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it

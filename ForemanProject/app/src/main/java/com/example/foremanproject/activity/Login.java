@@ -68,8 +68,14 @@ public class Login extends AppCompatActivity {
     }
 
     public void LogIn(View view) throws AuthFailureError {
+        Toast.makeText(Login.this, "Logging in...", Toast.LENGTH_LONG).show();
+
         String url = urlEdit.getText().toString();
         final Intent intent = new Intent(this, MonitorPage.class);
+
+        System.out.println(url.equals("puppet.ami-lab.org"));
+        System.out.println(userNameEdit.getText().toString().equals("admin"));
+        System.out.println(passwordEdit.getText().toString().equals("labuser"));
 
         if(url.equals(""))
             Toast.makeText(Login.this, "Please Enter url", Toast.LENGTH_LONG).show();
