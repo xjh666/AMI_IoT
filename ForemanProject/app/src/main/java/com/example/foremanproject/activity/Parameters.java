@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
@@ -37,6 +36,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.text.InputType.TYPE_CLASS_NUMBER;
 
 /**
  * Created by Xie Jihui on 5/25/2017.
@@ -499,8 +500,11 @@ public class Parameters extends AppCompatActivity {
                     parameterValue.setText(parameters.get(puppetClassName).get(parameterName).toString());
                     parameterValue.setTextSize(15);
                     parameterValue.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), (int)(Configuration.getHeight()* 0.08)));
-                    parameterValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                    if(parameterType.get(puppetClassName).get(parameterName).equals("integer")){
+                        parameterValue.setInputType(TYPE_CLASS_NUMBER);
+                    }
 
                     switch (tag.get(puppetClassName).get(parameterName)) {
                         case "Override":
