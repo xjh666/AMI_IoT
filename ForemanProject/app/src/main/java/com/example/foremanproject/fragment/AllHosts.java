@@ -154,8 +154,12 @@ public class AllHosts extends Fragment  {
                 Parameters.setID(obj.getInt("id"));
                 Parameters.setType("HOST");
                 Parameters.setName(name);
-                api = "api/hostgroups/" + obj.getInt("hostgroup_id");
-                sendRequest("");
+                if(!obj.isNull("hostgroup_id")) {
+                    api = "api/hostgroups/" + obj.getInt("hostgroup_id");
+                    sendRequest("");
+                } else {
+                    startActivity(new Intent(getActivity(), Parameters.class));
+                }
                 break;
             }
         }

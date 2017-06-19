@@ -188,6 +188,15 @@ public class Parameters extends AppCompatActivity {
 
     private void getParameters(JSONObject response) throws JSONException, InterruptedException {
         JSONArray arr = response.getJSONArray("results");
+
+        if(arr.length() == 0){
+            TextView text = new TextView(this);
+            text.setText("This host has no Puppet class parameters.");
+            LinearLayout list = (LinearLayout)findViewById(R.id.list);
+            list.addView(text);
+            return;
+        }
+
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
             JSONObject puppetClass = obj.getJSONObject("puppetclass_name");
