@@ -152,7 +152,7 @@ image::UI.png[height="400"]
  * Make sure to select both signature versions when building my signed apk. Otherwise, on some mobile devices, there may be 'App Not Installed' problem.
 +
 image::release_version.PNG[width="500"]
-+
+
 
 == Appendices
 * API Details: link: https://www.theforeman.org/api/1.15/index.html
