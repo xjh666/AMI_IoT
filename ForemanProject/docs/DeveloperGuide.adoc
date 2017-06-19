@@ -151,5 +151,5 @@ image::UI.png[height="400"]
 == Building APK
  * Make sure to select both signature versions when building my signed apk. Otherwise, on some mobile devices, there may be 'App Not Installed' problem.
 +
-image::release_version.png[width="300"]
+image::release_version.PNG[width="300"]
 +
