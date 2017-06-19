@@ -107,7 +107,7 @@ public class HostGroups extends Fragment {
             grouplist.addView(linearlayout);
 
             TextView textView = new TextView(getActivity());
-            textView.setText(obj.get("title").toString());
+            textView.setText(obj.getString("title"));
             textView.setTextSize(21);
             textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.64), LinearLayout.LayoutParams.WRAP_CONTENT));
 
