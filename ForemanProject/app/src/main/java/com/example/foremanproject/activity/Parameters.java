@@ -37,8 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.text.InputType.TYPE_CLASS_NUMBER;
-
 /**
  * Created by Xie Jihui on 5/25/2017.
  */
@@ -512,7 +510,7 @@ public class Parameters extends AppCompatActivity {
                     parameterValue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
                     if(parameterType.get(puppetClassName).get(parameterName).equals("integer")){
-                        parameterValue.setInputType(TYPE_CLASS_NUMBER);
+                        parameterValue.setInputType(0x00002002);
                     }
 
                     switch (tag.get(puppetClassName).get(parameterName)) {
@@ -572,10 +570,10 @@ public class Parameters extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             switch(_spinner.getSelectedItem().toString()){
-                                case "Disabled":
+                                case "False":
                                     _parameters.get(puppetClassName).put(parameterName,false);
                                     break;
-                                case "Enabled":
+                                case "True":
                                     _parameters.get(puppetClassName).put(parameterName,true);
                                     break;
                             }
