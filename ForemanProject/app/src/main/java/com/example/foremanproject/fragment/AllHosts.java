@@ -42,9 +42,6 @@ import java.util.Map;
  */
 
 public class AllHosts extends Fragment  {
-    public static AllHosts newInstance() {
-        return new AllHosts();
-    }
     LinearLayout totalList;
     String api;
     ArrayList<String> hostgroup;
@@ -107,20 +104,22 @@ public class AllHosts extends Fragment  {
         totalList = (LinearLayout) getView().findViewById(R.id.list);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
-
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
-            totalList.addView(linearlayout);
 
             ImageView imageView = new ImageView(getActivity());
             if(obj.get("global_status_label").equals("OK"))
                 imageView.setImageResource(R.drawable.ok_icon);
             else imageView.setImageResource(R.drawable.exclamation_icon);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getHeight()* 0.1)));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
+
+            TextView space = new TextView(getActivity());
+            space.setText("");
+            space.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.01), LinearLayout.LayoutParams.MATCH_PARENT));
 
             TextView textView = new TextView(getActivity());
-            textView.setText(" " + obj.get("name"));
-            textView.setTextSize(24);
+            textView.setText(obj.getString("name"));
+            textView.setTextSize(28);
             textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), LinearLayout.LayoutParams.WRAP_CONTENT));
 
             final Button button = new Button(getActivity());
@@ -137,8 +136,10 @@ public class AllHosts extends Fragment  {
             });
 
             linearlayout.addView(imageView);
+            linearlayout.addView(space);
             linearlayout.addView(textView);
             linearlayout.addView(button);
+            totalList.addView(linearlayout);
         }
         TextView space = new TextView(getActivity());
         space.setText("");
