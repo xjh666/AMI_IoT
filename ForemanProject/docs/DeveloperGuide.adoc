@@ -153,3 +153,7 @@ image::UI.png[height="400"]
 +
 image::release_version.PNG[width="500"]
 +
+
+== Appendices
+* API Details: link:https://www.theforeman.org/api/1.15/index.html
+* API Testing: link: https://www.getpostman.com/[Postman]
