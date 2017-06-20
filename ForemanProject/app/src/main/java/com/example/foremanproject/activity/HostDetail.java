@@ -221,6 +221,11 @@ public class HostDetail extends AppCompatActivity {
         text.setBackgroundResource(R.drawable.cell_shape);
         layout.addView(text);
         list.addView(layout);
+
+        text = new TextView(this);
+        text.setText("");
+        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(Configuration.getHeight()* 0.1)));
+        list.addView(text); // space
     }
 
     public static void setInfo(String _status, String _configuration, String _ip, String _mac,
