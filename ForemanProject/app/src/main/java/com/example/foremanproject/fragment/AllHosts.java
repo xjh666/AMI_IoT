@@ -48,14 +48,30 @@ public class AllHosts extends Fragment  {
     ArrayList<String> hostgroup;
     Map<String, String> ip;
     Map<String, String> mac;
+    Map<String, String> status;
+    Map<String, String> configuration;
+    Map<String, String> puppetEnvironment;
+    Map<String, String> hostArchitecture;
+    Map<String, String> os;
+    Map<String, String> owner;
+    Map<String, String> hostgroupName;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.list, container, false);
         api = "api/hosts";
+
         ip = new HashMap<>();
         mac = new HashMap<>();
+        status = new HashMap<>();
+        configuration = new HashMap<>();
+        puppetEnvironment = new HashMap<>();
+        hostArchitecture = new HashMap<>();
+        os = new HashMap<>();
+        owner = new HashMap<>();
+        hostgroupName = new HashMap<>();
+
         sendRequest("");
         return view;
     }
@@ -115,6 +131,13 @@ public class AllHosts extends Fragment  {
 
             ip.put(name, obj.getString("ip"));
             mac.put(name, obj.getString("mac"));
+            status.put(name, obj.getString("global_status_label"));
+            configuration.put(name, obj.getString("configuration_status_label"));
+            puppetEnvironment.put(name, obj.getString("environment_name"));
+            hostArchitecture.put(name, obj.getString("architecture_name"));
+            os.put(name, obj.getString("operatingsystem_name"));
+            owner.put(name, obj.getString("owner_type"));
+            hostgroupName.put(name, obj.getString("hostgroup_title"));
 
             ImageView imageView = new ImageView(getActivity());
             if(obj.get("global_status_label").equals("OK"))
@@ -132,7 +155,17 @@ public class AllHosts extends Fragment  {
             hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             hostName.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    HostDetail.setInfo(ip.get(hostName.getTag().toString()),mac.get(hostName.getTag().toString()), hostName.getTag().toString());
+                    HostDetail.setInfo(status.get(hostName.getTag().toString()),
+                                        configuration.get(hostName.getTag().toString()),
+                                        ip.get(hostName.getTag().toString()),
+                                        mac.get(hostName.getTag().toString()),
+                                        puppetEnvironment.get(hostName.getTag().toString()),
+                                        hostArchitecture.get(hostName.getTag().toString()),
+                                        os.get(hostName.getTag().toString()),
+                                        owner.get(hostName.getTag().toString()),
+                                        hostgroupName.get(hostName.getTag().toString()),
+                                        hostName.getTag().toString());
+
                     startActivity(new Intent(getActivity(), HostDetail.class));
                 }
             });

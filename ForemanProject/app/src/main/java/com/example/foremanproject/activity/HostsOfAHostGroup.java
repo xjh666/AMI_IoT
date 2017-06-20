@@ -45,8 +45,16 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     private static String title = "";
     private int hostgroupID;
     private ArrayList<String> hostgroup;
-    private Map<String, String> ip;
-    private Map<String, String> mac;
+    Map<String, String> ip;
+    Map<String, String> mac;
+    Map<String, String> status;
+    Map<String, String> configuration;
+    Map<String, String> puppetEnvironment;
+    Map<String, String> hostArchitecture;
+    Map<String, String> os;
+    Map<String, String> owner;
+    Map<String, String> hostgroupName;
+
     /**
      * Created the activity and then send request to get information
      */
@@ -55,8 +63,17 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         setTitle(title);
+
         ip = new HashMap<>();
         mac = new HashMap<>();
+        status = new HashMap<>();
+        configuration = new HashMap<>();
+        puppetEnvironment = new HashMap<>();
+        hostArchitecture = new HashMap<>();
+        os = new HashMap<>();
+        owner = new HashMap<>();
+        hostgroupName = new HashMap<>();
+
         sendRequest("");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
@@ -125,6 +142,13 @@ public class HostsOfAHostGroup extends AppCompatActivity {
 
             ip.put(name, obj.getString("ip"));
             mac.put(name, obj.getString("mac"));
+            status.put(name, obj.getString("global_status_label"));
+            configuration.put(name, obj.getString("configuration_status_label"));
+            puppetEnvironment.put(name, obj.getString("environment_name"));
+            hostArchitecture.put(name, obj.getString("architecture_name"));
+            os.put(name, obj.getString("operatingsystem_name"));
+            owner.put(name, obj.getString("owner_type"));
+            hostgroupName.put(name, obj.getString("hostgroup_title"));
 
             ImageView imageView = new ImageView(this);
             if(obj.get("global_status_label").equals("OK"))
@@ -143,7 +167,16 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             hostName.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    HostDetail.setInfo(ip.get(hostName.getTag().toString()),mac.get(hostName.getTag().toString()), hostName.getTag().toString());
+                    HostDetail.setInfo(status.get(hostName.getTag().toString()),
+                            configuration.get(hostName.getTag().toString()),
+                            ip.get(hostName.getTag().toString()),
+                            mac.get(hostName.getTag().toString()),
+                            puppetEnvironment.get(hostName.getTag().toString()),
+                            hostArchitecture.get(hostName.getTag().toString()),
+                            os.get(hostName.getTag().toString()),
+                            owner.get(hostName.getTag().toString()),
+                            hostgroupName.get(hostName.getTag().toString()),
+                            hostName.getTag().toString());
                     startActivity(intent);
                 }
             });

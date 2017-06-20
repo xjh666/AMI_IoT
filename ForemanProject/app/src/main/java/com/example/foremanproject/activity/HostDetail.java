@@ -5,19 +5,26 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.foremanproject.R;
+import com.example.foremanproject.other.Configuration;
 
 /**
  * Created by Xie Jihui on 6/20/2017.
  */
 
 public class HostDetail extends AppCompatActivity {
+    private static String name;
+    private static String status;
+    private static String configuration;
     private static String mac;
     private static String ip;
-    private static String name;
+    private static String puppetEnvironment;
+    private static String hostArchitecture;
+    private static String os;
+    private static String owner;
+    private static String hostgroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +39,187 @@ public class HostDetail extends AppCompatActivity {
     public void onBackPressed() { finish();}
 
     private void showInfo(){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.list);
+        LinearLayout list = (LinearLayout) findViewById(R.id.list);
+        LinearLayout layout;
+        TextView text;
 
-        TextView ipText = new TextView(this);
-        ipText.setText("  IP Address: " + ip);
-        ipText.setTextSize(21);
-        ipText.setTextColor(Color.BLACK);
-        TextView macText = new TextView(this);
-        macText.setText("  MAC Address: " + mac);
-        macText.setTextSize(21);
-        macText.setTextColor(Color.BLACK);
+        text = new TextView(this);
+        text.setText(" Properties");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(21);
+        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout = new LinearLayout(this);
+        layout.addView(text);
+        list.addView(layout);
 
-        layout.addView(ipText);
-        layout.addView(macText);
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Status");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + status);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
 
-        TableLayout table = new TableLayout(this);
-        layout.addView(table);
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Configuration");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + configuration);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" IP Address");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + ip);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" MAC Address");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + mac);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Puppet Environment");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + puppetEnvironment);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Host Architecture");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + hostArchitecture);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Operating System");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + os);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Host group");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + hostgroup);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
+
+        layout = new LinearLayout(this);
+        text = new TextView(this);
+        text.setText(" Owner");
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        text = new TextView(this);
+        text.setText(" " + owner);
+        text.setTextColor(Color.BLACK);
+        text.setTextSize(18);
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(text);
+        list.addView(layout);
     }
 
-    public static void setInfo(String _ip, String _mac, String _name){
+    public static void setInfo(String _status, String _configuration, String _ip, String _mac,
+                               String _puppetEnvironment, String _hostArchitecture, String _os,
+                               String _owner, String _hostgroup, String _name)
+    {
+        status = _status;
+        configuration = _configuration;
         ip = _ip;
         mac = _mac;
+        puppetEnvironment = _puppetEnvironment;
+        hostArchitecture = _hostArchitecture;
+        os = _os;
+        owner = _owner;
+        hostgroup =_hostgroup;
         name = _name;
     }
 }
