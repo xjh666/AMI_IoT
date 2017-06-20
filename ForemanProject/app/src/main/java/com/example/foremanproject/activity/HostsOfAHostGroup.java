@@ -45,6 +45,8 @@ public class HostsOfAHostGroup extends AppCompatActivity {
     private static String title = "";
     private int hostgroupID;
     private ArrayList<String> hostgroup;
+    private Map<String, String> ip;
+    private Map<String, String> mac;
     /**
      * Created the activity and then send request to get information
      */
@@ -53,6 +55,8 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         setTitle(title);
+        ip = new HashMap<>();
+        mac = new HashMap<>();
         sendRequest("");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
@@ -113,10 +117,14 @@ public class HostsOfAHostGroup extends AppCompatActivity {
         LinearLayout totalList = (LinearLayout) findViewById(R.id.list);
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
+            String name = obj.getString("name");
 
             LinearLayout linearlayout = new LinearLayout(this);
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
             totalList.addView(linearlayout);
+
+            ip.put(name, obj.getString("ip"));
+            mac.put(name, obj.getString("mac"));
 
             ImageView imageView = new ImageView(this);
             if(obj.get("global_status_label").equals("OK"))
@@ -124,25 +132,33 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
 
-            Button hostName = new Button(this);
-            hostName.setText(obj.getString("name"));
+            final Button hostName = new Button(this);
+            final Intent intent = new Intent(this, HostDetail.class);
+            hostName.setText(name);
             hostName.setTextSize(21);
             hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), (int)(Configuration.getHeight()* 0.115)));
             hostName.setBackground(getResources().getDrawable(R.drawable.white_background));
             hostName.setAllCaps(false);
+            hostName.setTag(name);
             hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            hostName.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    HostDetail.setInfo(ip.get(hostName.getTag().toString()),mac.get(hostName.getTag().toString()), hostName.getTag().toString());
+                    startActivity(intent);
+                }
+            });
 
             //The tag of a button is the name of the related host for the further use
             final Button button = new Button(this);
             button.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.19),  (int)(Configuration.getHeight()* 0.1)));
             button.setText("Edit");
-            button.setTag(obj.get("name"));
+            button.setTag(name);
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     hostgroup = new ArrayList<>();
                     api = "api/hosts";
-                    sendRequest((String) button.getTag());
+                    sendRequest(button.getTag().toString());
                 }
             });
             linearlayout.addView(imageView);
