@@ -124,14 +124,13 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
 
-            TextView space = new TextView(this);
-            space.setText("");
-            space.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.01), LinearLayout.LayoutParams.MATCH_PARENT));
-
-            TextView textView = new TextView(this);
-            textView.setText(obj.getString("name"));
-            textView.setTextSize(28);
-            textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.73), LinearLayout.LayoutParams.WRAP_CONTENT));
+            Button hostName = new Button(this);
+            hostName.setText(obj.getString("name"));
+            hostName.setTextSize(21);
+            hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), (int)(Configuration.getHeight()* 0.115)));
+            hostName.setBackground(getResources().getDrawable(R.drawable.white_background));
+            hostName.setAllCaps(false);
+            hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
             //The tag of a button is the name of the related host for the further use
             final Button button = new Button(this);
@@ -147,8 +146,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
                 }
             });
             linearlayout.addView(imageView);
-            linearlayout.addView(space);
-            linearlayout.addView(textView);
+            linearlayout.addView(hostName);
             linearlayout.addView(button);
         }
         TextView space = new TextView(this);

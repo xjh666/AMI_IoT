@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
+import com.example.foremanproject.activity.HostDetail;
 import com.example.foremanproject.activity.Parameters;
 import com.example.foremanproject.other.Configuration;
 
@@ -45,12 +46,16 @@ public class AllHosts extends Fragment  {
     LinearLayout totalList;
     String api;
     ArrayList<String> hostgroup;
+    Map<String, String> ip;
+    Map<String, String> mac;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.list, container, false);
         api = "api/hosts";
+        ip = new HashMap<>();
+        mac = new HashMap<>();
         sendRequest("");
         return view;
     }
@@ -106,6 +111,10 @@ public class AllHosts extends Fragment  {
             JSONObject obj = arr.getJSONObject(i);
             LinearLayout linearlayout = new LinearLayout(getActivity());
             linearlayout.setOrientation(LinearLayout.HORIZONTAL);
+            String name = obj.getString("name");
+
+            ip.put(name, obj.getString("ip"));
+            mac.put(name, obj.getString("mac"));
 
             ImageView imageView = new ImageView(getActivity());
             if(obj.get("global_status_label").equals("OK"))
@@ -113,31 +122,36 @@ public class AllHosts extends Fragment  {
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
 
-            TextView space = new TextView(getActivity());
-            space.setText("");
-            space.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.01), LinearLayout.LayoutParams.MATCH_PARENT));
-
-            TextView textView = new TextView(getActivity());
-            textView.setText(obj.getString("name"));
-            textView.setTextSize(28);
-            textView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), LinearLayout.LayoutParams.WRAP_CONTENT));
+            final Button hostName = new Button(getActivity());
+            hostName.setText(name);
+            hostName.setTextSize(21);
+            hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), (int)(Configuration.getHeight()* 0.115)));
+            hostName.setBackground(getResources().getDrawable(R.drawable.white_background));
+            hostName.setAllCaps(false);
+            hostName.setTag(name);
+            hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            hostName.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    HostDetail.setInfo(ip.get(hostName.getTag().toString()),mac.get(hostName.getTag().toString()), hostName.getTag().toString());
+                    startActivity(new Intent(getActivity(), HostDetail.class));
+                }
+            });
 
             final Button button = new Button(getActivity());
             button.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.2), (int)(Configuration.getHeight()* 0.1)));
             button.setText("Edit");
-            button.setTag(obj.get("name"));
+            button.setTag(name);
             button.setBackground(getResources().getDrawable(R.drawable.button_icon));
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     hostgroup = new ArrayList<>();
                     api = "api/hosts";
-                    sendRequest((String) button.getTag());
+                    sendRequest(button.getTag().toString());
                 }
             });
 
             linearlayout.addView(imageView);
-            linearlayout.addView(space);
-            linearlayout.addView(textView);
+            linearlayout.addView(hostName);
             linearlayout.addView(button);
             totalList.addView(linearlayout);
         }
