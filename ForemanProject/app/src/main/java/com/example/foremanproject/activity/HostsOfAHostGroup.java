@@ -156,7 +156,7 @@ public class HostsOfAHostGroup extends AppCompatActivity {
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
 
-            final Button hostName = new Button(this);
+            final TextView hostName = new TextView(this);
             final Intent intent = new Intent(this, HostDetail.class);
             hostName.setText(name);
             hostName.setTextSize(21);

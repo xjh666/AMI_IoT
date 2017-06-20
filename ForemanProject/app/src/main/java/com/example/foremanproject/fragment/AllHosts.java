@@ -145,7 +145,7 @@ public class AllHosts extends Fragment  {
             else imageView.setImageResource(R.drawable.exclamation_icon);
             imageView.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.1)));
 
-            final Button hostName = new Button(getActivity());
+            final TextView hostName = new TextView(getActivity());
             hostName.setText(name);
             hostName.setTextSize(21);
             hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), (int)(Configuration.getHeight()* 0.115)));

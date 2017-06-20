@@ -24,6 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +69,7 @@ public class HostDetail extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             setReports(response);
-                        } catch (JSONException e) {
+                        } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                         }
                     }
@@ -275,7 +280,7 @@ public class HostDetail extends AppCompatActivity {
         list.addView(text); // space
     }
 
-    private void setReports(JSONObject response) throws JSONException {
+    private void setReports(JSONObject response) throws JSONException, ParseException {
         LinearLayout list = (LinearLayout) findViewById(R.id.list);
         LinearLayout layout;
         TextView text;
@@ -287,9 +292,8 @@ public class HostDetail extends AppCompatActivity {
         text = new TextView(this);
         if(num == 0)
             text.setText("no reports");
-        else text.setText("Last " + num + " reports");
+        text.setText("Last " + num + " reports");
         text.setTextSize(22);
-        text.setTextColor(Color.BLACK);
         text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         layout = new LinearLayout(this);
         layout.addView(text);
@@ -356,9 +360,79 @@ public class HostDetail extends AppCompatActivity {
         layout.addView(text);
         list.addView(layout);
 
-        for(int i=0;i<num;i++){
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currentTime = sdf.parse(sdf.format(Calendar.getInstance().getTime()));
 
+        for(int i=0;i<num;i++){
+            JSONObject status = arr.getJSONObject(i).getJSONObject("status");
+
+            layout = new LinearLayout(this);
+            text = new TextView(this);
+            text.setBackgroundResource(R.drawable.cell_shape);
+            text.setTextColor(0xFF3BA7E0);
+            text.setText(" aaaaaaaaaaa");
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                }
+            });
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("applied"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("restarted"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("failed"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("failed_restarts"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("skipped"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            text = new TextView(this);
+            text.setText(status.getString("pending"));
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTextColor(Color.BLACK);
+            text.setTextSize(17);
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setBackgroundResource(R.drawable.cell_shape);
+            layout.addView(text);
+            list.addView(layout);
         }
+
+        text = new TextView(this);
+        text.setText("");
+        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(Configuration.getHeight()* 0.05)));
+        list.addView(text); // space
     }
 
     public static void setInfo(String _status, String _configuration, String _ip, String _mac,
