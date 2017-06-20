@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,16 +33,17 @@ public class HostDetail extends AppCompatActivity {
         setContentView(R.layout.list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setTitle(name);
-        showInfo();
+        setProperties();
     }
 
     @Override
     public void onBackPressed() { finish();}
 
-    private void showInfo(){
+    private void setProperties(){
         LinearLayout list = (LinearLayout) findViewById(R.id.list);
         LinearLayout layout;
         TextView text;
+        ImageView image;
 
         text = new TextView(this);
         text.setText(" Properties");
@@ -61,11 +63,18 @@ public class HostDetail extends AppCompatActivity {
         text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
         text.setBackgroundResource(R.drawable.cell_shape);
         layout.addView(text);
+        image = new ImageView(this);
+        if(status.equals("OK"))
+            image.setImageResource(R.drawable.ok_icon);
+        else image.setImageResource(R.drawable.exclamation_icon);
+        image.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.1), LinearLayout.LayoutParams.MATCH_PARENT));
+        image.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(image);
         text = new TextView(this);
         text.setText(" " + status);
         text.setTextColor(Color.BLACK);
         text.setTextSize(18);
-        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
+        text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.4), LinearLayout.LayoutParams.WRAP_CONTENT));
         text.setBackgroundResource(R.drawable.cell_shape);
         layout.addView(text);
         list.addView(layout);
@@ -78,6 +87,13 @@ public class HostDetail extends AppCompatActivity {
         text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.5), LinearLayout.LayoutParams.WRAP_CONTENT));
         text.setBackgroundResource(R.drawable.cell_shape);
         layout.addView(text);
+        image = new ImageView(this);
+        if(status.equals("OK"))
+            image.setImageResource(R.drawable.ok_icon);
+        else image.setImageResource(R.drawable.exclamation_icon);
+        image.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.1), LinearLayout.LayoutParams.MATCH_PARENT));
+        image.setBackgroundResource(R.drawable.cell_shape);
+        layout.addView(image);
         text = new TextView(this);
         text.setText(" " + configuration);
         text.setTextColor(Color.BLACK);
