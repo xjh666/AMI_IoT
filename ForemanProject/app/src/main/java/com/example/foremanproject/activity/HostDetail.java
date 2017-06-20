@@ -369,7 +369,7 @@ public class HostDetail extends AppCompatActivity {
             layout = new LinearLayout(this);
             text = new TextView(this);
             text.setBackgroundResource(R.drawable.cell_shape);
-            text.setTextColor(0xFF3BA7E0);
+            text.setTextColor(Color.BLACK);
             text.setText(" aaaaaaaaaaa");
             text.setTextSize(17);
             text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
