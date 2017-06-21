@@ -293,7 +293,7 @@ public class HostDetail extends AppCompatActivity {
         text = new TextView(this);
         if(num == 0)
             text.setText("no reports");
-        text.setText("Last " + num + " reports");
+        else text.setText("Last " + num + " reports");
         text.setTextSize(22);
         text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         layout = new LinearLayout(this);
