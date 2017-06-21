@@ -68,7 +68,7 @@ The following 3 components can be switched using navigation drawer, opening by s
 
 * This page shows a list of host groups on the server.
 * Each host group is listed as its name, a button `ALL` and a button `EDIT`.
-* Click the button `ALL` to go to the page viewing all hosts in the host group. The page is similar to link:[list of all hosts].
+* Click the button `ALL` to go to the page viewing all hosts in the host group. The page is similar to link:https://github.com/xjh666/AMI_IoT/blob/master/ForemanProject/docs/UserGuide.adoc#212-list-of-all-hosts[list of all hosts].
 * Click the button `EDIT` to go to the page to view all parameters of the host and editing them.
 
 
