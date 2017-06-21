@@ -111,7 +111,7 @@ image::UI.png[height="400"]
 * For the list of all hosts, `"GET /api/hosts"` is used.
 * For the list of hosts of a host group, `"GET /api/hostgroups/:hostgroup_id/hosts"` is used.
 * The `EDIT` button is set with tag of the button's name.
-* When clicked 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id"` will be used to get the hierarchy of the host's host group. Finally, statr the `Parameters` activity.
+* When clicking 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id"` will be used to get the hierarchy of the host's host group. Finally, statr the `Parameters` activity.
 
 ==== Editing Page
 * Variables, `id`, `name`, `type` and `hostgroup`, are set in the last step.
