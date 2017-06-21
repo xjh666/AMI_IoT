@@ -288,7 +288,6 @@ public class HostDetail extends AppCompatActivity {
 
         JSONArray arr = response.getJSONArray("results");
         int num = arr.length();
-        if(num > 10) num = 10;
 
         text = new TextView(this);
         if(num == 0)
