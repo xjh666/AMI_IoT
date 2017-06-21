@@ -364,13 +364,32 @@ public class HostDetail extends AppCompatActivity {
         Date currentTime = sdf.parse(sdf.format(Calendar.getInstance().getTime()));
 
         for(int i=0;i<num;i++){
+            Date time = sdf.parse(arr.getJSONObject(i).getString("reported_at").substring(0,10) + " " + arr.getJSONObject(i).getString("created_at").substring(11,19));
+            long timeDifference = currentTime.getTime() - time.getTime();
+            timeDifference /= 1000;
+
             JSONObject status = arr.getJSONObject(i).getJSONObject("status");
 
             layout = new LinearLayout(this);
             text = new TextView(this);
             text.setBackgroundResource(R.drawable.cell_shape);
             text.setTextColor(Color.BLACK);
-            text.setText(" aaaaaaaaaaa");
+            if(timeDifference < 60)
+                text.setText(" " + timeDifference + " seconds ago");
+            else {
+                timeDifference = (timeDifference+30)/60;
+                if(timeDifference < 60)
+                    text.setText(" " + timeDifference + " minutes ago" );
+                else {
+                    timeDifference = (timeDifference+30)/60;
+                    if(timeDifference < 24)
+                        text.setText(" about " + timeDifference + " hours ago" );
+                    else {
+                        timeDifference /= 24;
+                        text.setText(" about " + timeDifference + " days ago" );
+                    }
+                }
+            }
             text.setTextSize(17);
             text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
             text.setOnClickListener(new View.OnClickListener() {
