@@ -125,8 +125,7 @@ public class AllHosts extends Fragment  {
      * Created the activity and then send request to get information.
      * ImageView is to show the status of the hosts (OK/Warning), textView is the name of the host.
      *
-     * Clicking the name of the host will open the HostDetail activity to show the Properties of the host and last several reports
-     * If the host has more than 10 reports, only 10 reports will be shown.
+     * Clicking the name of the host will open the HostDetail activity to show the Properties of the host and last several report, if the host has reports.
      * Then, clicking the time of the report will open the ConfigReportDetail activity to show the details of the report
      *
      * Clicking the "EDIT" button will open Parameter activity to show the parameters and corresponding information of the host.
