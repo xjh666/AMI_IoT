@@ -62,6 +62,7 @@ public class AllHosts extends Fragment  {
         View view=inflater.inflate(R.layout.list, container, false);
         api = "api/hosts";
 
+        //The properties of a host
         ip = new HashMap<>();
         mac = new HashMap<>();
         status = new HashMap<>();
@@ -120,6 +121,18 @@ public class AllHosts extends Fragment  {
         queue.add(jsObjRequest);
     }
 
+    /**
+     * Created the activity and then send request to get information.
+     * ImageView is to show the status of the hosts (OK/Warning), textView is the name of the host.
+     *
+     * Clicking the name of the host will open the HostDetail activity to show the Properties of the host and last several reports
+     * If the host has more than 10 reports, only 10 reports will be shown.
+     * Then, clicking the time of the report will open the ConfigReportDetail activity to show the details of the report
+     *
+     * Clicking the "EDIT" button will open Parameter activity to show the parameters and corresponding information of the host.
+     * "GET /api/hosts" is to list all hosts and get the id of the selected host
+     * Then set id and other variables of parameters
+     */
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
         totalList = (LinearLayout) getView().findViewById(R.id.list);
