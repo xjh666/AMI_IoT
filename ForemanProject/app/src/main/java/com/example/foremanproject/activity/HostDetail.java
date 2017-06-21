@@ -1,5 +1,6 @@
 package com.example.foremanproject.activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -392,8 +393,11 @@ public class HostDetail extends AppCompatActivity {
             }
             text.setTextSize(17);
             text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setTag(arr.getJSONObject(i).getInt("id"));
+            final Intent intent = new Intent(this, ConfigReportDetail.class);
             text.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    startActivity(intent);
                 }
             });
             layout.addView(text);
