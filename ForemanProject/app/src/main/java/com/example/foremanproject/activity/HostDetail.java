@@ -393,14 +393,21 @@ public class HostDetail extends AppCompatActivity {
             }
             text.setTextSize(17);
             text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
-            text.setTag(arr.getJSONObject(i).getInt("id"));
+
+            final Map<String, Object> tag = new HashMap<>();
+            tag.put("name", arr.getJSONObject(i).get("host_name"));
+            tag.put("id", arr.getJSONObject(i).get("id"));
+            text.setTag(tag);
             final Intent intent = new Intent(this, ConfigReportDetail.class);
+
             text.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    ConfigReportDetail.setInfo(tag);
                     startActivity(intent);
                 }
             });
             layout.addView(text);
+
             text = new TextView(this);
             text.setText(status.getString("applied"));
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
