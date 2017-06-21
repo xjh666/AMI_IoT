@@ -35,8 +35,7 @@ image::UI.png[width="300"]
 
 The following 3 components can be switched using navigation drawer, opening by slide the screen from left to right or clicking the button on the tool bar.
 
-====
-*Dashboard*
+==== Dashboard
 
 * There are four components in the dashboard page. 
 * The data are updated every 30 seconds.
@@ -57,24 +56,21 @@ The following 3 components can be switched using navigation drawer, opening by s
 ** This able shows nine latest events with its host and its status.
 ** There are six status of a host. 
 ** “A” means “applied”. “R” means “restarted”. “F” means “failed”. “FR” means “failed restarts”. “S” means “skipped”. “P” means “pending”.
-====
 
-====
-*List of All Hosts*
+==== List of All Hosts
 
 * This page shows a list of hosts on the server.
 * Each host is listed as an icon showing its status, its name and a button `EDIT`.
 * Click the button to go to the page to view all parameters of the host and editing them.
-====
 
-====
-*List of All Host Groups*
+
+==== List of All Host Groups
 
 * This page shows a list of host groups on the server.
 * Each host group is listed as its name, a button `ALL` and a button `EDIT`.
 * Click the button `ALL` to go to the page viewing all hosts in the host group. The page is similar to the list of all hosts.
 * Click the button `EDIT` to go to the page to view all parameters of the host and editing them.
-====
+
 
 === Editing Page
 * The page contains all puppet classes of a host or a host group.
