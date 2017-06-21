@@ -112,6 +112,10 @@ image::UI.png[height="400"]
 * For the list of hosts of a host group, `"GET /api/hostgroups/:hostgroup_id/hosts"` is used.
 * The `EDIT` button is set with tag of the button's name.
 * When clicking 'EDIT', `"GET /api/hosts"` is used again to get the info of the host. Then '"GET /api/hostgroups"' and `"GET /api/hostgroups/:hostgroup_id"` will be used to get the hierarchy of the host's host group. Finally, statr the `Parameters` activity.
+* OnClickListener is set for the name of the host., which sets the properies of the host and opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostDetail.java[`HostDetail`] activity.
+** `"GET /api/hosts/:host_name/config_reports/"`is used to get the last few reports
+** Clicking the name of the time of a host will open link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ConfigReportDetail.java[`ConfigReportDetail`] activity.
+** `"GET /api/config_reports/:id"` is used in this activity to show the details of a report.
 
 ==== Editing Page
 * Variables, `id`, `name`, `type` and `hostgroup`, are set in the last step.
