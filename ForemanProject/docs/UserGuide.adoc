@@ -61,6 +61,9 @@ The following 3 components can be switched using navigation drawer, opening by s
 
 * This page shows a list of hosts on the server.
 * Each host is listed as an icon showing its status, its name and a button `EDIT`.
+* Click the name of the host can go to the page which shows the details of the host.
+** The details includes the properties of the host and the last several reports.
+** Click the time of the report can go to the page which shows the details of that report.
 * Click the button to go to the page to view all parameters of the host and editing them.
 
 
