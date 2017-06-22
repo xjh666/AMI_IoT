@@ -375,7 +375,7 @@ public class HostDetail extends AppCompatActivity {
             text.setBackgroundResource(R.drawable.cell_shape);
             text.setTextColor(Color.BLACK);
             if(timeDifference < 60)
-                text.setText(" " + timeDifference + " seconds ago");
+                text.setText(" less than 1 minute");
             else {
                 timeDifference = (timeDifference+30)/60;
                 if(timeDifference < 60)
