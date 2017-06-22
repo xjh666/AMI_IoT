@@ -160,9 +160,7 @@ public class AllHosts extends Fragment  {
             final TextView hostName = new TextView(getActivity());
             hostName.setText(name);
             hostName.setTextSize(21);
-            hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), (int)(Configuration.getHeight()* 0.115)));
-            hostName.setBackground(getResources().getDrawable(R.drawable.white_background));
-            hostName.setAllCaps(false);
+            hostName.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.72), LinearLayout.LayoutParams.WRAP_CONTENT));
             hostName.setTag(name);
             hostName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             hostName.setOnClickListener(new View.OnClickListener() {
