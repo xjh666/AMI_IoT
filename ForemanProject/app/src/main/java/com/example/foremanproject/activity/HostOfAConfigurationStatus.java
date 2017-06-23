@@ -57,6 +57,16 @@ public class HostOfAConfigurationStatus extends AppCompatActivity {
         setContentView(R.layout.list);
         setTitle(title);
 
+        totalList = (LinearLayout) findViewById(R.id.list);
+
+        if(hosts.size()==0){
+            TextView text = new TextView(this);
+            text.setText(" No hosts under this status.");
+            text.setTextSize(25);
+            totalList.addView(text);
+            return;
+        }
+
         api = "api/hosts";
         ip = new HashMap<>();
         mac = new HashMap<>();
@@ -129,7 +139,6 @@ public class HostOfAConfigurationStatus extends AppCompatActivity {
      */
     private void getHosts(JSONObject response) throws JSONException {
         JSONArray arr = response.getJSONArray("results");
-        totalList = (LinearLayout) findViewById(R.id.list);
         for(int i=0;i<arr.length();i++) {
             JSONObject obj = arr.getJSONObject(i);
             String name = obj.getString("name");
