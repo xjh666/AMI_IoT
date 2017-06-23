@@ -467,8 +467,7 @@ public class HostDetail extends AppCompatActivity {
 
     public static void setInfo(String _status, String _configuration, String _ip, String _mac,
                                String _puppetEnvironment, String _hostArchitecture, String _os,
-                               String _owner, String _hostgroup, String _name)
-    {
+                               String _owner, String _hostgroup, String _name) {
         status = _status;
         configuration = _configuration;
         ip = _ip;

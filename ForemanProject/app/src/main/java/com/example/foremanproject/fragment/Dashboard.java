@@ -1,5 +1,6 @@
 package com.example.foremanproject.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
+import com.example.foremanproject.activity.HostDetail;
 import com.example.foremanproject.other.Configuration;
 
 import org.achartengine.ChartFactory;
@@ -161,6 +163,8 @@ public class Dashboard extends Fragment {
     TextView s9;
     TextView p9;
 
+    String nameOfHostToShowDetail;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -207,9 +211,17 @@ public class Dashboard extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (api.equals("reports"))
-                                getReports(response);
-                            else  getInfoForChartAndStatus(response);
+                            switch (api) {
+                                case "reports":
+                                    getReports(response);
+                                    break;
+                                case "hosts":
+                                    getHost(response);
+                                    break;
+                                default:
+                                    getInfoForChartAndStatus(response);
+                                    break;
+                            }
                         } catch (JSONException | ParseException e) {
                             e.printStackTrace();
                         }
@@ -272,10 +284,16 @@ public class Dashboard extends Fragment {
         drawHistogram(runDistribution);
     }
 
-    private void setLatestEvent(int i, String hostName, Map<String, Map<String, Integer>> status ){
+    private void setLatestEvent(int i, final String hostName, Map<String, Map<String, Integer>> status ){
         switch (i){
             case 0:
                 id1.setText(" " + hostName);
+                id1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a1.setText(status.get(hostName).get("applied").toString());
                 r1.setText(status.get(hostName).get("restarted").toString());
                 f1.setText(status.get(hostName).get("failed").toString());
@@ -285,6 +303,12 @@ public class Dashboard extends Fragment {
                 break;
             case 1:
                 id2.setText(" " + hostName);
+                id2.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a2.setText(status.get(hostName).get("applied").toString());
                 r2.setText(status.get(hostName).get("restarted").toString());
                 f2.setText(status.get(hostName).get("failed").toString());
@@ -294,6 +318,12 @@ public class Dashboard extends Fragment {
                 break;
             case 2:
                 id3.setText(" " + hostName);
+                id3.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a3.setText(status.get(hostName).get("applied").toString());
                 r3.setText(status.get(hostName).get("restarted").toString());
                 f3.setText(status.get(hostName).get("failed").toString());
@@ -303,6 +333,12 @@ public class Dashboard extends Fragment {
                 break;
             case 3:
                 id4.setText(" " + hostName);
+                id4.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a4.setText(status.get(hostName).get("applied").toString());
                 r4.setText(status.get(hostName).get("restarted").toString());
                 f4.setText(status.get(hostName).get("failed").toString());
@@ -312,6 +348,12 @@ public class Dashboard extends Fragment {
                 break;
             case 4:
                 id5.setText(" " + hostName);
+                id5.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a5.setText(status.get(hostName).get("applied").toString());
                 r5.setText(status.get(hostName).get("restarted").toString());
                 f5.setText(status.get(hostName).get("failed").toString());
@@ -321,6 +363,12 @@ public class Dashboard extends Fragment {
                 break;
             case 5:
                 id6.setText(" " + hostName);
+                id6.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a6.setText(status.get(hostName).get("applied").toString());
                 r6.setText(status.get(hostName).get("restarted").toString());
                 f6.setText(status.get(hostName).get("failed").toString());
@@ -330,6 +378,12 @@ public class Dashboard extends Fragment {
                 break;
             case 6:
                 id7.setText(" " + hostName);
+                id7.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a7.setText(status.get(hostName).get("applied").toString());
                 r7.setText(status.get(hostName).get("restarted").toString());
                 f7.setText(status.get(hostName).get("failed").toString());
@@ -339,6 +393,12 @@ public class Dashboard extends Fragment {
                 break;
             case 7:
                 id8.setText(" " + hostName);
+                id8.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a8.setText(status.get(hostName).get("applied").toString());
                 r8.setText(status.get(hostName).get("restarted").toString());
                 f8.setText(status.get(hostName).get("failed").toString());
@@ -348,6 +408,12 @@ public class Dashboard extends Fragment {
                 break;
             case 8:
                 id9.setText(" " + hostName);
+                id9.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        nameOfHostToShowDetail= hostName;
+                        sendRequest("hosts");
+                    }
+                });
                 a9.setText(status.get(hostName).get("applied").toString());
                 r9.setText(status.get(hostName).get("restarted").toString());
                 f9.setText(status.get(hostName).get("failed").toString());
@@ -1270,6 +1336,29 @@ public class Dashboard extends Fragment {
 
         GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, mRenderer, BarChart.Type.DEFAULT);
         histogramContainer.addView(chartView,0);
+    }
+
+    private void getHost(JSONObject response) throws JSONException {
+        JSONArray arr = response.getJSONArray("results");
+
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = arr.getJSONObject(i);
+            if (obj.getString("name").equals(nameOfHostToShowDetail)){
+                HostDetail.setInfo(obj.getString("global_status_label"),
+                                obj.getString("configuration_status_label"),
+                                obj.getString("ip"),
+                                obj.getString("mac"),
+                                obj.getString("environment_name"),
+                                obj.getString("architecture_name"),
+                                obj.getString("operatingsystem_name"),
+                                obj.getString("owner_type"),
+                                obj.getString("hostgroup_title"),
+                                nameOfHostToShowDetail
+                );
+                startActivity(new Intent(getActivity(), HostDetail.class));
+                break;
+            }
+        }
     }
 }
 
