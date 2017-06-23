@@ -47,6 +47,7 @@ The following 3 components can be switched using navigation drawer, opening by s
 * Host Configuration Status
 ** This table showing the number of hosts in different status
 ** The color code of the same kind of hosts in the status table and chart are corresponding.
+** Click a configuration can go to the page which shows hosts what are under the configuration status.
 
 * Run distribution in the last 30 min
 ** This histogram shows the distribution of numbers of hosts which have run and reported with in the last 30 minutes. The time interval is 3 minutes.
