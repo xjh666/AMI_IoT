@@ -512,6 +512,3 @@ public class Dashboard extends Fragment {
         }
     }
 }
-
-
-
