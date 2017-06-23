@@ -49,12 +49,15 @@ public class HostDetail extends AppCompatActivity {
     private static String owner;
     private static String hostgroup;
 
+    LinearLayout list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setTitle(name);
+        list = (LinearLayout) findViewById(R.id.list);
         setPropertyTable();
         sendRequest();
     }
@@ -93,7 +96,6 @@ public class HostDetail extends AppCompatActivity {
     }
 
     private void setPropertyTable(){
-        LinearLayout list = (LinearLayout) findViewById(R.id.list);
         LinearLayout layout;
         TextView text;
         ImageView image;
@@ -282,7 +284,6 @@ public class HostDetail extends AppCompatActivity {
     }
 
     private void setReports(JSONObject response) throws JSONException, ParseException {
-        LinearLayout list = (LinearLayout) findViewById(R.id.list);
         LinearLayout layout;
         TextView text;
 

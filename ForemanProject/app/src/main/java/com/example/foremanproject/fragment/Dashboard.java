@@ -65,6 +65,10 @@ public class Dashboard extends Fragment {
     final int ThreeMinutesInMilliseconds = 180000;
     public static Dashboard newInstance() { return new Dashboard(); }
 
+    TextView percent;
+    LinearLayout histogramContainer;
+    LinearLayout chartContainer;
+
     //for Host Configuration Status Table
     TextView totalHost;
     TextView totalHostText;
@@ -162,8 +166,13 @@ public class Dashboard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mHandler = new Handler();
+
         statusTable = (LinearLayout) view.findViewById(R.id.StatusTable);
         eventTable = (LinearLayout) view.findViewById(R.id.LatestEvents);
+        histogramContainer = (LinearLayout) view.findViewById(R.id.histogram_container);
+        chartContainer = (LinearLayout) view.findViewById(R.id.chart_container);
+        percent = (TextView) view.findViewById(R.id.percentage);
+
         initializeHostConfigurationStatusTable();
         initializeLatestEventTable();
         startRepeatingTask();
@@ -1193,7 +1202,6 @@ public class Dashboard extends Fragment {
         reportMissing.setText(data[5] + "");
         disabledHost.setText(data[6] + "");
 
-        TextView percent = (TextView) getView().findViewById(R.id.percentage);
         percent.setText(percentage);
     }
 
@@ -1219,7 +1227,7 @@ public class Dashboard extends Fragment {
             defaultRenderer.setPanEnabled(false);
         }
         defaultRenderer.setZoomButtonsVisible(false);
-        LinearLayout chartContainer = (LinearLayout) getView().findViewById(R.id.chart_container);
+
         // remove any views before u paint the chart
         chartContainer.removeAllViews();
         // drawing pie chart
@@ -1261,8 +1269,7 @@ public class Dashboard extends Fragment {
         mRenderer.setLabelsColor(0xFF000000);
 
         GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, mRenderer, BarChart.Type.DEFAULT);
-        LinearLayout layout = (LinearLayout) getView().findViewById(R.id.histogram_container);
-        layout.addView(chartView,0);
+        histogramContainer.addView(chartView,0);
     }
 }
 
