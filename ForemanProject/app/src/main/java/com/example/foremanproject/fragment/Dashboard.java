@@ -65,7 +65,6 @@ public class Dashboard extends Fragment {
     private Handler mHandler;
     final int ThirtyMinutesInMilliseconds = 1800000;
     final int ThreeMinutesInMilliseconds = 180000;
-    public static Dashboard newInstance() { return new Dashboard(); }
 
     TextView percent;
     LinearLayout histogramContainer;
@@ -89,7 +88,7 @@ public class Dashboard extends Fragment {
     TextView disabledHost;
     TextView disabledHostText;
     LinearLayout statusTable;
-    
+
     LinearLayout latestEventTable;
     TextView latestEventTableText[][];
     int numLatestEventTableRows = 10;
@@ -113,6 +112,8 @@ public class Dashboard extends Fragment {
         startRepeatingTask();
         return view;
     }
+
+    public static Dashboard newInstance() { return new Dashboard(); }
 
     @Override
     public void onDestroy() {
