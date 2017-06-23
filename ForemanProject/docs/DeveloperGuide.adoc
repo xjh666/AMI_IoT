@@ -97,10 +97,14 @@ image::UI.png[height="400"]
 ** This api returns a JSONObject containing the number of hosts in different status.
 * `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events.
 ** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order.
-* OnClickListener is set for the name of the host in the configuration status table., which sets the properies of the host and opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostDetail.java[`HostDetail`] activity.
+
+* OnClickListener is set for the name of the host in the latest event table., which sets the properies of the host and opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostDetail.java[`HostDetail`] activity.
 ** `"GET /api/hosts/:host_name/config_reports/"`is used to get the last few reports (depends on the number of reports returned by the API.)
 ** Clicking the name of the time of a host will open link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/ConfigReportDetail.java[`ConfigReportDetail`] activity.
 ** `"GET /api/config_reports/:id"` is used in this activity to show the details of a report.
+
+* OnClickListener is set for configurations in the configuration status table., which opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostOfAConfigurationStatus.java[`HostOfAConfigurationStatus`] activity.
+** `HostOfAConfigurationStatus` activity is similar to other host lists.
 
 ==== Host Group List
 * `"GET /api/hostgroups"` is used to get all host groups and the details.
