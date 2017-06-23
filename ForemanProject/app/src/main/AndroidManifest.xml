@@ -32,8 +32,12 @@
             android:name=".activity.ConfigReportDetail"
             android:theme="@style/SecondActivityTheme" />
         <activity
+            android:name=".activity.HostOfAConfigurationStatus"
+            android:theme="@style/SecondActivityTheme" />
+        <activity
             android:name=".activity.ParameterInfo"
             android:theme="@style/PopupWindowTheme" />
+
 
     </application>
 

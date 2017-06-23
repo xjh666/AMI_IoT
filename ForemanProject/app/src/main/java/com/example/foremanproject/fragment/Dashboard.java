@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foremanproject.R;
 import com.example.foremanproject.activity.HostDetail;
+import com.example.foremanproject.activity.HostOfAConfigurationStatus;
 import com.example.foremanproject.other.Configuration;
 
 import org.achartengine.ChartFactory;
@@ -68,7 +69,10 @@ public class Dashboard extends Fragment {
     final int ThreeMinutesInMilliseconds = 180000;
     final int numLatestEventTableRows = 10;
 
+    boolean isShowDetail;
+
     String nameOfHostToShowDetail;
+    String configurationLabelOfHosts;
 
     LinearLayout histogramContainer;
     LinearLayout chartContainer;
@@ -135,7 +139,8 @@ public class Dashboard extends Fragment {
                                     getReports(response);
                                     break;
                                 case "hosts":
-                                    getHostDetail(response);
+                                    if(isShowDetail) getHostDetail(response);
+                                    else getHostsOfAConfigurationType(response);
                                     break;
                                 default:
                                     getInfoForChartAndStatus(response);
@@ -211,6 +216,7 @@ public class Dashboard extends Fragment {
                     latestEventTableText[i][j].setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             nameOfHostToShowDetail= hostName;
+                            isShowDetail = true;
                             sendRequest("hosts");
                         }
                     });
@@ -350,6 +356,18 @@ public class Dashboard extends Fragment {
                 row.addView(configurationStatusTable[i][j]);
             }
             statusTable.addView(row);
+        }
+
+        final String configurationLabels[] = {"", "Active", "Error", "No changes", "Pending", "Out of sync", "No reports", "Alerts disabled"};
+        for(int i=1;i<8;i++){
+            final int finalI = i;
+            configurationStatusTable[i][0].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    configurationLabelOfHosts = configurationLabels[finalI];
+                    isShowDetail = false;
+                    sendRequest("hosts");
+                }
+            });
         }
     }
 
@@ -510,5 +528,17 @@ public class Dashboard extends Fragment {
                 break;
             }
         }
+    }
+
+    private void getHostsOfAConfigurationType(JSONObject response) throws JSONException {
+        JSONArray arr = response.getJSONArray("results");
+        ArrayList<String> hosts = new ArrayList<>();
+        for(int i=0;i<arr.length();i++){
+            JSONObject obj = arr.getJSONObject(i);
+            if(obj.getString("configuration_status_label").equals(configurationLabelOfHosts))
+                hosts.add(obj.getString("name"));
+        }
+        HostOfAConfigurationStatus.setInfo(hosts, configurationLabelOfHosts);
+        startActivity(new Intent(getActivity(), HostOfAConfigurationStatus.class));
     }
 }
