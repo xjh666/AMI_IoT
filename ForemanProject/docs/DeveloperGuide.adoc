@@ -104,7 +104,7 @@ image::UI.png[height="400"]
 ** `"GET /api/config_reports/:id"` is used in this activity to show the details of a report.
 
 * OnClickListener is set for configurations in the configuration status table., which opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostOfAConfigurationStatus.java[`HostOfAConfigurationStatus`] activity.
-** `HostOfAConfigurationStatus` activity is similar to other host lists.
+** `HostOfAConfigurationStatus` activity is similar to other activities showing a list of hosts.
 
 ==== Host Group List
 * `"GET /api/hostgroups"` is used to get all host groups and the details.
