@@ -89,11 +89,10 @@ public class Dashboard extends Fragment {
     TextView disabledHost;
     TextView disabledHostText;
     LinearLayout statusTable;
-
-    //for Latest Event Table
+    
     LinearLayout latestEventTable;
-    TextView eventTableText[][];
-    int numEventTableRows;
+    TextView latestEventTableText[][];
+    int numLatestEventTableRows = 10;
 
     String nameOfHostToShowDetail;
 
@@ -110,7 +109,6 @@ public class Dashboard extends Fragment {
         percent = (TextView) view.findViewById(R.id.percentage);
 
         initializeHostConfigurationStatusTable();
-        numEventTableRows = 10;
         initializeLatestEventTable();
         startRepeatingTask();
         return view;
@@ -221,8 +219,8 @@ public class Dashboard extends Fragment {
         for(int j=0;j<7;j++){
             switch (j){
                 case 0:
-                    eventTableText[i][j].setText(" " + hostName);
-                    eventTableText[i][j].setOnClickListener(new View.OnClickListener() {
+                    latestEventTableText[i][j].setText(" " + hostName);
+                    latestEventTableText[i][j].setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             nameOfHostToShowDetail= hostName;
                             sendRequest("hosts");
@@ -230,22 +228,22 @@ public class Dashboard extends Fragment {
                     });
                     break;
                 case 1:
-                    eventTableText[i][j].setText(status.get(hostName).get("applied").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("applied").toString());
                     break;
                 case 2:
-                    eventTableText[i][j].setText(status.get(hostName).get("restarted").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("restarted").toString());
                     break;
                 case 3:
-                    eventTableText[i][j].setText(status.get(hostName).get("failed").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("failed").toString());
                     break;
                 case 4:
-                    eventTableText[i][j].setText(status.get(hostName).get("failed_restarts").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("failed_restarts").toString());
                     break;
                 case 5:
-                    eventTableText[i][j].setText(status.get(hostName).get("skipped").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("skipped").toString());
                     break;
                 case 6:
-                    eventTableText[i][j].setText(status.get(hostName).get("pending").toString());
+                    latestEventTableText[i][j].setText(status.get(hostName).get("pending").toString());
                     break;
             }
         }
@@ -415,57 +413,57 @@ public class Dashboard extends Fragment {
     }
 
     private void initializeLatestEventTable(){
-        eventTableText = new TextView[numEventTableRows][7];
+        latestEventTableText = new TextView[numLatestEventTableRows][7];
         LinearLayout row;
-        for(int i=0;i<numEventTableRows;i++){
+        for(int i=0;i<numLatestEventTableRows;i++){
             row = new LinearLayout(getActivity());
             row.setOrientation(LinearLayout.HORIZONTAL);
 
             for(int j=0;j<7;j++){
-                eventTableText[i][j] = new TextView(getActivity());
-                eventTableText[i][j].setBackgroundResource(R.drawable.cell_shape);
-                eventTableText[i][j].setTextColor(Color.BLACK);
+                latestEventTableText[i][j] = new TextView(getActivity());
+                latestEventTableText[i][j].setBackgroundResource(R.drawable.cell_shape);
+                latestEventTableText[i][j].setTextColor(Color.BLACK);
 
                 if(i==0){
                     switch(j){
                         case 0:
-                            eventTableText[i][j].setText(" Host");
+                            latestEventTableText[i][j].setText(" Host");
                             break;
                         case 1:
-                            eventTableText[i][j].setText("A");
+                            latestEventTableText[i][j].setText("A");
                             break;
                         case 2:
-                            eventTableText[i][j].setText("R");
+                            latestEventTableText[i][j].setText("R");
                             break;
                         case 3:
-                            eventTableText[i][j].setText("F");
+                            latestEventTableText[i][j].setText("F");
                             break;
                         case 4:
-                            eventTableText[i][j].setText("FR");
+                            latestEventTableText[i][j].setText("FR");
                             break;
                         case 5:
-                            eventTableText[i][j].setText("S");
+                            latestEventTableText[i][j].setText("S");
                             break;
                         case 6:
-                            eventTableText[i][j].setText("P");
+                            latestEventTableText[i][j].setText("P");
                             break;
                     }
-                } else eventTableText[i][j].setText("");
+                } else latestEventTableText[i][j].setText("");
 
                 if(j==0){
-                    eventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
                 }else if(j==6){
-                    eventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
-                } else eventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
+                } else latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
 
                 if(i==0){
-                    eventTableText[i][j].setTextSize(19);
-                } else eventTableText[i][j].setTextSize(16);
+                    latestEventTableText[i][j].setTextSize(19);
+                } else latestEventTableText[i][j].setTextSize(16);
 
                 if(j!=0)
-                    eventTableText[i][j].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    latestEventTableText[i][j].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                row.addView(eventTableText[i][j]);
+                row.addView(latestEventTableText[i][j]);
             }
 
             latestEventTable.addView(row);
