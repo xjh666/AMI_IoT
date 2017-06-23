@@ -62,54 +62,41 @@ import java.util.Map;
  */
 
 public class Dashboard extends Fragment {
-    private Handler mHandler;
+    Handler mHandler;
+
     final int ThirtyMinutesInMilliseconds = 1800000;
     final int ThreeMinutesInMilliseconds = 180000;
-
-    TextView percent;
-    LinearLayout histogramContainer;
-    LinearLayout chartContainer;
-
-    //for Host Configuration Status Table
-    TextView totalHost;
-    TextView totalHostText;
-    TextView activeHost;
-    TextView activeHostText;
-    TextView badHost;
-    TextView badHostText;
-    TextView okHost;
-    TextView okHostText;
-    TextView pendingHost;
-    TextView pendingHostText;
-    TextView outOfSyncHost;
-    TextView outOfSyncHostText;
-    TextView reportMissing;
-    TextView reportMissingText;
-    TextView disabledHost;
-    TextView disabledHostText;
-    LinearLayout statusTable;
-
-    LinearLayout latestEventTable;
-    TextView latestEventTableText[][];
-    int numLatestEventTableRows = 10;
+    final int numLatestEventTableRows = 10;
 
     String nameOfHostToShowDetail;
+
+    LinearLayout histogramContainer;
+    LinearLayout chartContainer;
+    LinearLayout statusTable;
+    LinearLayout latestEventTable;
+
+    TextView percent;
+    TextView latestEventTableText[][];
+    TextView configurationStatusTable[][];
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        mHandler = new Handler();
 
+        mHandler = new Handler();
+        percent = (TextView) view.findViewById(R.id.percentage);
         statusTable = (LinearLayout) view.findViewById(R.id.StatusTable);
         latestEventTable = (LinearLayout) view.findViewById(R.id.LatestEvents);
-        histogramContainer = (LinearLayout) view.findViewById(R.id.histogram_container);
         chartContainer = (LinearLayout) view.findViewById(R.id.chart_container);
-        percent = (TextView) view.findViewById(R.id.percentage);
+        histogramContainer = (LinearLayout) view.findViewById(R.id.histogram_container);
 
         initializeHostConfigurationStatusTable();
         initializeLatestEventTable();
+
         startRepeatingTask();
+
         return view;
     }
 
@@ -276,141 +263,94 @@ public class Dashboard extends Fragment {
     }
 
     private void initializeHostConfigurationStatusTable(){
-        LinearLayout row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        totalHostText = new TextView(getActivity());
-        totalHostText.setText("Total Hosts");
-        totalHostText.setTextColor(Color.BLACK);
-        totalHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.92), (int)(Configuration.getHeight()* 0.05)));
-        totalHostText.setTextSize(20);
-        totalHost = new TextView(getActivity());
-        totalHost.setText("");
-        totalHost.setTextColor(Color.BLACK);
-        totalHost.setTextSize(25);
-        totalHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        totalHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getHeight()* 0.05)));
-        row.addView(totalHostText);
-        row.addView(totalHost);
-        statusTable.addView(row);
+        configurationStatusTable = new TextView[8][2];
+        LinearLayout row;
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        activeHostText = new TextView(getActivity());
-        activeHostText.setTextColor(getResources().getColor(R.color.colorHostsThatHadPerformedModificationsWithoutError));
-        activeHostText.setTextSize(14);
-        activeHostText.setText("Hosts that had performed modifications without error");
-        activeHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        activeHost = new TextView(getActivity());
-        activeHost.setText("");
-        activeHost.setTextColor(getResources().getColor(R.color.colorHostsThatHadPerformedModificationsWithoutError));
-        activeHost.setTextSize(20);
-        activeHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        activeHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(activeHostText);
-        row.addView(activeHost);
-        statusTable.addView(row);
+        for(int i=0;i<8;i++){
+            row = new LinearLayout(getActivity());
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            for(int j=0;j<2;j++){
+                configurationStatusTable[i][j] = new TextView(getActivity());
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        badHostText = new TextView(getActivity());
-        badHostText.setTextColor(getResources().getColor(R.color.colorHostsInErrorState));
-        badHostText.setTextSize(14);
-        badHostText.setText("Hosts in error state");
-        badHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        badHost = new TextView(getActivity());
-        badHost.setText("");
-        badHost.setTextColor(getResources().getColor(R.color.colorHostsInErrorState));
-        badHost.setTextSize(20);
-        badHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        badHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(badHostText);
-        row.addView(badHost);
-        statusTable.addView(row);
+                if(j==1) {
+                    configurationStatusTable[i][j].setText("");
+                } else {
+                    switch (i){
+                        case 0:
+                            configurationStatusTable[i][j].setText("Total Hosts");
+                            break;
+                        case 1:
+                            configurationStatusTable[i][j].setText("Hosts that had performed modifications without error");
+                            break;
+                        case 2:
+                            configurationStatusTable[i][j].setText("Hosts in error state");
+                            break;
+                        case 3:
+                            configurationStatusTable[i][j].setText("Good host reports in the last 35 minutes");
+                            break;
+                        case 4:
+                            configurationStatusTable[i][j].setText("Hosts that had pending changes");
+                            break;
+                        case 5:
+                            configurationStatusTable[i][j].setText("Out of sync hosts");
+                            break;
+                        case 6:
+                            configurationStatusTable[i][j].setText("Hosts with no reports");
+                            break;
+                        case 7:
+                            configurationStatusTable[i][j].setText("Hosts with Alerts disabled");
+                            break;
+                    }
+                }
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        okHostText = new TextView(getActivity());
-        okHostText.setTextColor(getResources().getColor(R.color.colorGoodHostReportsInTheLast35Minutes));
-        okHostText.setTextSize(14);
-        okHostText.setText("Good host reports in the last 35 minutes");
-        okHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        okHost = new TextView(getActivity());
-        okHost.setText("");
-        okHost.setTextColor(getResources().getColor(R.color.colorGoodHostReportsInTheLast35Minutes));
-        okHost.setTextSize(20);
-        okHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        okHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(okHostText);
-        row.addView(okHost);
-        statusTable.addView(row);
+                switch (i){
+                    case 0:
+                        configurationStatusTable[i][j].setTextColor(Color.BLACK);
+                        break;
+                    case 1:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorHostsThatHadPerformedModificationsWithoutError));
+                        break;
+                    case 2:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorHostsInErrorState));
+                        break;
+                    case 3:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorGoodHostReportsInTheLast35Minutes));
+                        break;
+                    case 4:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorHostsThatHadPendingChanges));
+                        break;
+                    case 5:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorOutOfSyncHosts));
+                        break;
+                    case 6:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorHostsWithNoReports));
+                        break;
+                    case 7:
+                        configurationStatusTable[i][j].setTextColor(getResources().getColor(R.color.colorHostsWithAlertsDisabled));
+                        break;
+                }
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        pendingHostText = new TextView(getActivity());
-        pendingHostText.setTextColor(getResources().getColor(R.color.colorHostsThatHadPendingChanges));
-        pendingHostText.setTextSize(14);
-        pendingHostText.setText("Hosts that had pending changes");
-        pendingHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        pendingHost = new TextView(getActivity());
-        pendingHost.setText("");
-        pendingHost.setTextColor(getResources().getColor(R.color.colorHostsThatHadPendingChanges));
-        pendingHost.setTextSize(20);
-        pendingHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        pendingHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(pendingHostText);
-        row.addView(pendingHost);
-        statusTable.addView(row);
+                if(i==0 && j==0) {
+                    configurationStatusTable[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.92), (int) (Configuration.getHeight() * 0.05)));
+                    configurationStatusTable[i][j].setTextSize(20);
+                } else if(i==0 && j==1){
+                    configurationStatusTable[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.08), (int)(Configuration.getHeight()* 0.05)));
+                    configurationStatusTable[i][j].setTextSize(25);
+                } else if(j==0) {
+                    configurationStatusTable[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.93), (int) (Configuration.getHeight() * 0.04)));
+                    configurationStatusTable[i][j].setTextSize(14);
+                } else {
+                    configurationStatusTable[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.07), (int) (Configuration.getHeight() * 0.04)));
+                    configurationStatusTable[i][j].setTextSize(20);
+                }
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        outOfSyncHostText = new TextView(getActivity());
-        outOfSyncHostText.setTextColor(getResources().getColor(R.color.colorOutOfSyncHosts));
-        outOfSyncHostText.setTextSize(14);
-        outOfSyncHostText.setText("Out of sync hosts");
-        outOfSyncHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        outOfSyncHost = new TextView(getActivity());
-        outOfSyncHost.setText("");
-        outOfSyncHost.setTextColor(getResources().getColor(R.color.colorOutOfSyncHosts));
-        outOfSyncHost.setTextSize(20);
-        outOfSyncHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        outOfSyncHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(outOfSyncHostText);
-        row.addView(outOfSyncHost);
-        statusTable.addView(row);
+                if(j==1)
+                    configurationStatusTable[i][j].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        reportMissingText = new TextView(getActivity());
-        reportMissingText.setTextColor(getResources().getColor(R.color.colorHostsWithNoReports));
-        reportMissingText.setTextSize(14);
-        reportMissingText.setText("Hosts with no reports");
-        reportMissingText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        reportMissing = new TextView(getActivity());
-        reportMissing.setText("");
-        reportMissing.setTextColor(getResources().getColor(R.color.colorHostsWithNoReports));
-        reportMissing.setTextSize(20);
-        reportMissing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        reportMissing.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(reportMissingText);
-        row.addView(reportMissing);
-        statusTable.addView(row);
-
-        row = new LinearLayout(getActivity());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        disabledHostText = new TextView(getActivity());
-        disabledHostText.setTextColor(getResources().getColor(R.color.colorHostsWithAlertsDisabled));
-        disabledHostText.setTextSize(14);
-        disabledHostText.setText("Hosts with Alerts disabled");
-        disabledHostText.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.93), (int)(Configuration.getHeight()* 0.04)));
-        disabledHost = new TextView(getActivity());
-        disabledHost.setText("");
-        disabledHost.setTextColor(getResources().getColor(R.color.colorHostsWithAlertsDisabled));
-        disabledHost.setTextSize(20);
-        disabledHost.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        disabledHost.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.07), (int)(Configuration.getHeight()* 0.04)));
-        row.addView(disabledHostText);
-        row.addView(disabledHost);
-        statusTable.addView(row);
+                row.addView(configurationStatusTable[i][j]);
+            }
+            statusTable.addView(row);
+        }
     }
 
     private void initializeLatestEventTable(){
@@ -472,15 +412,13 @@ public class Dashboard extends Fragment {
     }
 
     private void setHostConfigurationStatusTable(int total, int[] data, String percentage){
-        totalHost.setText(total + "");
-        activeHost.setText(data[0] + "");
-        badHost.setText(data[1] + "");
-        okHost.setText(data[2] + "");
-        pendingHost.setText(data[3] + "");
-        outOfSyncHost.setText(data[4] + "");
-        reportMissing.setText(data[5] + "");
-        disabledHost.setText(data[6] + "");
-
+        for(int i=0;i<8;i++){
+            if(i==0) {
+                configurationStatusTable[i][1].setText(total + "");
+            } else{
+                configurationStatusTable[i][1].setText(data[i-1] + "");
+            }
+        }
         percent.setText(percentage);
     }
 
