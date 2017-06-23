@@ -165,7 +165,12 @@ image::UI.png[height="400"]
 +
 image::release_version.PNG[width="500"]
 
-
+== Problem to be solved
+Take `puppet.ami-lab.org` used in AMI lab as an example
+* There are 3 hosts which is under `out of sync` status, the "configuration_status_label" of which is `no reports` instead.
+* It seems that the Web UI records the report time of their last reports even though they have been deleted.
+* The way to get this infomation is not found.
+* Thus, when clicking "Out of sync hosts" and "Hosts with no reports" in the configuration status table in dashboard will show wrong lists of hosts.
 
 == Appendices
 * API Details: link: https://www.theforeman.org/api/1.15/index.html
