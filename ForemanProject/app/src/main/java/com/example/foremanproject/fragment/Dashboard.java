@@ -378,13 +378,13 @@ public class Dashboard extends Fragment {
             row = new LinearLayout(getActivity());
             row.setOrientation(LinearLayout.HORIZONTAL);
 
-            for(int j=0;j<7;j++){
+            for(int j=0;j<7;j++) {
                 latestEventTableText[i][j] = new TextView(getActivity());
                 latestEventTableText[i][j].setBackgroundResource(R.drawable.cell_shape);
                 latestEventTableText[i][j].setTextColor(Color.BLACK);
 
-                if(i==0){
-                    switch(j){
+                if (i == 0) {
+                    switch (j) {
                         case 0:
                             latestEventTableText[i][j].setText(" Host");
                             break;
@@ -409,11 +409,20 @@ public class Dashboard extends Fragment {
                     }
                 } else latestEventTableText[i][j].setText("");
 
-                if(j==0){
-                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), (int) (Configuration.getHeight() * 0.04)));
-                }else if(j==6){
-                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), (int) (Configuration.getHeight() * 0.04)));
-                } else latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
+                if (i == 0) {
+                    if (j == 0) {
+                        latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    } else if (j == 6) {
+                        latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    } else
+                        latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+                } else {
+                    if (j == 0) {
+                        latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.49), 80));
+                    } else if (j == 6) {
+                        latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.09), 80));
+                    } else latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int) (Configuration.getWidth() * 0.085), 80));
+                }
 
                 if(i==0){
                     latestEventTableText[i][j].setTextSize(19);
