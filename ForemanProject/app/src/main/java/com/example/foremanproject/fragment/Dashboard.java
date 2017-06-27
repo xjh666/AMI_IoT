@@ -58,6 +58,7 @@ import java.util.Map;
  * Run Distribution in the last 30 minutes(Histogram) and Latest Events(Table)
  * "GET /api/dashboard" is used to get information related to Host Configuration Chart and Host Configuration Status
  * "GET /api/reports" is used to get information related toRun Distribution in the last 30 minutes and Latest Events
+ * "GET /api/settings/outofsync_interval" and "GET api/settings/settings/outofsync_interval" are used to get the interval of the dividing line for determining whether a host is out of sync.
  * The requests are sent and the dashboard is updated every 30 seconds
  * "AChartEngine" is used to draw the pie chart and histogram
  */
