@@ -247,9 +247,9 @@ public class Dashboard extends Fragment {
         String[] labels = new String[]{"Active ", "Error ", "OK ", "Pending changes ", "Out of sync ", "No reports ", "Notification... "};
 
         int totalHosts = response.getInt("total_hosts");
-        int data[] = {  response.getInt("active_hosts"),
+        int data[] = {  response.getInt("active_hosts_ok_enabled"),
                         response.getInt("bad_hosts"),
-                        response.getInt("ok_hosts"),
+                        response.getInt("ok_hosts_enabled"),
                         response.getInt("pending_hosts"),
                         response.getInt("out_of_sync_hosts"),
                         response.getInt("reports_missing"),
