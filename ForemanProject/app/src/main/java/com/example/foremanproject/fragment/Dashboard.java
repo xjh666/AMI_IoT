@@ -248,10 +248,10 @@ public class Dashboard extends Fragment {
 
         int totalHosts = response.getInt("total_hosts");
         int data[] = {  response.getInt("active_hosts_ok_enabled"),
-                        response.getInt("bad_hosts"),
+                        response.getInt("bad_hosts_enabled"),
                         response.getInt("ok_hosts_enabled"),
-                        response.getInt("pending_hosts"),
-                        response.getInt("out_of_sync_hosts"),
+                        response.getInt("pending_hosts_enabled"),
+                        response.getInt("out_of_sync_hosts_enabled"),
                         response.getInt("reports_missing"),
                         response.getInt("disabled_hosts")};
 
