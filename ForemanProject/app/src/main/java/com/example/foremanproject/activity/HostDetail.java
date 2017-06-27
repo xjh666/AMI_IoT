@@ -392,7 +392,7 @@ public class HostDetail extends AppCompatActivity {
                 }
             }
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), (int) (Configuration.getHeight() * 0.04)));
 
             final Map<String, Object> tag = new HashMap<>();
             tag.put("name", arr.getJSONObject(i).get("host_name"));
@@ -413,7 +413,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             text = new TextView(this);
@@ -421,7 +421,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             text = new TextView(this);
@@ -429,7 +429,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             text = new TextView(this);
@@ -437,7 +437,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             text = new TextView(this);
@@ -445,7 +445,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             text = new TextView(this);
@@ -453,7 +453,7 @@ public class HostDetail extends AppCompatActivity {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             text.setTextColor(Color.BLACK);
             text.setTextSize(17);
-            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), (int) (Configuration.getHeight() * 0.04)));
             text.setBackgroundResource(R.drawable.cell_shape);
             layout.addView(text);
             list.addView(layout);
