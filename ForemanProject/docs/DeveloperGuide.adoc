@@ -107,13 +107,13 @@ image::UI.png[height="400"]
 * OnClickListener is set for configurations in the configuration status table., which opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostOfAConfigurationStatus.java[`HostOfAConfigurationStatus`] activity.
 ** `HostOfAConfigurationStatus` activity is similar to other activities showing a list of hosts.
 ** The logic to determine whether a host is iunder a status
-*** `last_report > "35 minutes ago" and (status.applied > 0 or status.restarted > 0) and (status.failed = 0)` ==> Hosts that had performed modifications without error
-*** `last_report > "35 minutes ago" and (status.failed > 0 or status.failed_restarts > 0) and status.enabled = true` ==> Hosts in error state
-*** `last_report > "35 minutes ago" and status.enabled = true and status.applied = 0 and status.failed = 0 and status.pending = 0` ==> Good host reports in the last 35 minutes
-*** `status.pending > 0 and status.enabled = true` ==> Hosts that had pending changes
-*** `last_report < "35 minutes ago" and status.enabled = true` ==> Out of sync hosts
-*** `not has last_report and status.enabled = true` ==> Hosts with no reports
-*** `status.enabled = false` ==> Hosts with Alerts disabled
+*** `last_report > "35 minutes ago" and (status.applied > 0 or status.restarted > 0) and (status.failed = 0)` => Hosts that had performed modifications without error
+*** `last_report > "35 minutes ago" and (status.failed > 0 or status.failed_restarts > 0) and status.enabled = true` => Hosts in error state
+*** `last_report > "35 minutes ago" and status.enabled = true and status.applied = 0 and status.failed = 0 and status.pending = 0` => Good host reports in the last 35 minutes
+*** `status.pending > 0 and status.enabled = true` => Hosts that had pending changes
+*** `last_report < "35 minutes ago" and status.enabled = true` => Out of sync hosts
+*** `not has last_report and status.enabled = true` => Hosts with no reports
+*** `status.enabled = false` => Hosts with Alerts disabled
 
 ==== Host Group List
 * `"GET /api/hostgroups"` is used to get all host groups and the details.
