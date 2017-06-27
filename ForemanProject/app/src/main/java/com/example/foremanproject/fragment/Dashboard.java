@@ -69,6 +69,9 @@ public class Dashboard extends Fragment {
     final int ThreeMinutesInMilliseconds = 180000;
     final int numLatestEventTableRows = 10;
 
+    int outOfSyncInterval;
+    int puppetInterval;
+
     boolean isShowDetail;
 
     String nameOfHostToShowDetail;
@@ -83,6 +86,7 @@ public class Dashboard extends Fragment {
     TextView latestEventTableText[][];
     TextView configurationStatusTable[][];
 
+    Map<String, Map<String, Integer>> status;
 
     @Nullable
     @Override
@@ -99,8 +103,10 @@ public class Dashboard extends Fragment {
         initializeHostConfigurationStatusTable();
         initializeLatestEventTable();
 
-        startRepeatingTask();
+        sendRequest("settings/puppet_interval");
+        sendRequest("settings/outofsync_interval");
 
+        startRepeatingTask();
         return view;
     }
 
@@ -142,6 +148,12 @@ public class Dashboard extends Fragment {
                                     if(isShowDetail) getHostDetail(response);
                                     else getHostsOfAConfigurationType(response);
                                     break;
+                                case "settings/puppet_interval":
+                                    puppetInterval = response.getInt("value");
+                                    break;
+                                case "settings/outofsync_interval":
+                                    outOfSyncInterval = response.getInt("value");
+                                    break;
                                 default:
                                     getInfoForChartAndStatus(response);
                                     break;
@@ -170,7 +182,8 @@ public class Dashboard extends Fragment {
     }
 
     private void getReports(JSONObject response) throws JSONException, ParseException {
-        Map<String, Map<String, Integer>> status = new HashMap<>();
+        Map<String, Map<String, Integer>> latestEvent = new HashMap<>();
+        status = new HashMap<>();
         ArrayList<String> order = new ArrayList<>();
         int [] runDistribution = {0,0,0,0,0,0,0,0,0,0};
         int num = 9;
@@ -184,6 +197,22 @@ public class Dashboard extends Fragment {
             String host = obj.getString("host_name");
             if(obj.getJSONObject("metrics").getJSONObject("changes").getInt("total") > 0 && num-->0){
                 order.add(host);
+                latestEvent.put(host,new HashMap<String, Integer>());
+                JSONObject hostStatus = obj.getJSONObject("status");
+                latestEvent.get(host).put("applied",(hostStatus.getInt("applied")));
+                latestEvent.get(host).put("restarted",(hostStatus.getInt("restarted")));
+                latestEvent.get(host).put("failed",(hostStatus.getInt("failed")));
+                latestEvent.get(host).put("failed_restarts",(hostStatus.getInt("failed_restarts")));
+                latestEvent.get(host).put("skipped",(hostStatus.getInt("skipped")));
+                latestEvent.get(host).put("pending",(hostStatus.getInt("pending")));
+            }
+
+            Date time = sdf.parse(obj.getString("created_at").substring(0,10) + " " + obj.getString("created_at").substring(11,19));
+            long timeDifference = currentTime.getTime() - time.getTime();
+            if(timeDifference >= ThirtyMinutesInMilliseconds)
+                break;
+
+            if(!status.containsKey(host)){
                 status.put(host,new HashMap<String, Integer>());
                 JSONObject hostStatus = obj.getJSONObject("status");
                 status.get(host).put("applied",(hostStatus.getInt("applied")));
@@ -194,16 +223,12 @@ public class Dashboard extends Fragment {
                 status.get(host).put("pending",(hostStatus.getInt("pending")));
             }
 
-            Date time = sdf.parse(obj.getString("created_at").substring(0,10) + " " + obj.getString("created_at").substring(11,19));
-            long timeDifference = currentTime.getTime() - time.getTime();
-            if(timeDifference >= ThirtyMinutesInMilliseconds)
-                continue;
             runDistribution[(int)timeDifference/ThreeMinutesInMilliseconds]++;
         }
 
         for(int i=0;i<order.size();i++){
             String hostName = order.get(i);
-            setLatestEvent(i+1, hostName, status);
+            setLatestEvent(i+1, hostName, latestEvent);
         }
         drawHistogram(runDistribution);
     }
@@ -531,13 +556,60 @@ public class Dashboard extends Fragment {
         }
     }
 
-    private void getHostsOfAConfigurationType(JSONObject response) throws JSONException {
+    private void getHostsOfAConfigurationType(JSONObject response) throws JSONException, ParseException {
         JSONArray arr = response.getJSONArray("results");
         ArrayList<String> hosts = new ArrayList<>();
+        long interval = (puppetInterval + outOfSyncInterval) * 60000;
+
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currentTime = sdf.parse(sdf.format(Calendar.getInstance().getTime()));
+        Date time;
+        long timeDifference;
+
         for(int i=0;i<arr.length();i++){
             JSONObject obj = arr.getJSONObject(i);
-            if(obj.getString("configuration_status_label").equals(configurationLabelOfHosts))
-                hosts.add(obj.getString("name"));
+
+            switch(configurationLabelOfHosts){
+                case "Active":
+                    time = sdf.parse(obj.getString("last_report").substring(0,10) + " " + obj.getString("last_report").substring(11,19));
+                    timeDifference = currentTime.getTime() - time.getTime();
+                    if(timeDifference < interval && status.get(obj.getString("name")).get("failed") == 0
+                          && (status.get(obj.getString("name")).get("applied") > 0 || status.get(obj.getString("name")).get("restarted")>0))
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "Error":
+                    time = sdf.parse(obj.getString("last_report").substring(0,10) + " " + obj.getString("last_report").substring(11,19));
+                    timeDifference = currentTime.getTime() - time.getTime();
+                    if(obj.getBoolean("enabled") && timeDifference < interval &&
+                            (status.get(obj.getString("name")).get("failed") > 0 || status.get(obj.getString("name")).get("failed_restarts")>0))
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "No changes":
+                    time = sdf.parse(obj.getString("last_report").substring(0,10) + " " + obj.getString("last_report").substring(11,19));
+                    timeDifference = currentTime.getTime() - time.getTime();
+                    if(obj.getBoolean("enabled") && timeDifference < interval && status.get(obj.getString("name")).get("applied")==0
+                            && status.get(obj.getString("name")).get("failed")==0 && status.get(obj.getString("name")).get("pending")==0)
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "Pending":
+                    if(obj.getBoolean("enabled") && status.containsKey(obj.getString("name")) &&status.get(obj.getString("name")).get("pending")>0)
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "Out of sync":
+                    time = sdf.parse(obj.getString("last_report").substring(0,10) + " " + obj.getString("last_report").substring(11,19));
+                    timeDifference = currentTime.getTime() - time.getTime();
+                    if(obj.getBoolean("enabled") && timeDifference > interval)
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "No reports":
+                    if(obj.getBoolean("enabled")&&obj.isNull("last_report"))
+                        hosts.add(obj.getString("name"));
+                    break;
+                case "Alerts disabled":
+                    if(!obj.getBoolean("enabled"))
+                        hosts.add(obj.getString("name"));
+                    break;
+            }
         }
         HostOfAConfigurationStatus.setInfo(hosts, configurationLabelOfHosts);
         startActivity(new Intent(getActivity(), HostOfAConfigurationStatus.class));
