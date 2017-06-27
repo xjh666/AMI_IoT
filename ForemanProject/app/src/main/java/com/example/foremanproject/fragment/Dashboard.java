@@ -410,10 +410,10 @@ public class Dashboard extends Fragment {
                 } else latestEventTableText[i][j].setText("");
 
                 if(j==0){
-                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.49), (int) (Configuration.getHeight() * 0.04)));
                 }else if(j==6){
-                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), LinearLayout.LayoutParams.WRAP_CONTENT));
-                } else latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), LinearLayout.LayoutParams.WRAP_CONTENT));
+                    latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.09), (int) (Configuration.getHeight() * 0.04)));
+                } else latestEventTableText[i][j].setLayoutParams(new LinearLayout.LayoutParams((int)(Configuration.getWidth()* 0.085), (int) (Configuration.getHeight() * 0.04)));
 
                 if(i==0){
                     latestEventTableText[i][j].setTextSize(19);
