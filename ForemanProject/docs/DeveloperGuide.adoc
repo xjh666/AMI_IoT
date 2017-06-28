@@ -179,5 +179,5 @@ image::release_version.PNG[width="500"]
 * link:https://developer.android.com/guide/components/fragments.html[Fragment]: A Fragment represents a behavior or a portion of user interface in an Activity. 
 
 == Appendix
-* API Details: link: https://www.theforeman.org/api/1.15/index.html
-* API Testing: link: https://www.getpostman.com/[Postman]
+* API Details: https://www.theforeman.org/api/1.15/index.html
+* API Testing: https://www.getpostman.com/[Postman]
