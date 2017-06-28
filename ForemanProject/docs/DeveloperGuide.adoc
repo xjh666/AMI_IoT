@@ -97,7 +97,7 @@ image::UI.png[height="400"]
 ** This api returns a JSONObject containing the number of hosts in different status.
 * `"GET /api/reports"` is used to get information related to Run Distribution in the last 30 minutes and Latest Events.
 ** This api returns a JSONObject containing a list of reports within the past 40 minutes, which are in chronological order.
-* "GET /api/settings/outofsync_interval" and "GET api/settings/settings/outofsync_interval" are used to get the interval of the dividing line for determining whether a host is out of sync.
+* "GET /api/settings/puppet_interval" and "GET api/settings/settings/outofsync_interval" are used to get the interval of the dividing line for determining whether a host is out of sync.
 
 * OnClickListener is set for the name of the host in the latest event table., which sets the properies of the host and opens link:{repoURL}/ForemanProject/app/src/main/java/com/example/foremanproject/activity/HostDetail.java[`HostDetail`] activity.
 ** `"GET /api/hosts/:host_name/config_reports/"`is used to get the last few reports (depends on the number of reports returned by the API.)
